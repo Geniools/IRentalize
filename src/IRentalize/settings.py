@@ -39,12 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bookings',
-    'listings',
-    'main',
-    'payments',
-    'reviews',
-    'users',
+    # Project apps
+    'backend.bookings.apps.BookingsConfig',
+    'backend.listings.apps.ListingsConfig',
+    'backend.main.apps.MainConfig',
+    'backend.payments.apps.PaymentsConfig',
+    'backend.reviews.apps.ReviewsConfig',
+    'backend.users.apps.UsersConfig',
+    'frontend.apps.FrontendConfig',
+    # Third party apps
     'rest_framework',
     'grappelli',
 ]
@@ -64,7 +67,7 @@ ROOT_URLCONF = 'IRentalize.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'frontend/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
