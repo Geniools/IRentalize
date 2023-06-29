@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 
 import {
     BrowserRouter as Router,
@@ -12,30 +12,24 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Icon from "./Icon";
 
-export default class HomePage extends Component {
-    constructor(props) {
-        super(props);
-    }
+function IndexPage() {
+    return (
+        <>
+            <Header/>
+            <h1>Index page</h1>
+            <Icon/>
+            <Footer/>
+        </>
+    );
+}
 
-    renderHomePage() {
-        return (
-            <>
-                <Header/>
-                <h1>Index page</h1>
-                <Icon/>
-                <Footer/>
-            </>
-        );
-    }
-
-    render() {
-        return (
-            <Router>
-                <Routes>
-                    <Route exact path="/" element={<this.renderHomePage/>}/>
-                    <Route exact path="/about-us/" element={<AboutUsPage/>}/>
-                </Routes>
-            </Router>
-        );
-    }
+export default function HomePage() {
+    return (
+        <Router>
+            <Routes>
+                <Route exact path="/" element={<IndexPage/>}/>
+                <Route exact path="/about-us/" element={<AboutUsPage/>}/>
+            </Routes>
+        </Router>
+    );
 }
