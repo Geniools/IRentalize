@@ -10,6 +10,7 @@ import {
 import AboutUsPage from "./AboutUsPage";
 import Header from "./Header";
 import Footer from "./Footer";
+import Icon from "./Icon";
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ export default class HomePage extends Component {
             <>
                 <Header/>
                 <h1>Index page</h1>
+                <Icon/>
                 <Footer/>
             </>
         );
