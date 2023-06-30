@@ -25,28 +25,29 @@ class AvailabilitySerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-# Listings
-class ListingSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Listing
-        fields = [
-            'id', 'category', 'host', 'title', 'description', 'price', 'address',
-        ]
-
-
-class ListingImageSerializer(serializers.HyperlinkedModelSerializer):
+class ListingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingImage
-        fields = [
-            'id', 'listing', 'image',
-        ]
+        fields = ['image']
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = [
-            'id', 'name', 'icon',
+            'name', 'icon',
+        ]
+
+
+# Listings
+class ListingSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    images = ListingImageSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Listing
+        fields = [
+            'id', 'category', 'title', 'description', 'price', 'address', 'images',
         ]
 
 

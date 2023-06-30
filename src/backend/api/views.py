@@ -1,37 +1,13 @@
 from rest_framework import viewsets, permissions
+from django_filters import rest_framework as filters
 
 from backend.api.serializers import *
-
-
-# Bookings
-class ReservationViewSet(viewsets.ModelViewSet):
-    queryset = Reservation.objects.all()
-    serializer_class = ReservationSerializer
-
-
-class AvailabilityViewSet(viewsets.ModelViewSet):
-    queryset = Availability.objects.all()
-    serializer_class = AvailabilitySerializer
+from backend.listings.filters import ListingSearchFilter
 
 
 # Listings
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
-
-
-class ListingImageViewSet(viewsets.ModelViewSet):
-    queryset = ListingImage.objects.all()
-    serializer_class = ListingImageSerializer
-
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-# Users
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ListingSearchFilter

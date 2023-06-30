@@ -18,8 +18,8 @@ class Category(models.Model):
 
 class Listing(models.Model):
     id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    host = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='listings')
+    host = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='listings')
     title = models.CharField(max_length=50)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -37,7 +37,7 @@ class Listing(models.Model):
 
 class ListingImage(models.Model):
     id = models.AutoField(primary_key=True)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='listings')
     
     class Meta:
