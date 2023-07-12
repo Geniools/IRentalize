@@ -1,0 +1,59 @@
+:root {
+	--padding     : 2rem;
+	--color-black : #000000;
+	--color-green : #50C878;
+	--color-grey  : #808080;
+	--color-white : #FFFFFF;
+}
+
+* {
+	box-sizing  : border-box;
+	font-family : "Inter", sans-serif;
+	margin      : 0;
+	padding     : 0;
+}
+
+a {
+	text-decoration : none;
+}
+
+main {
+	display : flex;
+}
+
+#app {
+	display   : flex;
+	flex-flow : column;
+	width     : 100%;
+}
+
+/* Header */
+
+header {
+	align-items     : center;
+	display         : flex;
+	height          : 7rem;
+	justify-content : space-between;
+	padding         : 0 var(--padding);
+	width           : 100%;
+}
+
+.icon {
+	display : flex;
+	gap     : 0.5rem;
+	height  : 100%;
+}
+
+.icon img {
+	height : 80%;
+	width  : 100%;
+}
+
+header select {
+	appearance       : auto;
+	background-color : var(--color-white);
+	border           : none;
+	border-radius    : 1rem;
+	font-size        : 1rem;
+	font-weight      : bold;
+}

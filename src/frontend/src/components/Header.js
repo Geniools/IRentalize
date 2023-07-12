@@ -1,9 +1,14 @@
 import React from 'react';
+import Icon from "./Icon";
 
 export default function Header() {
     return (
         <header>
-            <h1>Header here!</h1>
+            <Icon/>
+            <select>
+                <option value="english">English</option>
+                <option value="dutch">Nederland</option>
+            </select>
         </header>
     );
 }

@@ -1,0 +1,83 @@
+/* Authentication: login, logout, register  */
+.authentication-form {
+	display         : flex;
+	flex-flow       : column;
+	gap             : 1rem;
+	justify-content : center;
+	left            : 50%;
+	position        : absolute;
+	top             : 50%;
+	transform       : translate(-50%, -50%);
+	width           : 30%;
+}
+
+.authentication-header {
+	align-items : center;
+	display     : flex;
+	flex-flow   : column;
+	gap         : 3rem;
+}
+
+.authentication-header h1 {
+	font-size   : 3rem;
+	font-weight : normal;
+}
+
+.authentication-header h2 {
+	font-size   : 1.5rem;
+	font-weight : normal;
+}
+
+.authentication-form div:last-child p {
+	color           : var(--color-grey);
+	display         : flex;
+	gap             : 0.3rem;
+	justify-content : center;
+}
+
+.authentication-form div:last-child p a {
+	color       : var(--color-green);
+	font-weight : bold;
+}
+
+.authentication-form form {
+	display   : flex;
+	flex-flow : column;
+	gap       : 1rem;
+}
+
+.authentication-form form button {
+	background-color : var(--color-green);
+	border           : none;
+	color            : var(--color-white);
+	font-weight      : bold;
+}
+
+.authentication-field {
+	display   : flex;
+	flex-flow : column;
+	gap       : 1rem;
+}
+
+.authentication-field-info {
+	display         : flex;
+	flex-flow       : row wrap;
+	gap             : 1rem;
+	justify-content : space-between;
+}
+
+.authentication-field-info div {
+	display   : flex;
+	flex-flow : row nowrap;
+	gap       : 0.5rem;
+}
+
+.authentication-field-info a {
+	color : var(--color-grey);
+}
+
+.authentication-input {
+	border        : 1px solid var(--color-black);
+	border-radius : 1rem;
+	padding       : 1rem var(--padding);
+}

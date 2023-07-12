@@ -5,12 +5,14 @@ import {createRoot} from 'react-dom/client';
 import IndexPage from "./pages/IndexPage";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import AboutUsPage from "./pages/AboutUsPage";
+import UserLoginPage from "./pages/UserLoginPage";
 
 export default function App() {
     return (
         <Router>
             <Routes>
                 <Route exact path="/" element={<IndexPage/>}/>
+                <Route exact path="/accounts/login/" element={<UserLoginPage/>}/>
                 <Route exact path="/about-us/" element={<AboutUsPage/>}/>
             </Routes>
         </Router>

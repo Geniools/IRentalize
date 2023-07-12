@@ -10,9 +10,9 @@ export default class Icon extends Component {
 
     render() {
         return (
-            <div className="icon">
+            <a className="icon" href="/">
                 <img src={this.src} alt={this.alt}/>
-            </div>
+            </a>
         );
     }
 }
