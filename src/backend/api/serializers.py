@@ -68,8 +68,14 @@ class LoginSerializer(serializers.Serializer):
         label='Password',
         trim_whitespace=False,
     )
+    remember_me = serializers.BooleanField(
+        label='Remember me',
+        default=False,
+    )
     
     def validate(self, attrs):
+        # TODO: Integrate the remember_me field
+        
         # .get() returns None if the key doesn't exist
         email = attrs.get('email').strip().lower()
         password = attrs.get('password')

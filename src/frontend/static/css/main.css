@@ -19,16 +19,25 @@ a {
 }
 
 main {
-	display  : flex;
-	height   : 100vh;
-	position : relative;
-	width    : 100%;
+	display : flex;
+	width   : 100%;
 }
 
 #app {
 	display   : flex;
 	flex-flow : column;
 	width     : 100%;
+}
+
+.page-container {
+	align-content   : center;
+	align-items     : center;
+	display         : flex;
+	justify-content : center;
+	min-height      : calc(100vh - var(--header-height));
+	padding         : var(--header-height) var(--padding);
+	position        : relative;
+	width           : 100%;
 }
 
 /* Header */
