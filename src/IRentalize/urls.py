@@ -24,7 +24,7 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path('', include('frontend.urls')),
     path('api/', include('backend.api.urls')),
-    path('api-auth/', include('rest_framework.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
 ]
 
 # In order to serve media files in development, we need to add the following to the project's urls.py file:

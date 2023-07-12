@@ -1,30 +1,12 @@
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 # Import all the models that will be used in the serializers
-from backend.bookings.models import Reservation, Availability
 from backend.listings.models import Listing, ListingImage, Category
 from backend.users.models import User
 
 
-# Create a serializer for each model
-
-# Bookings
-class ReservationSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Reservation
-        fields = [
-            'id', 'listing', 'guest', 'start_date', 'end_date', 'total_price',
-        ]
-
-
-class AvailabilitySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Availability
-        fields = [
-            'id', 'listing', 'start_date', 'end_date',
-        ]
-
-
+# Listings
 class ListingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingImage
@@ -39,7 +21,6 @@ class CategorySerializer(serializers.ModelSerializer):
         ]
 
 
-# Listings
 class ListingSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     images = ListingImageSerializer(many=True, read_only=True)
@@ -52,9 +33,64 @@ class ListingSerializer(serializers.ModelSerializer):
 
 
 # Users
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        style={'input_type': 'password'},
+        label='Password',
+        write_only=True
+    )
+    
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            email=validated_data['email'],
+            phone=validated_data['phone'],
+            address=validated_data['address'],
+        )
+        return user
+    
     class Meta:
         model = User
         fields = [
-            'id', 'username', 'email', 'phone', 'first_name', 'last_name', 'date_joined', 'last_login',
+            'username', 'password', 'email', 'phone', 'first_name', 'last_name', 'address'
         ]
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(
+        label='Email',
+    )
+    password = serializers.CharField(
+        style={'input_type': 'password'},
+        label='Password',
+        trim_whitespace=False,
+    )
+    
+    def validate(self, attrs):
+        # .get() returns None if the key doesn't exist
+        email = attrs.get('email').strip().lower()
+        password = attrs.get('password')
+        
+        # Make sure both fields have been sent to the backend
+        if not email or not password:
+            raise serializers.ValidationError('Both the "email" and the "password" are required.')
+        
+        # Authenticate the user
+        user = authenticate(
+            request=self.context.get('request'),
+            username=attrs['email'],
+            password=attrs['password']
+        )
+        
+        # Make sure the user exists and is active
+        if not user or not user.is_active:
+            raise serializers.ValidationError('Incorrect credentials')
+        
+        attrs['user'] = user
+        return attrs
+    
+    class Meta:
+        fields = ['email', 'password']

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+
 from . import local_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,6 +30,7 @@ ADMINS = local_settings.ADMINS
 DEBUG = local_settings.DEBUG
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 
@@ -48,18 +50,28 @@ INSTALLED_APPS = [
     'backend.users.apps.UsersConfig',
     'frontend.apps.FrontendConfig',
     # Third party apps
-    'rest_framework',
     'django_filters',
     'grappelli',
+    'knox',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
     ],
     # 'DEFAULT_FILTER_BACKENDS': 'django_filters.rest_framework.DjangoFilterBackend',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+}
+
+REST_KNOX = {
+    'USER_SERIALIZER': 'backend.api.serializers.UserSerializer',
 }
 
 MIDDLEWARE = [
