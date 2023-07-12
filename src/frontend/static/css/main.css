@@ -1,9 +1,10 @@
 :root {
-	--padding     : 2rem;
-	--color-black : #000000;
-	--color-green : #50C878;
-	--color-grey  : #808080;
-	--color-white : #FFFFFF;
+	--padding       : 2rem;
+	--color-black   : #000000;
+	--color-green   : #50C878;
+	--color-grey    : #808080;
+	--header-height : 7rem;
+	--color-white   : #FFFFFF;
 }
 
 * {
@@ -18,7 +19,10 @@ a {
 }
 
 main {
-	display : flex;
+	display  : flex;
+	height   : 100vh;
+	position : relative;
+	width    : 100%;
 }
 
 #app {
@@ -32,9 +36,10 @@ main {
 header {
 	align-items     : center;
 	display         : flex;
-	height          : 7rem;
+	height          : var(--header-height);
 	justify-content : space-between;
 	padding         : 0 var(--padding);
+	position        : relative;
 	width           : 100%;
 }
 
