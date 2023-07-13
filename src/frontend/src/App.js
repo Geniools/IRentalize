@@ -1,31 +1,32 @@
-import React, {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
+import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {Provider} from "react-redux";
+import store from "./store/store";
 
 // Import the pages
 import IndexPage from "./pages/IndexPage";
 import AboutUsPage from "./pages/AboutUsPage";
-import UserLoginPage from "./pages/UserLoginPage";
-import UserRegistrationPage from "./pages/UserRegistrationPage";
+import UserLoginPage from "./pages/authentication/UserLoginPage";
+import UserRegistrationPage from "./pages/authentication/UserRegistrationPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
+import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
 
-export default function App() {
+const App = () => {
     return (
-        <Router>
-            <Routes>
-                <Route exact path="/" element={<IndexPage/>}/>
-                <Route exact path="/account/" element={<UserDashboardPage/>}/>
-                <Route exact path="/account/login/" element={<UserLoginPage/>}/>
-                <Route exact path="/account/register/" element={<UserRegistrationPage/>}/>
-                <Route exact path="/about-us/" element={<AboutUsPage/>}/>
-            </Routes>
-        </Router>
+        <Provider store={store}>
+            <Router>
+                <Routes>
+                    <Route exact path="/" element={<IndexPage/>}/>
+                    <Route exact path="/about-us/" element={<AboutUsPage/>}/>
+                    {/* Authentication */}
+                    <Route exact path="/account/" element={<UserDashboardPage/>}/>
+                    <Route exact path="/account/login/" element={<UserLoginPage/>}/>
+                    <Route exact path="/account/register/" element={<UserRegistrationPage/>}/>
+                    <Route exact path="/account/password-reset/" element={<ResetPasswordPage/>}/>
+                </Routes>
+            </Router>
+        </Provider>
     );
 }
 
-const root = createRoot(document.getElementById('app'));
-root.render(
-    <StrictMode>
-        <App/>
-    </StrictMode>
-);
+export default App;

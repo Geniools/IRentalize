@@ -1,25 +1,38 @@
 import React, {useState} from "react";
-import Header from "../components/Header";
-import InputField from "../components/InputField";
+import Header from "../../components/Header";
+import InputField from "../../components/InputField";
+import {Link} from "react-router-dom";
 
 export default function UserRegistrationPage() {
-    const [username, setUsername] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [address, setAddress] = useState("");
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        username: "",
+        email: "",
+        password: "",
+        phoneNumber: "",
+        address: "",
+    });
+    const {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        phoneNumber,
+        address
+    } = formData;
+    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
 
     // TODO: Handle the form submission
-    const handleSubmit = (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
-        console.log(email);
     }
 
     return (
         <>
-            <Header/>
+            <Header showLinks={false} showSearch={false} showLogin={false}/>
+
             <div className="page-container">
                 <div className="authentication-form">
                     <div className="authentication-header">
@@ -27,16 +40,14 @@ export default function UserRegistrationPage() {
                         <h2>Please enter your details</h2>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={onSubmit}>
                         <InputField
                             label=""
                             type="text"
                             name="first-name"
                             value={firstName}
                             placeholder="First Name"
-                            onChange={(event) => {
-                                setFirstName(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
                         <InputField
                             label=""
@@ -44,9 +55,7 @@ export default function UserRegistrationPage() {
                             name="last-name"
                             value={lastName}
                             placeholder="Last Name"
-                            onChange={(event) => {
-                                setLastName(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
                         <InputField
                             label=""
@@ -54,9 +63,7 @@ export default function UserRegistrationPage() {
                             name="username"
                             value={username}
                             placeholder="Username"
-                            onChange={(event) => {
-                                setUsername(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
                         <InputField
                             label=""
@@ -64,9 +71,7 @@ export default function UserRegistrationPage() {
                             name="email"
                             value={email}
                             placeholder="Email"
-                            onChange={(event) => {
-                                setEmail(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
                         <InputField
                             label=""
@@ -74,9 +79,7 @@ export default function UserRegistrationPage() {
                             name="password"
                             value={password}
                             placeholder="Password"
-                            onChange={(event) => {
-                                setPassword(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
                         <InputField
                             label=""
@@ -84,9 +87,7 @@ export default function UserRegistrationPage() {
                             name="phone-number"
                             value={phoneNumber}
                             placeholder="Phone Number"
-                            onChange={(event) => {
-                                setPhoneNumber(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
                         <InputField
                             label=""
@@ -94,9 +95,7 @@ export default function UserRegistrationPage() {
                             name="address"
                             value={address}
                             placeholder="Address"
-                            onChange={(event) => {
-                                setAddress(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
 
                         <button
@@ -107,7 +106,10 @@ export default function UserRegistrationPage() {
                     </form>
 
                     <div>
-                        <p>Don't have an account? <a href="/account/login/">Sign In</a></p>
+                        <p>
+                            Don't have an account?
+                            <Link to={"/account/login/"}>Sign In</Link>
+                        </p>
                     </div>
                 </div>
             </div>

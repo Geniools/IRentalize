@@ -1,36 +1,31 @@
 import React, {useState} from 'react';
-import InputField from "../components/InputField";
-import Header from "../components/Header";
-import axios from "axios";
+import {Link} from 'react-router-dom';
+import InputField from "../../components/InputField";
+import Header from "../../components/Header";
+import {connect} from "react-redux";
+import {login} from "../../actions/auth";
 
-export default function UserLoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);
+const UserLoginPage = ({login}) => {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        rememberMe: false,
+    });
+    const {email, password, rememberMe} = formData;
+    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
+
+    // TODO:  Is the user logged in? -> Redirect them to the homepage
 
     // Handle the form submission
-    const handleSubmit = (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
-        // Make a POST request to the backend
-        const data = {
-            "email": email,
-            "password": password,
-        }
-
-        // Send the data to the backend
-        axios.post('/api/auth/login/', data)
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        login(email, password, rememberMe);
     }
 
     return (
         <>
-            <Header/>
+            <Header showLinks={false} showSearch={false} showLogin={false}/>
+
             <div className="page-container">
                 <div className="authentication-form">
                     <div className="authentication-header">
@@ -38,16 +33,15 @@ export default function UserLoginPage() {
                         <h2>Please enter your details</h2>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={onSubmit}>
                         <InputField
                             label=""
                             type="email"
                             name="email"
                             value={email}
+                            required={true}
                             placeholder="Email"
-                            onChange={(event) => {
-                                setEmail(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
 
                         <InputField
@@ -55,10 +49,10 @@ export default function UserLoginPage() {
                             type="password"
                             name="password"
                             value={password}
+                            required={true}
+                            minLength={8}
                             placeholder="Password"
-                            onChange={(event) => {
-                                setPassword(event.target.value);
-                            }}
+                            onChange={onChange}
                         />
 
                         <div className="authentication-field-info">
@@ -69,11 +63,10 @@ export default function UserLoginPage() {
                                 name="remember-me"
                                 id="remember-me"
                                 checked={rememberMe}
-                                onChange={(event) => {
-                                    setRememberMe(event.target.checked);
-                                }}
+                                required={false}
+                                onChange={onChange}
                             />
-                            <a href="/accounts/password-reset/">Forgot Password</a>
+                            <Link to={"/account/password-reset/"}>Forgot Password</Link>
                         </div>
 
                         <button
@@ -84,10 +77,19 @@ export default function UserLoginPage() {
                     </form>
 
                     <div>
-                        <p>Don't have an account? <a href="/account/register/">Sign Up</a></p>
+                        <p>
+                            Don't have an account?
+                            <Link to={"/account/register/"}>Sign Up</Link>
+                        </p>
                     </div>
                 </div>
             </div>
         </>
     )
 }
+
+// const mapStateToProps = state => ({
+//     // isAuthenticated: state.auth.isAuthenticated
+// });
+
+export default connect(null, {login})(UserLoginPage);

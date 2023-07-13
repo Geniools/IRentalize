@@ -52,6 +52,44 @@ header {
 	width           : 100%;
 }
 
+.header-panel {
+	align-items : center;
+	display     : flex;
+	gap         : 3rem;
+	height      : 100%;
+}
+
+.header-panel ul {
+	display   : flex;
+	font-size : 1.5rem;
+	gap       : 5rem;
+	height    : 100%;
+}
+
+.header-panel ul li {
+	align-items : center;
+	display     : flex;
+	height      : 100%;
+}
+
+.header-panel ul li a {
+	color       : var(--color-black);
+	display     : flex;
+	font-weight : bold;
+}
+
+.header-panel ul li a:hover {
+	border-bottom  : 0.2rem solid var(--color-green);
+	padding-bottom : 0.2rem;
+}
+
+.header-green-link {
+	background-color : var(--color-green);
+	border-radius    : 1.5rem;
+	color            : var(--color-white);
+	padding          : 0.8rem;
+}
+
 .icon {
 	display : flex;
 	gap     : 0.5rem;

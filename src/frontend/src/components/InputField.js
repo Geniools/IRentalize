@@ -12,6 +12,8 @@ export default function InputField(props) {
                     name={props.name}
                     id={props.name}
                     value={props.value}
+                    required={props.required}
+                    minLength={props.minLength}
                     placeholder={props.placeholder}
                     onChange={props.onChange}/>
             </div>
@@ -26,6 +28,8 @@ export default function InputField(props) {
                     name={props.name}
                     id={props.name}
                     value={props.value}
+                    required={props.required}
+                    minLength={props.minLength}
                     placeholder={props.placeholder}
                     onChange={props.onChange}/>
                 <label htmlFor={props.name}>{props.label}</label>

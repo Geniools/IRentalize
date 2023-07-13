@@ -54,15 +54,17 @@ INSTALLED_APPS = [
     'grappelli',
     'knox',
     'rest_framework',
-    'rest_framework.authtoken',
+    'djoser',
 ]
 
+# DRF (Django REST Framework) settings
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'knox.auth.TokenAuthentication',
     ],
     # 'DEFAULT_FILTER_BACKENDS': 'django_filters.rest_framework.DjangoFilterBackend',
@@ -70,8 +72,29 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
+# 3rd party app for managing API tokens
 REST_KNOX = {
     'USER_SERIALIZER': 'backend.api.serializers.UserSerializer',
+}
+
+# 3rd party app for managing user accounts
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'TOKEN_MODEL': 'knox.models.AuthToken',
+    'SERIALIZERS': {
+        'user_create': 'backend.auth.serializers.CustomUserCreateSerializer',
+        'user': 'backend.auth.serializers.UserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserCreateSerializer',
+    },
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 MIDDLEWARE = [
@@ -138,6 +161,16 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = local_settings.EMAIL_HOST
+EMAIL_PORT = local_settings.EMAIL_PORT
+EMAIL_USE_TLS = local_settings.EMAIL_USE_TLS
+EMAIL_HOST_USER = local_settings.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = local_settings.EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL = local_settings.DEFAULT_FROM_EMAIL
+EMAIL_TIMEOUT = 5
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

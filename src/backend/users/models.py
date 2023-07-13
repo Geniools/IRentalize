@@ -1,8 +1,11 @@
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+
+from backend.users.manager import UserManager
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50)
@@ -19,6 +22,8 @@ class User(AbstractUser):
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'password']
+    
+    objects = UserManager()
     
     class Meta:
         db_table = 'user'
