@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from "./Icon";
 import {Link} from "react-router-dom";
 
-export default function Header({showIcon = true, showLinks = true, showSearch = true, showLogin = true}) {
+const Header = ({showIcon = true, showLinks = true, showSearch = true, showLogin = true}) => {
     return (
         <header>
             {showIcon && (
@@ -43,3 +43,5 @@ export default function Header({showIcon = true, showLinks = true, showSearch = 
         </header>
     );
 }
+
+export default Header;

@@ -10,20 +10,23 @@ import UserLoginPage from "./pages/authentication/UserLoginPage";
 import UserRegistrationPage from "./pages/authentication/UserRegistrationPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
 import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
+import Layout from "./hocs/Layout";
 
 const App = () => {
     return (
         <Provider store={store}>
             <Router>
-                <Routes>
-                    <Route exact path="/" element={<IndexPage/>}/>
-                    <Route exact path="/about-us/" element={<AboutUsPage/>}/>
-                    {/* Authentication */}
-                    <Route exact path="/account/" element={<UserDashboardPage/>}/>
-                    <Route exact path="/account/login/" element={<UserLoginPage/>}/>
-                    <Route exact path="/account/register/" element={<UserRegistrationPage/>}/>
-                    <Route exact path="/account/password-reset/" element={<ResetPasswordPage/>}/>
-                </Routes>
+                <Layout>
+                    <Routes>
+                        <Route exact path="/" element={<IndexPage/>}/>
+                        <Route exact path="/about-us/" element={<AboutUsPage/>}/>
+                        {/* Authentication */}
+                        <Route exact path="/account/" element={<UserDashboardPage/>}/>
+                        <Route exact path="/account/login/" element={<UserLoginPage/>}/>
+                        <Route exact path="/account/register/" element={<UserRegistrationPage/>}/>
+                        <Route exact path="/account/password-reset/" element={<ResetPasswordPage/>}/>
+                    </Routes>
+                </Layout>
             </Router>
         </Provider>
     );

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import InputField from "../../components/InputField";
 import Header from "../../components/Header";
 import {connect} from "react-redux";
 import {login} from "../../actions/auth";
 
-const UserLoginPage = ({login}) => {
+const UserLoginPage = ({isAuthenticated, login}) => {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -14,12 +14,17 @@ const UserLoginPage = ({login}) => {
     const {email, password, rememberMe} = formData;
     const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
 
-    // TODO:  Is the user logged in? -> Redirect them to the homepage
-
     // Handle the form submission
     const onSubmit = (event) => {
         event.preventDefault();
         login(email, password, rememberMe);
+    }
+
+    // Redirect if logged in
+    if (isAuthenticated) {
+        return (
+            <Navigate to={"/"}/>
+        )
     }
 
     return (
@@ -88,8 +93,8 @@ const UserLoginPage = ({login}) => {
     )
 }
 
-// const mapStateToProps = state => ({
-//     // isAuthenticated: state.auth.isAuthenticated
-// });
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
 
-export default connect(null, {login})(UserLoginPage);
+export default connect(mapStateToProps, {login})(UserLoginPage);
