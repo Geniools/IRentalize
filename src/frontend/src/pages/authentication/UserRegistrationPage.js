@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import Header from "../../components/Header";
 import InputField from "../../components/InputField";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import {connect} from "react-redux";
+import {logout, signup} from "../../actions/auth";
 
-export default function UserRegistrationPage() {
+const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
+    const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -11,7 +14,6 @@ export default function UserRegistrationPage() {
         email: "",
         password: "",
         phoneNumber: "",
-        address: "",
     });
     const {
         firstName,
@@ -19,14 +21,43 @@ export default function UserRegistrationPage() {
         username,
         email,
         password,
-        phoneNumber,
-        address
+        phoneNumber
     } = formData;
     const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
 
-    // TODO: Handle the form submission
     const onSubmit = (event) => {
         event.preventDefault();
+        signup(firstName, lastName, username, email, password, phoneNumber);
+        setAccountCreated(true);
+    }
+
+    if (accountCreated) {
+        return <Navigate to={"/account/login/"}/>
+    }
+
+    if (isAuthenticated) {
+        return (
+            <>
+                <Header showLinks={false} showSearch={false} showAuth={false}/>
+
+                <div className="page-container">
+                    <div className="authentication-form">
+                        <div className="authentication-header">
+                            <h1>You are logged in</h1>
+                            <h2>Go to your <Link to={"/account/"}>Dashboard</Link> OR</h2>
+                        </div>
+
+                        <button
+                            type={"submit"}
+                            className={"authentication-input"}
+                            onClick={logout}
+                        >
+                            LOG OUT
+                        </button>
+                    </div>
+                </div>
+            </>
+        )
     }
 
     return (
@@ -44,16 +75,18 @@ export default function UserRegistrationPage() {
                         <InputField
                             label=""
                             type="text"
-                            name="first-name"
+                            name="firstName"
                             value={firstName}
+                            required={true}
                             placeholder="First Name"
                             onChange={onChange}
                         />
                         <InputField
                             label=""
                             type="text"
-                            name="last-name"
+                            name="lastName"
                             value={lastName}
+                            required={true}
                             placeholder="Last Name"
                             onChange={onChange}
                         />
@@ -62,6 +95,7 @@ export default function UserRegistrationPage() {
                             type="text"
                             name="username"
                             value={username}
+                            required={true}
                             placeholder="Username"
                             onChange={onChange}
                         />
@@ -70,6 +104,7 @@ export default function UserRegistrationPage() {
                             type="email"
                             name="email"
                             value={email}
+                            required={true}
                             placeholder="Email"
                             onChange={onChange}
                         />
@@ -78,23 +113,17 @@ export default function UserRegistrationPage() {
                             type="password"
                             name="password"
                             value={password}
+                            required={true}
                             placeholder="Password"
                             onChange={onChange}
                         />
                         <InputField
                             label=""
                             type="text"
-                            name="phone-number"
+                            name="phoneNumber"
                             value={phoneNumber}
+                            required={true}
                             placeholder="Phone Number"
-                            onChange={onChange}
-                        />
-                        <InputField
-                            label=""
-                            type="text"
-                            name="address"
-                            value={address}
-                            placeholder="Address"
                             onChange={onChange}
                         />
 
@@ -116,3 +145,9 @@ export default function UserRegistrationPage() {
         </>
     )
 }
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {signup, logout})(UserRegistrationPage);

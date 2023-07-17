@@ -1,4 +1,6 @@
 import {
+    ACTIVATION_FAIL,
+    ACTIVATION_SUCCESS,
     AUTHENTICATED_FAIL,
     AUTHENTICATED_SUCCESS,
     LOGIN_FAIL,
@@ -8,6 +10,8 @@ import {
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_SUCCESS,
+    SIGNUP_FAIL,
+    SIGNUP_SUCCESS,
     USER_LOADED_FAIL,
     USER_LOADED_SUCCESS,
 } from "../actions/types";
@@ -42,12 +46,18 @@ export default function (state = initialState, action) {
                 access: payload.access,
                 refresh: payload.refresh,
             }
+        case SIGNUP_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: false,
+            }
         case USER_LOADED_SUCCESS:
             return {
                 ...state,
                 user: payload,
             }
         case LOGIN_FAIL:
+        case SIGNUP_FAIL:
         case LOGOUT:
             localStorage.removeItem("access");
             localStorage.removeItem("refresh");
@@ -63,6 +73,8 @@ export default function (state = initialState, action) {
                 ...state,
                 user: null,
             }
+        case ACTIVATION_SUCCESS:
+        case ACTIVATION_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:
         case PASSWORD_RESET_CONFIRM_FAIL:
         case PASSWORD_RESET_SUCCESS:

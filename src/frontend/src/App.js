@@ -22,11 +22,13 @@ const App = () => {
                         <Route exact path="/" element={<IndexPage/>}/>
                         <Route exact path="/about-us/" element={<AboutUsPage/>}/>
                         {/* Authentication */}
+                        {/*TODO: Change the paths in the rest of the application*/}
                         <Route exact path="/account/" element={<UserDashboardPage/>}/>
-                        <Route exact path="/account/login/" element={<UserLoginPage/>}/>
-                        <Route exact path="/account/register/" element={<UserRegistrationPage/>}/>
-                        <Route exact path="/account/password-reset/" element={<ResetPasswordPage/>}/>
-                        <Route exact path="/account/password-reset/confirm/:uid/:token/" element={<ResetPasswordConfirmPage/>}/>
+                        <Route exact path="/login/" element={<UserLoginPage/>}/>
+                        <Route exact path="/register/" element={<UserRegistrationPage/>}/>
+                        <Route exact path="/activate/:uid/:token/" element={<UserRegistrationPage/>}/>
+                        <Route exact path="/password-reset/" element={<ResetPasswordPage/>}/>
+                        <Route exact path="/password-reset/confirm/:uid/:token/" element={<ResetPasswordConfirmPage/>}/>
                     </Routes>
                 </Layout>
             </Router>

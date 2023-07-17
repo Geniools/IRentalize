@@ -17,7 +17,7 @@ const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        
+
         reset_password_confirm(uid, token, new_password, re_new_password);
         setRequestSent(true);
     }

@@ -74,7 +74,7 @@ REST_FRAMEWORK = {
 
 # 3rd party app for managing API tokens
 REST_KNOX = {
-    'USER_SERIALIZER': 'backend.api.serializers.UserSerializer',
+    'USER_SERIALIZER': 'backend.auth.serializers.CustomUserCreateSerializer',
 }
 
 # 3rd party app for managing user accounts
