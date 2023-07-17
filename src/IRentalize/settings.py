@@ -80,15 +80,17 @@ REST_KNOX = {
 # 3rd party app for managing user accounts
 DJOSER = {
     'LOGIN_FIELD': 'email',
-    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'account/password-reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': 'knox.models.AuthToken',
     'SERIALIZERS': {
         'user_create': 'backend.auth.serializers.CustomUserCreateSerializer',
-        'user': 'backend.auth.serializers.UserCreateSerializer',
+        'user': 'backend.auth.serializers.CustomUserCreateSerializer',
         'user_delete': 'djoser.serializers.UserCreateSerializer',
     },
 }

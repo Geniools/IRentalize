@@ -9,4 +9,5 @@ urlpatterns = [
     path('account/login/', views.index, name='login'),
     path('account/register/', views.index, name='register'),
     path('account/password-reset/', views.index, name='register'),
+    path('account/password-reset/confirm/<str:uid>/<str:token>/', views.index, name='password_reset_confirm'),
 ]

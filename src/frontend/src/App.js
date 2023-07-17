@@ -10,6 +10,7 @@ import UserLoginPage from "./pages/authentication/UserLoginPage";
 import UserRegistrationPage from "./pages/authentication/UserRegistrationPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
 import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
+import ResetPasswordConfirmPage from "./pages/authentication/ResetPasswordConfirmPage";
 import Layout from "./hocs/Layout";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
                         <Route exact path="/account/login/" element={<UserLoginPage/>}/>
                         <Route exact path="/account/register/" element={<UserRegistrationPage/>}/>
                         <Route exact path="/account/password-reset/" element={<ResetPasswordPage/>}/>
+                        <Route exact path="/account/password-reset/confirm/:uid/:token/" element={<ResetPasswordConfirmPage/>}/>
                     </Routes>
                 </Layout>
             </Router>

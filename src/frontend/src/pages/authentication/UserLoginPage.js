@@ -29,7 +29,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
 
     return (
         <>
-            <Header showLinks={false} showSearch={false} showLogin={false}/>
+            <Header showLinks={false} showSearch={false} showAuth={false}/>
 
             <div className="page-container">
                 <div className="authentication-form">

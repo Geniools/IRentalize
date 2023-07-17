@@ -1,8 +1,32 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Icon from "./Icon";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {logout} from "../actions/auth";
 
-const Header = ({showIcon = true, showLinks = true, showSearch = true, showLogin = true}) => {
+const Header = ({
+                    logout,
+                    isAuthenticated,
+                    showIcon = true,
+                    showLinks = true,
+                    showSearch = true,
+                    showAuth = true
+                }) => {
+
+    const authLinks = (
+        <Fragment>
+            <a className={"header-green-link"} href="" onClick={logout}>
+                LOG OUT
+            </a>
+        </Fragment>
+    )
+    
+    const guestLinks = (
+        <Link className={"header-green-link"} to={"/account/login/"}>
+            LOG IN
+        </Link>
+    )
+
     return (
         <header>
             {showIcon && (
@@ -34,14 +58,16 @@ const Header = ({showIcon = true, showLinks = true, showSearch = true, showLogin
                     <option value="dutch">Nederlands</option>
                 </select>
 
-                {showLogin && (
-                    <Link className={"header-green-link"} to={"/account/login/"}>
-                        LOG IN
-                    </Link>
+                {showAuth && (
+                    isAuthenticated ? authLinks : guestLinks
                 )}
             </div>
         </header>
     );
 }
 
-export default Header;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {logout})(Header);
