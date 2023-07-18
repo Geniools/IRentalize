@@ -20,9 +20,9 @@ const Header = ({
             </a>
         </Fragment>
     )
-    
+
     const guestLinks = (
-        <Link className={"header-green-link"} to={"/account/login/"}>
+        <Link className={"header-green-link"} to={"/login/"}>
             LOG IN
         </Link>
     )

@@ -4,6 +4,7 @@ import InputField from "../../components/InputField";
 import Header from "../../components/Header";
 import {connect} from "react-redux";
 import {login} from "../../actions/auth";
+import {HOME_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../UrlPaths";
 
 const UserLoginPage = ({isAuthenticated, login}) => {
     const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
     // Redirect if logged in
     if (isAuthenticated) {
         return (
-            <Navigate to={"/"}/>
+            <Navigate to={HOME_URL}/>
         )
     }
 
@@ -71,7 +72,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
                                 required={false}
                                 onChange={onChange}
                             />
-                            <Link to={"/account/password-reset/"}>Forgot Password</Link>
+                            <Link to={PASSWORD_RESET_URL}>Forgot Password</Link>
                         </div>
 
                         <button
@@ -84,7 +85,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
                     <div>
                         <p>
                             Don't have an account?
-                            <Link to={"/account/register/"}>Sign Up</Link>
+                            <Link to={SIGNUP_URL}>Sign Up</Link>
                         </p>
                     </div>
                 </div>

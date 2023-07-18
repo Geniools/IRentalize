@@ -12,6 +12,8 @@ import UserDashboardPage from "./pages/UserDashboardPage";
 import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
 import ResetPasswordConfirmPage from "./pages/authentication/ResetPasswordConfirmPage";
 import Layout from "./hocs/Layout";
+import {ABOUT_US_URL, ACCOUNT_URL, ACTIVATE_URL, HOME_URL, LOGIN_URL, PASSWORD_RESET_CONFIRM_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "./UrlPaths";
+import UserActivatePage from "./pages/authentication/UserActivatePage";
 
 const App = () => {
     return (
@@ -19,16 +21,16 @@ const App = () => {
             <Router>
                 <Layout>
                     <Routes>
-                        <Route exact path="/" element={<IndexPage/>}/>
-                        <Route exact path="/about-us/" element={<AboutUsPage/>}/>
+                        <Route exact path={HOME_URL} element={<IndexPage/>}/>
+                        <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>
                         {/* Authentication */}
                         {/*TODO: Change the paths in the rest of the application*/}
-                        <Route exact path="/account/" element={<UserDashboardPage/>}/>
-                        <Route exact path="/login/" element={<UserLoginPage/>}/>
-                        <Route exact path="/register/" element={<UserRegistrationPage/>}/>
-                        <Route exact path="/activate/:uid/:token/" element={<UserRegistrationPage/>}/>
-                        <Route exact path="/password-reset/" element={<ResetPasswordPage/>}/>
-                        <Route exact path="/password-reset/confirm/:uid/:token/" element={<ResetPasswordConfirmPage/>}/>
+                        <Route exact path={ACCOUNT_URL} element={<UserDashboardPage/>}/>
+                        <Route exact path={LOGIN_URL} element={<UserLoginPage/>}/>
+                        <Route exact path={SIGNUP_URL} element={<UserRegistrationPage/>}/>
+                        <Route exact path={ACTIVATE_URL} element={<UserActivatePage/>}/>
+                        <Route exact path={PASSWORD_RESET_URL} element={<ResetPasswordPage/>}/>
+                        <Route exact path={PASSWORD_RESET_CONFIRM_URL} element={<ResetPasswordConfirmPage/>}/>
                     </Routes>
                 </Layout>
             </Router>

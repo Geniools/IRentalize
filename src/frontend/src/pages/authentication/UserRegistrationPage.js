@@ -4,6 +4,7 @@ import InputField from "../../components/InputField";
 import {Link, Navigate} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout, signup} from "../../actions/auth";
+import {ACCOUNT_URL, LOGIN_URL} from "../../UrlPaths";
 
 const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
     const [accountCreated, setAccountCreated] = useState(false);
@@ -32,7 +33,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
     }
 
     if (accountCreated) {
-        return <Navigate to={"/account/login/"}/>
+        return <Navigate to={LOGIN_URL}/>
     }
 
     if (isAuthenticated) {
@@ -44,7 +45,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
                     <div className="authentication-form">
                         <div className="authentication-header">
                             <h1>You are logged in</h1>
-                            <h2>Go to your <Link to={"/account/"}>Dashboard</Link> OR</h2>
+                            <h2>Go to your <Link to={ACCOUNT_URL}>Dashboard</Link> OR</h2>
                         </div>
 
                         <button
@@ -137,7 +138,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
                     <div>
                         <p>
                             Don't have an account?
-                            <Link to={"/account/login/"}>Sign In</Link>
+                            <Link to={LOGIN_URL}>Sign In</Link>
                         </p>
                     </div>
                 </div>
