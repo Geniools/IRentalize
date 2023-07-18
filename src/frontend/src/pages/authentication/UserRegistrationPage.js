@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "../../components/Header";
 import InputField from "../../components/InputField";
 import {Link, Navigate} from "react-router-dom";
@@ -7,6 +7,10 @@ import {logout, signup} from "../../actions/auth";
 import {ACCOUNT_URL, LOGIN_URL} from "../../UrlPaths";
 
 const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
+    useEffect(() => {
+        document.title = "Sign Up";
+    }, []);
+
     const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         firstName: "",
@@ -65,7 +69,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container">
+            <div className="page-container flex-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Welcome to IRentalize</h1>
@@ -137,7 +141,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
 
                     <div>
                         <p>
-                            Don't have an account?
+                            Already have an account?
                             <Link to={LOGIN_URL}>Sign In</Link>
                         </p>
                     </div>

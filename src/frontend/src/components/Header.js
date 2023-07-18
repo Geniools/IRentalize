@@ -3,6 +3,7 @@ import Icon from "./Icon";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from "../actions/auth";
+import {CONTACT_US_URL, LOGIN_URL} from "../UrlPaths";
 
 const Header = ({
                     logout,
@@ -22,7 +23,7 @@ const Header = ({
     )
 
     const guestLinks = (
-        <Link className={"header-green-link"} to={"/login/"}>
+        <Link className={"header-green-link"} to={LOGIN_URL}>
             LOG IN
         </Link>
     )
@@ -36,14 +37,14 @@ const Header = ({
             )}
 
             {showLinks && (
-                <div className={"header-panel"}>
+                <nav className={"header-panel"}>
                     <ul>
                         <li><Link to={""}>Housing</Link></li>
                         <li><Link to={""}>Furniture</Link></li>
                         <li><Link to={""}>Accessories</Link></li>
-                        <li><Link to={""}>Contact Us</Link></li>
+                        <li><Link to={CONTACT_US_URL}>Contact Us</Link></li>
                     </ul>
-                </div>
+                </nav>
             )}
 
             <div className={"header-panel"}>

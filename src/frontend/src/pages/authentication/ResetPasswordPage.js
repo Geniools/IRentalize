@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {reset_password} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 import Header from "../../components/Header";
@@ -6,6 +6,10 @@ import InputField from "../../components/InputField";
 import {connect} from "react-redux";
 
 const ResetPasswordPage = ({reset_password}) => {
+    useEffect(() => {
+        document.title = "Reset Password";
+    }, []);
+
     const [requestSent, setRequestSent] = useState(false);
     const [formData, setFormData] = useState({
         email: ""

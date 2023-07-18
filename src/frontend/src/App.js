@@ -12,8 +12,9 @@ import UserDashboardPage from "./pages/UserDashboardPage";
 import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
 import ResetPasswordConfirmPage from "./pages/authentication/ResetPasswordConfirmPage";
 import Layout from "./hocs/Layout";
-import {ABOUT_US_URL, ACCOUNT_URL, ACTIVATE_URL, HOME_URL, LOGIN_URL, PASSWORD_RESET_CONFIRM_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "./UrlPaths";
+import {ABOUT_US_URL, ACCOUNT_URL, ACTIVATE_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL, PASSWORD_RESET_CONFIRM_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "./UrlPaths";
 import UserActivatePage from "./pages/authentication/UserActivatePage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 const App = () => {
     return (
@@ -23,6 +24,7 @@ const App = () => {
                     <Routes>
                         <Route exact path={HOME_URL} element={<IndexPage/>}/>
                         <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>
+                        <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
                         {/* Authentication */}
                         {/*TODO: Change the paths in the rest of the application*/}
                         <Route exact path={ACCOUNT_URL} element={<UserDashboardPage/>}/>

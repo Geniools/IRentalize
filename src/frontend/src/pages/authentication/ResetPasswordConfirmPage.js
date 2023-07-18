@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {reset_password_confirm} from "../../actions/auth";
 import InputField from "../../components/InputField";
 import {Navigate, useParams} from "react-router-dom";
 
 const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
+    useEffect(() => {
+        document.title = "Reset Password";
+    }, []);
+
     const {uid} = useParams();
     const {token} = useParams();
     const [requestSent, setRequestSent] = useState(false);

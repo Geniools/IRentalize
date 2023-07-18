@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import InputField from "../../components/InputField";
 import Header from "../../components/Header";
@@ -7,6 +7,10 @@ import {login} from "../../actions/auth";
 import {HOME_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../UrlPaths";
 
 const UserLoginPage = ({isAuthenticated, login}) => {
+    useEffect(() => {
+        document.title = "Login";
+    }, []);
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -32,7 +36,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container">
+            <div className="page-container flex-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Welcome back &#128075;</h1>

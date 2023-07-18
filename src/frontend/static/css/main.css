@@ -19,29 +19,56 @@ a {
 }
 
 button {
-	cursor : pointer;
+	background-color : var(--color-green);
+	border           : none;
+	border-radius    : 1rem;
+	color            : var(--color-white);
+	cursor           : pointer;
+	font-weight      : bold;
+	padding          : calc(var(--padding) / 2) var(--padding);
 }
 
 main {
-	display : flex;
-	width   : 100%;
-}
-
-#app {
 	display   : flex;
 	flex-flow : column;
 	width     : 100%;
 }
 
+input {
+	border        : 1px solid var(--color-black);
+	border-radius : 1rem;
+	padding       : 1rem var(--padding);
+}
+
+.green-text {
+	color : var(--color-green);
+}
+
+/* Label + input */
+.input-field-container {
+	display   : flex;
+	flex      : 1;
+	flex-flow : column;
+	gap       : 1rem;
+	min-width : 10rem;
+}
+
+.input-field-container:has(input[type="checkbox"]) {
+	flex-direction : row;
+}
+
 .page-container {
+	min-height : calc(100vh - var(--header-height));
+	padding    : 0 var(--padding) var(--header-height) var(--padding);
+	position   : relative;
+	width      : 100%;
+}
+
+.flex-center {
 	align-content   : center;
 	align-items     : center;
 	display         : flex;
 	justify-content : center;
-	min-height      : calc(100vh - var(--header-height));
-	padding         : var(--header-height) var(--padding);
-	position        : relative;
-	width           : 100%;
 }
 
 /* Header */

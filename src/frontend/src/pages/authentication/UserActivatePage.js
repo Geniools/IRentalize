@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {verify} from "../../actions/auth";
 import {connect} from "react-redux";
 import {Navigate, useParams} from "react-router-dom";
 import {LOGIN_URL} from "../../UrlPaths";
 
 const UserActivatePage = ({verify, isAuthenticated}) => {
+    useEffect(() => {
+        document.title = "Activate Account";
+    }, []);
+
     const {uid, token} = useParams();
     const [verified, setVerified] = useState(false);
 

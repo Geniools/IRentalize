@@ -3,10 +3,10 @@ import React from 'react';
 export default function InputField(props) {
     if (props.order === "label-first" || props.order === undefined) {
         return (
-            <div className="authentication-field">
-                <label htmlFor={props.name}>{props.label}</label>
+            <div className="input-field-container">
+                <label className={props.labelClassName} htmlFor={props.name}>{props.label}</label>
                 <input
-                    className="authentication-input"
+                    className={props.className}
                     type={props.type}
                     checked={props.checked}
                     name={props.name}
@@ -20,9 +20,9 @@ export default function InputField(props) {
         )
     } else if (props.order === "input-first") {
         return (
-            <div className="authentication-field">
+            <div className="input-field-container">
                 <input
-                    className="authentication-input"
+                    className={props.className}
                     type={props.type}
                     checked={props.checked}
                     name={props.name}
