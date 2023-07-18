@@ -17,7 +17,13 @@ const UserLoginPage = ({isAuthenticated, login}) => {
         rememberMe: false,
     });
     const {email, password, rememberMe} = formData;
-    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
+    const onChange = event => {
+        if (event.target.name === "rememberMe") {
+            setFormData({...formData, [event.target.name]: event.target.checked})
+            return;
+        }
+        setFormData({...formData, [event.target.name]: event.target.value})
+    };
 
     // Handle the form submission
     const onSubmit = (event) => {
@@ -70,8 +76,8 @@ const UserLoginPage = ({isAuthenticated, login}) => {
                                 order="input-first"
                                 type="checkbox"
                                 label="Remember me"
-                                name="remember-me"
-                                id="remember-me"
+                                name="rememberMe"
+                                id="rememberMe"
                                 checked={rememberMe}
                                 required={false}
                                 onChange={onChange}

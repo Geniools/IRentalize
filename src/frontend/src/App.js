@@ -26,7 +26,6 @@ const App = () => {
                         <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>
                         <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
                         {/* Authentication */}
-                        {/*TODO: Change the paths in the rest of the application*/}
                         <Route exact path={ACCOUNT_URL} element={<UserDashboardPage/>}/>
                         <Route exact path={LOGIN_URL} element={<UserLoginPage/>}/>
                         <Route exact path={SIGNUP_URL} element={<UserRegistrationPage/>}/>

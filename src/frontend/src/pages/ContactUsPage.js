@@ -15,7 +15,13 @@ const ContactUsPage = () => {
         termsAndConditions: false
     });
     const {fullName, email, phoneNumber, message, termsAndConditions} = formData;
-    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
+    const onChange = event => {
+        if (event.target.name === "termsAndConditions") {
+            setFormData({...formData, [event.target.name]: event.target.checked})
+            return;
+        }
+        setFormData({...formData, [event.target.name]: event.target.value})
+    };
 
     // Handle the form submission
     const onSubmit = (event) => {

@@ -32,7 +32,7 @@ const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
 
     return (
         <>
-            <div className="page-container">
+            <div className="page-container flex-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Reset Password</h1>

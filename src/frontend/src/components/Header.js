@@ -3,26 +3,37 @@ import Icon from "./Icon";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from "../actions/auth";
-import {CONTACT_US_URL, LOGIN_URL} from "../UrlPaths";
+import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../UrlPaths";
 
 const Header = ({
                     logout,
                     isAuthenticated,
+                    userName,
                     showIcon = true,
                     showLinks = true,
                     showSearch = true,
-                    showAuth = true
+                    showAuth = true,
+                    showLogout = false
                 }) => {
+    const authLink = () => {
+        if (showLogout) {
+            return (
+                <Fragment>
+                    <a className={"header-green-link"} href="" onClick={logout}>
+                        LOG OUT
+                    </a>
+                </Fragment>
+            )
+        } else {
+            return (
+                <Link className={"header-green-link"} to={ACCOUNT_URL}>
+                    {userName}
+                </Link>
+            )
+        }
+    }
 
-    const authLinks = (
-        <Fragment>
-            <a className={"header-green-link"} href="" onClick={logout}>
-                LOG OUT
-            </a>
-        </Fragment>
-    )
-
-    const guestLinks = (
+    const guestLink = (
         <Link className={"header-green-link"} to={LOGIN_URL}>
             LOG IN
         </Link>
@@ -60,7 +71,7 @@ const Header = ({
                 </select>
 
                 {showAuth && (
-                    isAuthenticated ? authLinks : guestLinks
+                    isAuthenticated ? authLink() : guestLink
                 )}
             </div>
         </header>
@@ -68,7 +79,8 @@ const Header = ({
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    userName: state.auth.user ? state.auth.user.username : null
 });
 
 export default connect(mapStateToProps, {logout})(Header);

@@ -22,7 +22,7 @@ const UserActivatePage = ({verify, isAuthenticated}) => {
     }
 
     return (
-        <div className="page-container">
+        <div className="page-container flex-center">
             <div className="authentication-form">
                 <div className="authentication-header">
                     <h1>Activate your account</h1>

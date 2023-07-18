@@ -34,7 +34,7 @@ const ResetPasswordPage = ({reset_password}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container">
+            <div className="page-container flex-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Reset Password</h1>
