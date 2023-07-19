@@ -8,20 +8,23 @@ from backend.users.manager import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(max_length=80, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=80, unique=True)
-    address = models.CharField(max_length=255)  # TODO: Add address model
+    # password = models.CharField(max_length=255)
+    
+    # TODO: Add address model
+    address = models.CharField(max_length=255)
     phone = models.CharField(max_length=15)
-    password = models.CharField(max_length=255)
+    
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    last_login = models.DateTimeField(auto_now=True)
+    # last_login = models.DateTimeField(auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'password']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'password']
     
     objects = UserManager()
     
@@ -32,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ['-date_joined']
     
     def __str__(self):
-        return self.username
+        return self.username if self.username else self.email
     
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'

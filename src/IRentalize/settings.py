@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 from . import local_settings
@@ -52,9 +52,11 @@ INSTALLED_APPS = [
     # Third party apps
     'django_filters',
     'grappelli',
-    'knox',
+    # 'knox', # knox is used for token authentication, this is not needed for JWT
     'rest_framework',
     'djoser',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 # DRF (Django REST Framework) settings
@@ -65,7 +67,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'knox.auth.TokenAuthentication',
+        # 'knox.auth.TokenAuthentication',
     ],
     # 'DEFAULT_FILTER_BACKENDS': 'django_filters.rest_framework.DjangoFilterBackend',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -87,16 +89,22 @@ DJOSER = {
     'SEND_CONFIRMATION_EMAIL': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'TOKEN_MODEL': 'knox.models.AuthToken',
+    'TOKEN_MODEL': None,
     'SERIALIZERS': {
         'user_create': 'backend.auth.serializers.CustomUserCreateSerializer',
-        'user': 'backend.auth.serializers.CustomUserCreateSerializer',
+        'user': 'backend.auth.serializers.UserSerializer',
+        'current_user': 'backend.auth.serializers.UserSerializer',
         'user_delete': 'djoser.serializers.UserCreateSerializer',
     },
 }
 
 SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     'AUTH_HEADER_TYPES': ('JWT',),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
 }
 
 MIDDLEWARE = [

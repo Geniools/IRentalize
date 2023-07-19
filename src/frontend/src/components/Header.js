@@ -7,8 +7,8 @@ import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../UrlPaths";
 
 const Header = ({
                     logout,
+                    user,
                     isAuthenticated,
-                    userName,
                     showIcon = true,
                     showLinks = true,
                     showSearch = true,
@@ -25,9 +25,10 @@ const Header = ({
                 </Fragment>
             )
         } else {
+            let output = user.username ? user.username : user.first_name;
             return (
                 <Link className={"header-green-link"} to={ACCOUNT_URL}>
-                    {userName}
+                    {output}
                 </Link>
             )
         }
@@ -80,7 +81,7 @@ const Header = ({
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    userName: state.auth.user ? state.auth.user.username : null
+    user: state.auth.user ? state.auth.user : {},
 });
 
 export default connect(mapStateToProps, {logout})(Header);
