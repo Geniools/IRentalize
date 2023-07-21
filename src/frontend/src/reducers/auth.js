@@ -10,6 +10,8 @@ import {
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_SUCCESS,
+    REFRESH_TOKEN_FAIL,
+    REFRESH_TOKEN_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     USER_LOADED_FAIL,
@@ -37,6 +39,7 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
             }
+        case REFRESH_TOKEN_SUCCESS:
         case LOGIN_SUCCESS:
             localStorage.setItem("access", payload.access);
             localStorage.setItem("refresh", payload.refresh);
@@ -56,6 +59,7 @@ export default function (state = initialState, action) {
                 ...state,
                 user: payload,
             }
+        case REFRESH_TOKEN_FAIL:
         case LOGIN_FAIL:
         case SIGNUP_FAIL:
         case LOGOUT:

@@ -15,24 +15,20 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
-        username: "",
         email: "",
         password: "",
-        phoneNumber: "",
     });
     const {
         firstName,
         lastName,
-        username,
         email,
         password,
-        phoneNumber
     } = formData;
     const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
 
     const onSubmit = (event) => {
         event.preventDefault();
-        signup(firstName, lastName, username, email, password, phoneNumber);
+        signup(firstName, lastName, email, password);
         setAccountCreated(true);
     }
 
@@ -95,15 +91,15 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
                             placeholder="Last Name"
                             onChange={onChange}
                         />
-                        <InputField
-                            label=""
-                            type="text"
-                            name="username"
-                            value={username}
-                            required={true}
-                            placeholder="Username"
-                            onChange={onChange}
-                        />
+                        {/*<InputField*/}
+                        {/*    label=""*/}
+                        {/*    type="text"*/}
+                        {/*    name="username"*/}
+                        {/*    value={username}*/}
+                        {/*    required={true}*/}
+                        {/*    placeholder="Username"*/}
+                        {/*    onChange={onChange}*/}
+                        {/*/>*/}
                         <InputField
                             label=""
                             type="email"
@@ -122,15 +118,15 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
                             placeholder="Password"
                             onChange={onChange}
                         />
-                        <InputField
-                            label=""
-                            type="text"
-                            name="phoneNumber"
-                            value={phoneNumber}
-                            required={true}
-                            placeholder="Phone Number"
-                            onChange={onChange}
-                        />
+                        {/*<InputField*/}
+                        {/*    label=""*/}
+                        {/*    type="text"*/}
+                        {/*    name="phoneNumber"*/}
+                        {/*    value={phoneNumber}*/}
+                        {/*    required={true}*/}
+                        {/*    placeholder="Phone Number"*/}
+                        {/*    onChange={onChange}*/}
+                        {/*/>*/}
 
                         <button
                             className="authentication-input"

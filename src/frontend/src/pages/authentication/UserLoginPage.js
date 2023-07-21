@@ -4,7 +4,7 @@ import InputField from "../../components/InputField";
 import Header from "../../components/Header";
 import {connect} from "react-redux";
 import {login} from "../../actions/auth";
-import {HOME_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../UrlPaths";
+import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../UrlPaths";
 
 const UserLoginPage = ({isAuthenticated, login}) => {
     useEffect(() => {
@@ -34,7 +34,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
     // Redirect if logged in
     if (isAuthenticated) {
         return (
-            <Navigate to={HOME_URL}/>
+            <Navigate to={ACCOUNT_URL}/>
         )
     }
 

@@ -9,6 +9,8 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
         document.title = "Host Dashboard";
     }, []);
 
+    console.log("UserDashboardPage: ", isAuthenticated, user);
+
     if (!isAuthenticated) {
         return (
             <Navigate to={LOGIN_URL}/>
@@ -24,6 +26,17 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
                     <h1>Host Dashboard</h1>
                     <p>Host Dashboard</p>
                 </div>
+
+                <ul>
+                    <li>Username: {user.username ? user.username : "None"}</li>
+                    <li>First name: {user.first_name ? user.first_name : "None"}</li>
+                    <li>Last name: {user.last_name ? user.last_name : "None"}</li>
+                    <li>Email: {user.email ? user.email : "None"}</li>
+                    <li>Address: {user.address ? user.address : "None"}</li>
+                    <li>Phone: {user.phone ? user.phone : "None"}</li>
+                    <li>Last login: {user.last_login ? user.last_login : "None"}</li>
+                    <li>Date joined: {user.date_joined ? user.date_joined : "None"}</li>
+                </ul>
             </div>
         </>
     )

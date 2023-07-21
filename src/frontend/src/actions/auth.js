@@ -11,11 +11,39 @@ import {
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_SUCCESS,
+    REFRESH_TOKEN_FAIL,
+    REFRESH_TOKEN_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     USER_LOADED_FAIL,
     USER_LOADED_SUCCESS,
 } from "./types";
+import axiosAuthInstanceAPI from "../utils/axios/axios";
+
+
+export const refresh_token = () => async dispatch => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+
+    const refresh = localStorage.getItem('refresh');
+    const body = JSON.stringify({refresh});
+
+    try {
+        const res = await axios.post("/auth/jwt/refresh/", body, config);
+
+        dispatch({
+            type: REFRESH_TOKEN_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: REFRESH_TOKEN_FAIL,
+        });
+    }
+}
 
 export const checkAuthenticated = () => async dispatch => {
     if (localStorage.getItem("access")) {
@@ -64,7 +92,9 @@ export const load_user = () => async dispatch => {
         }
 
         try {
-            const res = await axios.get("/auth/users/me/", config);
+            const res = await axiosAuthInstanceAPI.get("/auth/users/me/", config);
+
+            console.log("LOAD USER:", res.data)
 
             dispatch({
                 type: USER_LOADED_SUCCESS,
@@ -107,14 +137,14 @@ export const login = (email, password) => async dispatch => {
     }
 }
 
-export const signup = (first_name, last_name, username, email, password, phone) => async dispatch => {
+export const signup = (first_name, last_name, email, password) => async dispatch => {
     const config = {
         headers: {
             "Content-Type": "application/json"
         }
     }
 
-    const body = JSON.stringify({first_name, last_name, username, email, password, phone});
+    const body = JSON.stringify({first_name, last_name, email, password});
 
     try {
         const res = await axios.post("/auth/users/", body, config);

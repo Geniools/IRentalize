@@ -7,15 +7,15 @@ from backend.users.manager import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50, unique=True, null=True, blank=True)
     email = models.EmailField(max_length=80, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     # password = models.CharField(max_length=255)
     
     # TODO: Add address model
-    address = models.CharField(max_length=255)
-    phone = models.CharField(max_length=15)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
     
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
