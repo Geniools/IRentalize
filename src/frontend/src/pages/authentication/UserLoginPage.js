@@ -26,7 +26,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
     };
 
     // Handle the form submission
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         login(email, password, rememberMe);
     }

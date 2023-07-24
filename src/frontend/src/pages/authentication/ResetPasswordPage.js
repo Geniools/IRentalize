@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {reset_password} from "../../actions/auth";
+import {resetPassword} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 import Header from "../../components/Header";
 import InputField from "../../components/InputField";
@@ -60,4 +60,4 @@ const ResetPasswordPage = ({reset_password}) => {
     );
 }
 
-export default connect(null, {reset_password})(ResetPasswordPage);
+export default connect(null, {reset_password: resetPassword})(ResetPasswordPage);

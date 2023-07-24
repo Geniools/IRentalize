@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../store/store";
-import {refresh_token} from "../../actions/auth";
+import {refreshToken} from "../../actions/auth";
 
 const axiosAuthInstanceAPI = axios.create();
 
@@ -12,9 +12,9 @@ axiosAuthInstanceAPI.interceptors.response.use(
 
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            await store.dispatch(refresh_token());
+            await store.dispatch(refreshToken());
 
-            originalRequest.headers['Authorization'] = `JWT ${localStorage.getItem("access")}`;
+            originalRequest.headers['Authorization'] = `JWT ${localStorage.getItem("access") || sessionStorage.getItem("access")}`;
             return axiosAuthInstanceAPI(originalRequest);
         }
         return Promise.reject(error);

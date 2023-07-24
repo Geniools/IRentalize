@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {reset_password_confirm} from "../../actions/auth";
+import {resetPasswordConfirm} from "../../actions/auth";
 import InputField from "../../components/InputField";
 import {Navigate, useParams} from "react-router-dom";
 
@@ -70,4 +70,4 @@ const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
     )
 }
 
-export default connect(null, {reset_password_confirm})(ResetPasswordConfirmPage);
+export default connect(null, {reset_password_confirm: resetPasswordConfirm})(ResetPasswordConfirmPage);

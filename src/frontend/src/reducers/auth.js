@@ -19,14 +19,14 @@ import {
 } from "../actions/types";
 
 const initialState = {
-    access: localStorage.getItem("access"),
-    refresh: localStorage.getItem("refresh"),
+    access: sessionStorage.getItem("access") || localStorage.getItem("access"),
+    refresh: sessionStorage.getItem("refresh") || localStorage.getItem("refresh"),
     isAuthenticated: null,
     user: null,
 }
 
 export default function (state = initialState, action) {
-    const {type, payload} = action;
+    const {type, payload, remember} = action;
 
     switch (type) {
         case AUTHENTICATED_SUCCESS:
@@ -41,8 +41,14 @@ export default function (state = initialState, action) {
             }
         case REFRESH_TOKEN_SUCCESS:
         case LOGIN_SUCCESS:
-            localStorage.setItem("access", payload.access);
-            localStorage.setItem("refresh", payload.refresh);
+            console.log("remember", remember);
+            if (remember) {
+                localStorage.setItem("access", payload.access);
+                localStorage.setItem("refresh", payload.refresh);
+            } else {
+                sessionStorage.setItem("access", payload.access);
+                sessionStorage.setItem("refresh", payload.refresh);
+            }
             return {
                 ...state,
                 isAuthenticated: true,
@@ -65,6 +71,8 @@ export default function (state = initialState, action) {
         case LOGOUT:
             localStorage.removeItem("access");
             localStorage.removeItem("refresh");
+            sessionStorage.removeItem("access");
+            sessionStorage.removeItem("refresh");
             return {
                 ...state,
                 access: null,
