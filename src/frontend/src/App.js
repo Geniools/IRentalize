@@ -8,7 +8,7 @@ import IndexPage from "./pages/IndexPage";
 import AboutUsPage from "./pages/AboutUsPage";
 import UserLoginPage from "./pages/authentication/UserLoginPage";
 import UserRegistrationPage from "./pages/authentication/UserRegistrationPage";
-import UserDashboardPage from "./pages/UserDashboardPage";
+import UserDashboardPage from "./pages/userdashboard/UserDashboardPage";
 import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
 import ResetPasswordConfirmPage from "./pages/authentication/ResetPasswordConfirmPage";
 import Layout from "./hocs/Layout";

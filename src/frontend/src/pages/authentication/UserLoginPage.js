@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux";
 import {Link, Navigate} from 'react-router-dom';
 import InputField from "../../components/InputField";
 import Header from "../../components/Header";
-import {connect} from "react-redux";
 import {login} from "../../actions/auth";
 import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../UrlPaths";
 
