@@ -100,7 +100,7 @@ const ContactUsPage = () => {
 
                 <div className="contact-us-footer">
                     <p>Or send us an e-mail: &nbsp;</p>
-                    <a href="mailto:irentalize@gmail.com" type={"email"}>irentalize@gmail.com</a>
+                    <a href="mailto:irentalize@gmail.com" type={"email"}><b>irentalize@gmail.com</b></a>
                 </div>
             </div>
         </>

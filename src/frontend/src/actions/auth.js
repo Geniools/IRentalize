@@ -15,6 +15,9 @@ import {
     REFRESH_TOKEN_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
+    UPDATE_USER_FAILURE,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
     USER_LOADED_FAIL,
     USER_LOADED_SUCCESS,
 } from "./types";
@@ -136,6 +139,41 @@ export const login = (email, password, rememberMe) => async dispatch => {
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL,
+        });
+    }
+}
+
+export const updateUserInfo = (username, first_name, last_name, address, phone) => async (dispatch, getState) => {
+    dispatch({
+        type: UPDATE_USER_REQUEST,
+    })
+
+    const accessToken = getState().auth.access;
+    if (accessToken) {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `JWT ${accessToken}`,
+                "Accept": "application/json",
+            }
+        }
+        
+        const body = JSON.stringify({username, first_name, last_name, address, phone});
+        try {
+            const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
+
+            dispatch({
+                type: UPDATE_USER_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: UPDATE_USER_FAILURE,
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_USER_FAILURE,
         });
     }
 }

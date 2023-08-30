@@ -5,8 +5,9 @@
 	min-height       : 100vh;
 	opacity          : 9%;
 	position         : absolute;
-	top              : 0;
+	top              : calc(-1 * var(--header-height) - var(--padding));
 	width            : var(--dashboard-left-panel-width);
+	z-index          : -1;
 }
 
 .dashboard-container {
@@ -49,13 +50,22 @@
 	gap            : 4rem;
 }
 
+.dashboard-nav-bar li a:hover {
+	color : var(--color-green);
+}
+
+
 /* Right panel */
 
-.dashboard-right-panel {
+.dashboard-right-panel, .dashboard-right-panel-content {
 	display        : flex;
 	flex-direction : column;
 	gap            : 2rem;
 	padding        : 2rem;
+}
+
+.dashboard-right-panel-content {
+	padding : 0;
 }
 
 .dashboard-right-panel form {
@@ -71,7 +81,7 @@
 
 .dashboard-right-panel form input, .dashboard-right-panel form button {
 	border-radius : 0.5rem;
-	font-size     : 1.5rem;
+	font-size     : 1rem;
 	padding       : 1rem;
 	width         : 100%;
 }
@@ -93,4 +103,10 @@
 .dashboard-right-panel-header h1 {
 	color     : var(--color-green);
 	font-size : 3rem;
+}
+
+.dashboard-right-panel-content-readinfo {
+	display        : flex;
+	flex-direction : column;
+	gap            : 2rem;
 }

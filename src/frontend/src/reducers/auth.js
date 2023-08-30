@@ -14,6 +14,9 @@ import {
     REFRESH_TOKEN_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
+    UPDATE_USER_FAILURE,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
     USER_LOADED_FAIL,
     USER_LOADED_SUCCESS,
 } from "../actions/types";
@@ -60,6 +63,7 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
             }
+        case UPDATE_USER_SUCCESS:
         case USER_LOADED_SUCCESS:
             return {
                 ...state,
@@ -85,6 +89,8 @@ export default function (state = initialState, action) {
                 ...state,
                 user: null,
             }
+        case UPDATE_USER_REQUEST:
+        case UPDATE_USER_FAILURE:
         case ACTIVATION_SUCCESS:
         case ACTIVATION_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:
