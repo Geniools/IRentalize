@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {resetPassword} from "../../actions/auth";
+import {resetEmail} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 import Header from "../../components/Header";
 import InputField from "../../components/InputField";
 import {connect} from "react-redux";
 
-const ResetPasswordPage = ({reset_password}) => {
+const ResetEmailPage = ({resetEmail}) => {
     useEffect(() => {
-        document.title = "Change Password";
+        document.title = "Change Email";
     }, []);
 
     const [requestSent, setRequestSent] = useState(false);
@@ -22,7 +22,7 @@ const ResetPasswordPage = ({reset_password}) => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        reset_password(email);
+        resetEmail(email);
         setRequestSent(true);
     }
 
@@ -37,8 +37,8 @@ const ResetPasswordPage = ({reset_password}) => {
             <div className="page-container flex-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
-                        <h1>Change your Password</h1>
-                        <h2>Please enter your email address</h2>
+                        <h1>Change your Email</h1>
+                        <h2>Please enter your current email address</h2>
                     </div>
 
                     <form onSubmit={onSubmit}>
@@ -52,7 +52,7 @@ const ResetPasswordPage = ({reset_password}) => {
                             onChange={onChange}
                         />
 
-                        <button type="submit" className="authentication-input">Send Change Password Link</button>
+                        <button type="submit" className="authentication-input">Send Email Change Link</button>
                     </form>
                 </div>
             </div>
@@ -60,4 +60,4 @@ const ResetPasswordPage = ({reset_password}) => {
     );
 }
 
-export default connect(null, {reset_password: resetPassword})(ResetPasswordPage);
+export default connect(null, {resetEmail})(ResetEmailPage);

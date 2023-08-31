@@ -28,3 +28,12 @@ class ListingSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'title', 'description', 'price', 'address', 'images',
         ]
+
+
+# Contact Us Form
+class ContactUsFormSerializer(serializers.Serializer):
+    full_name = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    phone_number = serializers.CharField(max_length=20)
+    message = serializers.CharField(max_length=500)
+    terms_and_conditions = serializers.BooleanField()

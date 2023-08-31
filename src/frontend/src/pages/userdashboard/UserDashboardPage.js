@@ -2,10 +2,12 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import Header from "../../components/Header";
 import {Navigate} from "react-router-dom";
-import {LOGIN_URL, USER_DETAILS_URL, USER_ORDERS_URL, USER_POSTS_URL, USER_RECENTLY_VIEWED_URL} from "../../UrlPaths";
+import {EMAIL_RESET_URL, LOGIN_URL, PASSWORD_RESET_URL, USER_DETAILS_URL, USER_ORDERS_URL, USER_POSTS_URL, USER_RECENTLY_VIEWED_URL} from "../../UrlPaths";
 import {updateUserInfo} from "../../actions/auth";
 
 const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
+    const [render, setRender] = useState(false);
+
     useEffect(() => {
         document.title = "Host Dashboard";
     }, []);
@@ -21,6 +23,7 @@ const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
                 phone: user.phone,
             })
         }
+        setRender(!render);
     }, [user]);
 
     // Form data for updating the user's details
@@ -66,7 +69,7 @@ const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
                     <div className="dashboard-container">
                         <div className="dashboard-left-panel">
                             <div className="dashboard-left-panel-header">
-                                <img src="" alt="Avatar"/>
+                                <img src="/static/assets/cowboy.png" alt="Avatar"/>
                                 <a href={USER_DETAILS_URL}><h1>{user.first_name}</h1></a>
                             </div>
 
@@ -91,20 +94,17 @@ const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
                                     <div className="dashboard-right-panel-content-line">
                                         <div>
                                             <label htmlFor="first_name">First name:</label>
-                                            <input onChange={onChange} type="text" id="first_name" name="first_name" placeholder="Your first name"
-                                                   value={first_name}/>
+                                            <input onChange={onChange} type="text" id="first_name" name="first_name" placeholder="Your first name" value={first_name}/>
                                         </div>
 
                                         <div>
                                             <label htmlFor="last_name">Last name:</label>
-                                            <input onChange={onChange} type="text" id="last_name" name="last_name" placeholder="Your last name"
-                                                   value={last_name}/>
+                                            <input onChange={onChange} type="text" id="last_name" name="last_name" placeholder="Your last name" value={last_name}/>
                                         </div>
                                     </div>
 
                                     <label htmlFor="address">Address:</label>
-                                    <input onChange={onChange} type="text" id="address" name="address" placeholder="Address"
-                                           value={address}/>
+                                    <input onChange={onChange} type="text" id="address" name="address" placeholder="Address" value={address}/>
 
                                     <label htmlFor="phone">Phone:</label>
                                     <input onChange={onChange} type="tel" id="phone" name="phone" placeholder="Phone" value={phone}/>
@@ -115,15 +115,16 @@ const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
                                 <hr/>
 
                                 <div className="dashboard-right-panel-header">
-                                    <h1>EMAIL</h1>
+                                    <h1>LOGIN CREDENTIALS</h1>
                                 </div>
 
-                                <form>
+                                <form onSubmit="">
                                     <label htmlFor="email">Email:</label>
-                                    <input onChange={onChange} type="email" id="email" name="email" placeholder="Email" value={email}/>
-
-                                    <button type="submit">Update Email</button>
+                                    <input onChange={onChange} type="email" id="email" name="email" placeholder="Email" value={email} readOnly={true}/>
                                 </form>
+
+                                <i>To change your email use <u><b><a href={EMAIL_RESET_URL}>this</a></b></u> link.</i>
+                                <i>To change your password use <u><b><a href={PASSWORD_RESET_URL}>this</a></b></u> link.</i>
 
                                 <hr/>
 
@@ -142,20 +143,8 @@ const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
             </>
         )
     } else {
-        return (
-            <>
-                <Header showLogout={true}/>
-
-                <div className={"page-container"}>
-                    <div className="contact-us-header">
-                        <h1>Host Dashboard</h1>
-                        <p>Host Dashboard</p>
-                    </div>
-
-                    <p>Loading...</p>
-                </div>
-            </>
-        )
+        // Refresh the page if the user is not loaded
+        window.location.reload(false);
     }
 }
 

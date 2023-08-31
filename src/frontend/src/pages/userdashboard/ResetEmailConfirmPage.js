@@ -1,28 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {resetPasswordConfirm} from "../../actions/auth";
+import {resetEmailConfirm} from "../../actions/auth";
 import InputField from "../../components/InputField";
 import {Navigate, useParams} from "react-router-dom";
+import Header from "../../components/Header";
 
-const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
+const ResetEmailConfirmPage = ({resetEmailConfirm}) => {
     useEffect(() => {
-        document.title = "Change Password";
+        document.title = "Change Email";
     }, []);
 
     const {uid} = useParams();
     const {token} = useParams();
     const [requestSent, setRequestSent] = useState(false);
     const [formData, setFormData] = useState({
-        new_password: "",
-        re_new_password: ""
+        new_email: "",
+        re_new_email: ""
     })
-    const {new_password, re_new_password} = formData;
+    const {new_email, re_new_email} = formData;
     const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
 
     const onSubmit = (event) => {
         event.preventDefault();
 
-        reset_password_confirm(uid, token, new_password, re_new_password);
+        resetEmailConfirm(uid, token, new_email, re_new_email);
         setRequestSent(true);
     }
 
@@ -32,37 +33,39 @@ const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
 
     return (
         <>
+            <Header showLinks={false} showSearch={false} showAuth={false}/>
+
             <div className="page-container flex-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
-                        <h1>Change your Password</h1>
-                        <h2>Please enter your new password</h2>
+                        <h1>Change your Email</h1>
+                        <h2>Please enter your new email</h2>
                     </div>
 
                     <form onSubmit={onSubmit}>
                         <InputField
                             label=""
-                            type="password"
-                            name="new_password"
-                            value={new_password}
+                            type="text"
+                            name="new_email"
+                            value={new_email}
                             required={true}
                             minLength={8}
-                            placeholder="New Password"
+                            placeholder="New Email"
                             onChange={onChange}
                         />
 
                         <InputField
                             label=""
-                            type="password"
-                            name="re_new_password"
-                            value={re_new_password}
+                            type="text"
+                            name="re_new_email"
+                            value={re_new_email}
                             required={true}
                             minLength={8}
-                            placeholder="Confirm New Password"
+                            placeholder="Confirm New Email"
                             onChange={onChange}
                         />
 
-                        <button type="submit" className="authentication-input">Change Password</button>
+                        <button type="submit" className="authentication-input">Change your email</button>
                     </form>
                 </div>
             </div>
@@ -70,4 +73,4 @@ const ResetPasswordConfirmPage = ({props, reset_password_confirm}) => {
     )
 }
 
-export default connect(null, {reset_password_confirm: resetPasswordConfirm})(ResetPasswordConfirmPage);
+export default connect(null, {resetEmailConfirm})(ResetEmailConfirmPage);

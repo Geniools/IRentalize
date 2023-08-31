@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header";
 import InputField from "../components/InputField";
+import {sendContactUsForm} from "../actions/utils";
+import {connect} from "react-redux";
 
-const ContactUsPage = () => {
+const ContactUsPage = ({sendContactUsForm}) => {
     useEffect(() => {
         document.title = "Contact Us";
     }, []);
@@ -26,7 +28,7 @@ const ContactUsPage = () => {
     // Handle the form submission
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(formData);
+        sendContactUsForm(fullName, email, phoneNumber, message, termsAndConditions);
     }
 
     return (
@@ -74,7 +76,7 @@ const ContactUsPage = () => {
 
                     <div className={"contact-us-form-container"}>
                         <label htmlFor="message" className={"green-text"}>Message*</label>
-                        <textarea name="message" id="message" placeholder={"Enter your message here"}></textarea>
+                        <textarea name="message" id="message" placeholder={"Enter your message here"} value={message} onChange={onChange}></textarea>
                     </div>
 
                     <div className={"contact-us-form-container"}>
@@ -107,4 +109,4 @@ const ContactUsPage = () => {
     )
 }
 
-export default ContactUsPage;
+export default connect(null, {sendContactUsForm})(ContactUsPage);

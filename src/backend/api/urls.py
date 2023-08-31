@@ -10,4 +10,5 @@ router.register(r'listings', views.ListingViewSet)
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('', include(router.urls)),
+    path('contact-us/', views.ContactUsView.as_view()),
 ]

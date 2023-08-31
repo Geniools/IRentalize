@@ -20,6 +20,10 @@ import {
     UPDATE_USER_SUCCESS,
     USER_LOADED_FAIL,
     USER_LOADED_SUCCESS,
+    USERNAME_RESET_CONFIRM_FAIL,
+    USERNAME_RESET_CONFIRM_SUCCESS,
+    USERNAME_RESET_FAIL,
+    USERNAME_RESET_SUCCESS,
 } from "./types";
 import axiosAuthInstanceAPI from "../utils/axios/axios";
 
@@ -157,7 +161,7 @@ export const updateUserInfo = (username, first_name, last_name, address, phone) 
                 "Accept": "application/json",
             }
         }
-        
+
         const body = JSON.stringify({username, first_name, last_name, address, phone});
         try {
             const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
@@ -271,6 +275,52 @@ export const resetPasswordConfirm = (uid, token, new_password, re_new_password) 
     } catch (err) {
         dispatch({
             type: PASSWORD_RESET_CONFIRM_FAIL,
+        });
+    }
+}
+
+// Email reset
+export const resetEmail = (email) => async (dispatch, getState) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+
+    const body = JSON.stringify({email});
+
+    try {
+        const res = await axios.post("/auth/users/reset_email/", body, config);
+
+        dispatch({
+            type: USERNAME_RESET_SUCCESS,
+        });
+    } catch (err) {
+        dispatch({
+            type: USERNAME_RESET_FAIL,
+        });
+    }
+    // }
+}
+
+export const resetEmailConfirm = (uid, token, new_email, re_new_email) => async dispatch => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+
+    const body = JSON.stringify({uid, token, new_email, re_new_email});
+
+    try {
+        const res = await axios.post("/auth/users/reset_email_confirm/", body, config);
+
+        dispatch({
+            type: USERNAME_RESET_CONFIRM_SUCCESS,
+        });
+    } catch (err) {
+        dispatch({
+            type: USERNAME_RESET_CONFIRM_FAIL,
         });
     }
 }
