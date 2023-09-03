@@ -1,13 +1,13 @@
 import axios from "axios";
 
-export const sendContactUsForm = (full_name, email, phone_number, message, terms_and_conditions) => async (dispatch, getState) => {
+export const sendContactUsForm = (full_name, email, phone_number, message, terms_and_conditions, g_recaptcha_response) => async (dispatch, getState) => {
     const config = {
         headers: {
             "Content-Type": "application/json"
         }
     }
 
-    const body = JSON.stringify({full_name, email, phone_number, message, terms_and_conditions});
+    const body = JSON.stringify({full_name, email, phone_number, message, terms_and_conditions, g_recaptcha_response});
 
     try {
         const res = await axios.post("/api/contact-us/", body, config);

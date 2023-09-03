@@ -6,8 +6,6 @@ import {EMAIL_RESET_URL, LOGIN_URL, PASSWORD_RESET_URL, USER_DETAILS_URL, USER_O
 import {updateUserInfo} from "../../actions/auth";
 
 const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
-    const [render, setRender] = useState(false);
-
     useEffect(() => {
         document.title = "Host Dashboard";
     }, []);
@@ -35,6 +33,8 @@ const UserDashboardPage = ({isAuthenticated, user, updateUserInfo}) => {
         address: '',
         phone: '',
     });
+    const [render, setRender] = useState(false);
+    
     const {username, first_name, last_name, email, address, phone} = formData;
     const onChange = event => {
         setFormData({...formData, [event.target.name]: event.target.value})

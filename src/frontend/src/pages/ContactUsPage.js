@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import InputField from "../components/InputField";
 import {sendContactUsForm} from "../actions/utils";
 import {connect} from "react-redux";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const ContactUsPage = ({sendContactUsForm}) => {
     useEffect(() => {
@@ -14,9 +15,11 @@ const ContactUsPage = ({sendContactUsForm}) => {
         email: "",
         phoneNumber: "",
         message: "",
-        termsAndConditions: false
+        termsAndConditions: false,
+        captcha: false,
+        gRecaptchaResponse: ""
     });
-    const {fullName, email, phoneNumber, message, termsAndConditions} = formData;
+    const {fullName, email, phoneNumber, message, termsAndConditions, captcha, gRecaptchaResponse} = formData;
     const onChange = event => {
         if (event.target.name === "termsAndConditions") {
             setFormData({...formData, [event.target.name]: event.target.checked})
@@ -25,10 +28,17 @@ const ContactUsPage = ({sendContactUsForm}) => {
         setFormData({...formData, [event.target.name]: event.target.value})
     };
 
+    const recaptchaRef = React.createRef();
+    const handleCaptcha = (value) => {
+        setFormData({...formData, gRecaptchaResponse: value})
+    }
+
     // Handle the form submission
     const onSubmit = (event) => {
         event.preventDefault();
-        sendContactUsForm(fullName, email, phoneNumber, message, termsAndConditions);
+        sendContactUsForm(fullName, email, phoneNumber, message, termsAndConditions, gRecaptchaResponse);
+        // Reset the captcha
+        recaptchaRef.current.reset();
     }
 
     return (
@@ -92,6 +102,12 @@ const ContactUsPage = ({sendContactUsForm}) => {
                             <label htmlFor={"termsAndConditions"}>I agree with all <a className={"green-text"} href="">Terms and Conditions*</a></label>
                         </div>
                     </div>
+
+                    <ReCAPTCHA
+                        sitekey={"6Lf4XvgnAAAAALBJKdqmMoBvbywdVks4v7SvwG2j"}
+                        ref={recaptchaRef}
+                        onChange={handleCaptcha}
+                    />
 
                     <div className="contact-us-form-container">
                         <button type={"submit"}>

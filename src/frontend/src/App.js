@@ -33,8 +33,8 @@ import {
 } from "./UrlPaths";
 import UserActivatePage from "./pages/authentication/UserActivatePage";
 import ContactUsPage from "./pages/ContactUsPage";
-import ResetEmailPage from "./pages/userdashboard/ResetEmailPage";
-import ResetEmailConfirmPage from "./pages/userdashboard/ResetEmailConfirmPage";
+import ResetEmailPage from "./pages/authentication/ResetEmailPage";
+import ResetEmailConfirmPage from "./pages/authentication/ResetEmailConfirmPage";
 
 const App = () => {
     return (
