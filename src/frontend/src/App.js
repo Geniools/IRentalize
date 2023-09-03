@@ -25,9 +25,7 @@ import {
     PASSWORD_RESET_URL,
     SIGNUP_URL,
     USER_DETAILS_URL,
-    USER_ORDER_DETAILS_URL,
     USER_ORDERS_URL,
-    USER_POST_DETAILS_URL,
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL
 } from "./UrlPaths";
@@ -35,6 +33,10 @@ import UserActivatePage from "./pages/authentication/UserActivatePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import ResetEmailPage from "./pages/authentication/ResetEmailPage";
 import ResetEmailConfirmPage from "./pages/authentication/ResetEmailConfirmPage";
+import UserDetailsPage from "./pages/userdashboard/UserDetailsPage";
+import UserPostsPage from "./pages/userdashboard/UserPostsPage";
+import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage";
+import UserOrdersPage from "./pages/userdashboard/UserOrdersPage";
 
 const App = () => {
     return (
@@ -42,17 +44,19 @@ const App = () => {
             <Router>
                 <Layout>
                     <Routes>
+                        {/* Pages */}
                         <Route exact path={HOME_URL} element={<IndexPage/>}/>
                         <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>
                         <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
+
                         {/* User Dashboard */}
-                        <Route exact path={ACCOUNT_URL} element={<UserDashboardPage/>}/>
-                        <Route exact path={USER_DETAILS_URL} element={<UserDashboardPage/>}/>
-                        <Route exact path={USER_ORDERS_URL} element={<UserDashboardPage/>}/>
-                        <Route exact path={USER_ORDER_DETAILS_URL} element={<UserDashboardPage/>}/>
-                        <Route exact path={USER_POSTS_URL} element={<UserDashboardPage/>}/>
-                        <Route exact path={USER_POST_DETAILS_URL} element={<UserDashboardPage/>}/>
-                        <Route exact path={USER_RECENTLY_VIEWED_URL} element={<UserDashboardPage/>}/>
+                        <Route path={ACCOUNT_URL} element={<UserDashboardPage/>}>
+                            <Route path={USER_DETAILS_URL} element={<UserDetailsPage/>}/>
+                            <Route path={USER_ORDERS_URL} element={<UserOrdersPage/>}/>
+                            <Route path={USER_POSTS_URL} element={<UserPostsPage/>}/>
+                            <Route path={USER_RECENTLY_VIEWED_URL} element={<UserRecentlyViewedPage/>}/>
+                        </Route>
+
                         {/* Authentication */}
                         <Route exact path={LOGIN_URL} element={<UserLoginPage/>}/>
                         <Route exact path={SIGNUP_URL} element={<UserRegistrationPage/>}/>
