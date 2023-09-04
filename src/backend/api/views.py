@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,12 +13,23 @@ from backend.listings.filters import ListingSearchFilter
 from .utils import get_client_ip
 
 
+# Categories
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
 # Listings
 class ListingViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ListingSearchFilter
+    
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        return super().create(request, *args, **kwargs)
 
 
 # Contact Us Form

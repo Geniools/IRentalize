@@ -36,10 +36,16 @@ main {
 	width     : 100%;
 }
 
-input {
+textarea {
+	max-height : 100vh;
+	min-height : 20vh;
+	resize     : vertical;
+}
+
+input, textarea, select, option {
 	border        : 1px solid var(--color-black);
 	border-radius : 1rem;
-	padding       : 1rem var(--padding);
+	padding       : calc(var(--padding) / 2);
 }
 
 li {
@@ -48,6 +54,10 @@ li {
 
 .green-text {
 	color : var(--color-green);
+}
+
+.hidden {
+	display : none;
 }
 
 /* Label + input */

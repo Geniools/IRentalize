@@ -27,3 +27,10 @@ export const USERNAME_RESET_SUCCESS = 'USERNAME_RESET_SUCCESS';
 export const USERNAME_RESET_CONFIRM_FAIL = 'USERNAME_RESET_CONFIRM_FAIL';
 export const USERNAME_RESET_CONFIRM_SUCCESS = 'USERNAME_RESET_CONFIRM_SUCCESS';
 
+// Listings ==================================================================================================================
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAIL = 'ADD_POST_FAIL';
+export const GET_LISTINGS_SUCCESS = 'GET_LISTINGS_SUCCESS';
+export const GET_LISTINGS_FAIL = 'GET_LISTINGS_FAIL';
+export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
+export const GET_CATEGORIES_FAIL = 'GET_CATEGORIES_FAIL';
