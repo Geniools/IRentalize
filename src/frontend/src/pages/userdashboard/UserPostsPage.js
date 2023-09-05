@@ -8,21 +8,25 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
         loadListings();
     }, []);
 
-    const [formVisibility, setFormVisibility] = useState(false);
+    const [formVisibility, setFormVisibility] = useState(null);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         category: '',
         price: '',
         address: '',
-        images: [],
     });
+    const [formImages, setFormImages] = useState([]);
 
     const {title, description, category, price, address} = formData;
 
-
     const onChange = event => {
         setFormData({...formData, [event.target.name]: event.target.value})
+    }
+
+    const onImageChange = event => {
+        // setFormImages([...formImages, event.target.files]);
+        setFormImages(event.target.files);
     }
 
     const changeFormVisibility = () => {
@@ -31,7 +35,7 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        addPost(title, description, price, address);
+        addPost(title, description, category, price, address, formImages);
     }
 
     return (
@@ -56,6 +60,7 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
 
                         <label htmlFor="category">Category</label>
                         <select id="category" name="category" value={category} onChange={onChange}>
+                            <option>Select category...</option>
                             {categories.results.map((category) => (
                                 <option value={category.id}>{category.name}</option>
                             ))}
@@ -65,7 +70,7 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
                         <input type="text" id="address" name="address" placeholder="Address" value={address} onChange={onChange}/>
 
                         <label htmlFor="images">Images</label>
-                        <input type="file" id="images" name="images" placeholder="Images" value={address} onChange={onChange} multiple/>
+                        <input type="file" id="images" name="images" accept="image/*" onChange={onImageChange} multiple/>
 
                         <button type="submit">Add Post</button>
                     </form>

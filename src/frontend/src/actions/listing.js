@@ -1,20 +1,30 @@
 import {ADD_POST_FAIL, ADD_POST_SUCCESS, GET_CATEGORIES_FAIL, GET_CATEGORIES_SUCCESS, GET_LISTINGS_FAIL, GET_LISTINGS_SUCCESS} from "./types";
 import axiosAuthInstanceAPI from "../utils/axios/axios";
 
-export const addPost = (title, description, price, address) => async (dispatch, getState) => {
+export const addPost = (title, description, category, price, address, images) => async (dispatch, getState) => {
     const accessToken = getState().auth.access;
 
     const config = {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data; ',
             "Authorization": `JWT ${accessToken}`,
         }
     }
 
-    const body = JSON.stringify({title, description, price, address});
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('category', category);
+    formData.append('price', price);
+    formData.append('address', address);
+
+    // Append the images to the form data
+    for (let i = 0; i < images.length; i++) {
+        formData.append('uploaded_images', images[i]);
+    }
 
     try {
-        const res = await axiosAuthInstanceAPI.post('/api/listings/', body, config);
+        const res = await axiosAuthInstanceAPI.post('/api/listings/', formData, config);
 
         dispatch({
             type: ADD_POST_SUCCESS,

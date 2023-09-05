@@ -1,33 +1,48 @@
 from rest_framework import serializers
 
 # Import all the models that will be used in the serializers
-from backend.listings.models import Listing, ListingImage, Category
+from backend.listings.models import Listing, Category, ListingImage
 
 
 # Listings
 class ListingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingImage
-        fields = ['image']
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = [
-            'id', 'name', 'icon',
-        ]
+        fields = '__all__'
 
 
 class ListingSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
+    category = serializers.ChoiceField(choices=Category.objects.all())
+    # Will retrieve all the images attributed to the listing
     images = ListingImageSerializer(many=True, read_only=True)
+    # Will be used when creating or updating a listing
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(max_length=None, allow_empty_file=False, use_url=False),
+        write_only=True,
+    )
     
     class Meta:
         model = Listing
         fields = [
-            'id', 'category', 'title', 'description', 'price', 'address', 'images',
+            'id', 'category', 'host', 'title', 'description', 'price', 'address', 'images', 'uploaded_images'
         ]
+    
+    def create(self, validated_data):
+        print(validated_data)
+        uploaded_images = validated_data.pop("uploaded_images")
+        listing = Listing.objects.create(**validated_data)
+        
+        # Create and save the images to the listing
+        for image in uploaded_images:
+            ListingImage.objects.create(listing=listing, image=image)
+        
+        return listing
 
 
 # Contact Us Form

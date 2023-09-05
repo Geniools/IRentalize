@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,11 +26,33 @@ class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
     filter_backends = (filters.DjangoFilterBackend,)
+    parser_classes = [MultiPartParser, FormParser]
     filterset_class = ListingSearchFilter
     
     def create(self, request, *args, **kwargs):
+        # Make a copy of the request data so that we can modify it (QueryDict is immutable)
+        copy_data = request.data
+        # Add the user (host) to the created listing
+        copy_data['host'] = request.user.id
+        # Add the category to the created listing
+        copy_data['category'] = Category.objects.get(id=request.data['category'])
+        # Create the serializer
+        serializer = ListingSerializer(data=copy_data)
+        
+        # Validate the data
         print(request.data)
-        return super().create(request, *args, **kwargs)
+        if serializer.is_valid():
+            print("PASS:", serializer.validated_data)
+            # TODO: Save the listing and the images (images in the ModelSerializer.create() method)
+            # Save the listing
+            # listing = serializer.save()
+            # Save the images
+            # for image in request.data.getlist('uploaded_images'):
+            #     ListingImage.objects.create(listing=listing, image=image)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        print("ERROR:", serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Contact Us Form
