@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.html import format_html
 
 
 class Category(models.Model):
@@ -33,6 +34,13 @@ class Listing(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def display_images(self):
+        images_html = ''
+        for image in self.images.all():
+            images_html += f'<img src="{image.image.url}" alt="{self.title}" class="img-fluid">'
+        
+        return format_html(images_html)
 
 
 class ListingImage(models.Model):

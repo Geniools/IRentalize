@@ -34,24 +34,14 @@ class ListingViewSet(viewsets.ModelViewSet):
         copy_data = request.data
         # Add the user (host) to the created listing
         copy_data['host'] = request.user.id
-        # Add the category to the created listing
-        copy_data['category'] = Category.objects.get(id=request.data['category'])
         # Create the serializer
         serializer = ListingSerializer(data=copy_data)
-        
         # Validate the data
-        print(request.data)
         if serializer.is_valid():
-            print("PASS:", serializer.validated_data)
-            # TODO: Save the listing and the images (images in the ModelSerializer.create() method)
             # Save the listing
-            # listing = serializer.save()
-            # Save the images
-            # for image in request.data.getlist('uploaded_images'):
-            #     ListingImage.objects.create(listing=listing, image=image)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        print("ERROR:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -78,8 +68,8 @@ class ContactUsView(APIView):
             captcha_response = requests.post(
                 'https://www.google.com/recaptcha/api/siteverify',
                 data={
-                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
                     'response': captcha,
+                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
                     'remote_ip': get_client_ip(request),
                 }
             )

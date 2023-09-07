@@ -25,7 +25,6 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
     }
 
     const onImageChange = event => {
-        // setFormImages([...formImages, event.target.files]);
         setFormImages(event.target.files);
     }
 
@@ -36,6 +35,7 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
     const onSubmit = async (event) => {
         event.preventDefault();
         addPost(title, description, category, price, address, formImages);
+        loadListings();
     }
 
     return (
@@ -80,11 +80,23 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
                 <hr/>
 
                 <div className="dashboard-right-panel-content-listings">
-                    {listings.results?.map((listing) => (
-                        <div className="dashboard-right-panel-content-listings-item">
-                            {listing}
-                        </div>
-                    ))}
+                    {
+                        // TODO: Display the listings in a stylish way
+                        listings.results?.map((listing) => (
+                            <div className="dashboard-right-panel-content-listings-item">
+                                <div className="dashboard-right-panel-content-listings-item-image">
+                                    <img src={listing.images[0].image} alt={listing.title}/>
+                                </div>
+
+                                <div className="dashboard-right-panel-content-listings-item-info">
+                                    <h1>{listing.title}</h1>
+                                    <p>{listing.description}</p>
+                                    <p>{listing.price}</p>
+                                    <p>{listing.address}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
 
             </div>
