@@ -1,0 +1,53 @@
+.listings-item-link-wrapper {
+	display : flex;
+	flex    : 1;
+}
+
+.listings-item {
+	background-color      : #FFFFFF;
+	border                : 1px solid #CCCCCC;
+	border-radius         : 1rem;
+	box-shadow            : 0 2px 4px rgba(0, 0, 0, 0.1);
+	display               : grid;
+	grid-template-columns : 1.3fr 2fr;
+	height                : 10rem;
+	overflow              : hidden;
+	width                 : 100%;
+}
+
+.listings-item:hover {
+	box-shadow : 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.listings-item-image {
+	align-items     : center;
+	display         : flex;
+	justify-content : center;
+}
+
+.listings-item-image img {
+	border-bottom : 1px solid #CCCCCC;
+	height        : 100%;
+	object-fit    : cover;
+	width         : 100%;
+}
+
+.listings-item-info {
+	display            : grid;
+	grid-template-rows : 1fr 2fr 0.5fr 0.5fr;
+	max-height         : 100%;
+	overflow           : hidden;
+	padding            : calc(var(--padding) / 2);
+}
+
+.listings-item-info h1 {
+	font-size : 1.5em;
+}
+
+.listings-item-info p {
+	font-size     : 1em;
+	margin        : 0;
+	overflow      : hidden;
+	text-overflow : ellipsis;
+	white-space   : nowrap;
+}

@@ -111,3 +111,10 @@
 	flex-direction : column;
 	gap            : 2rem;
 }
+
+.dashboard-right-panel-content-listings {
+	display         : flex;
+	flex-flow       : row wrap;
+	gap             : 2rem;
+	justify-content : space-evenly;
+}

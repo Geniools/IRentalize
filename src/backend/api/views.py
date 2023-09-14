@@ -5,7 +5,7 @@ from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -18,6 +18,7 @@ from .utils import get_client_ip
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    pagination_class = None
 
 
 # Listings
@@ -30,7 +31,7 @@ class ListingViewSet(viewsets.ModelViewSet):
     filterset_class = ListingSearchFilter
     
     def create(self, request, *args, **kwargs):
-        # Make a copy of the request data so that we can modify it (QueryDict is immutable)
+        # Make a "copy" of the request data so that we can modify it (QueryDict is immutable)
         copy_data = request.data
         # Add the user (host) to the created listing
         copy_data['host'] = request.user.id
@@ -43,6 +44,28 @@ class ListingViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def update(self, request, *args, **kwargs):
+        # Check of the user is the host of the listing
+        listing = Listing.objects.get(pk=kwargs['pk'])
+        if request.user != listing.host:
+            return Response({'message': 'You are not allowed to edit this listing'}, status=status.HTTP_403_FORBIDDEN)
+        
+        return super().update(request, *args, **kwargs)
+
+
+# User listings (api endpoint to retrieve only the listings attributed to the logged-in user)
+class UserListingViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ListingSerializer
+    queryset = Listing.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    parser_classes = [MultiPartParser, FormParser]
+    filterset_class = ListingSearchFilter
+    pagination_class = None
+    
+    def get_queryset(self):
+        return Listing.objects.filter(host=self.request.user)
 
 
 # Contact Us Form

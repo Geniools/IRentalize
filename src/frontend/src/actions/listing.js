@@ -89,3 +89,29 @@ export const loadListings = () => async (dispatch, getState) => {
         });
     }
 }
+
+export const loadUserListings = () => async (dispatch, getState) => {
+    const accessToken = getState().auth.access;
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `JWT ${accessToken}`,
+        }
+    }
+
+    try {
+        const res = await axiosAuthInstanceAPI.get('/api/user-listings/', config);
+
+        dispatch({
+            type: GET_LISTINGS_SUCCESS,
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log(err);
+
+        dispatch({
+            type: GET_LISTINGS_FAIL,
+        });
+    }
+}

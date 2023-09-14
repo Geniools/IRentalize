@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {addPost, loadCategories, loadListings} from "../../actions/listing";
+import {addPost, loadCategories, loadUserListings} from "../../actions/listing";
 
-const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListings}) => {
+const UserPostsPage = ({listings, categories, addPost, loadCategories, loadUserListings}) => {
     useEffect(() => {
         loadCategories();
-        loadListings();
+        loadUserListings();
     }, []);
 
     const [formVisibility, setFormVisibility] = useState(null);
@@ -35,7 +35,7 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
     const onSubmit = async (event) => {
         event.preventDefault();
         addPost(title, description, category, price, address, formImages);
-        loadListings();
+        loadUserListings();
     }
 
     return (
@@ -81,20 +81,22 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadListi
 
                 <div className="dashboard-right-panel-content-listings">
                     {
-                        // TODO: Display the listings in a stylish way
-                        listings.results?.map((listing) => (
-                            <div className="dashboard-right-panel-content-listings-item">
-                                <div className="dashboard-right-panel-content-listings-item-image">
-                                    <img src={listing.images[0].image} alt={listing.title}/>
-                                </div>
+                        // TODO: Make a component for this
+                        listings?.map((listing) => (
+                            <a href="" className="listings-item-link-wrapper">
+                                <div className="listings-item">
+                                    <div className="listings-item-image">
+                                        <img src={listing.images[0].image} alt={listing.title}/>
+                                    </div>
 
-                                <div className="dashboard-right-panel-content-listings-item-info">
-                                    <h1>{listing.title}</h1>
-                                    <p>{listing.description}</p>
-                                    <p>{listing.price}</p>
-                                    <p>{listing.address}</p>
+                                    <div className="listings-item-info">
+                                        <h1>{listing.title}</h1>
+                                        <p>{listing.description}</p>
+                                        <p>{listing.price}</p>
+                                        <p>{listing.address}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         ))
                     }
                 </div>
@@ -109,4 +111,4 @@ const mapStateToProps = state => ({
     categories: state.listing.categories,
 });
 
-export default connect(mapStateToProps, {addPost, loadCategories, loadListings})(UserPostsPage);
+export default connect(mapStateToProps, {addPost, loadCategories, loadUserListings})(UserPostsPage);
