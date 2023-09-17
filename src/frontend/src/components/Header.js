@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import Icon from "./Icon";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from "../actions/auth";
 import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../UrlPaths";
@@ -51,10 +51,10 @@ const Header = ({
             {showLinks && (
                 <nav className={"header-panel"}>
                     <ul>
-                        <li><Link to={""}>Housing</Link></li>
-                        <li><Link to={""}>Furniture</Link></li>
-                        <li><Link to={""}>Accessories</Link></li>
-                        <li><Link to={CONTACT_US_URL}>Contact Us</Link></li>
+                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={""}>Housing</NavLink></li>
+                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={""}>Furniture</NavLink></li>
+                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={""}>Accessories</NavLink></li>
+                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>Contact Us</NavLink></li>
                     </ul>
                 </nav>
             )}

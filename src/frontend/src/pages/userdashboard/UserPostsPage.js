@@ -1,41 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {addPost, loadCategories, loadUserListings} from "../../actions/listing";
+import ListingLink from "../../components/ListingLink";
+import ListingForm from "../../components/ListingForm";
+import {loadUserListings} from "../../actions/listing";
 
-const UserPostsPage = ({listings, categories, addPost, loadCategories, loadUserListings}) => {
+const UserPostsPage = ({listings, loadUserListings}) => {
     useEffect(() => {
-        loadCategories();
         loadUserListings();
     }, []);
 
     const [formVisibility, setFormVisibility] = useState(null);
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        category: '',
-        price: '',
-        address: '',
-    });
-    const [formImages, setFormImages] = useState([]);
 
-    const {title, description, category, price, address} = formData;
-
-    const onChange = event => {
-        setFormData({...formData, [event.target.name]: event.target.value})
-    }
-
-    const onImageChange = event => {
-        setFormImages(event.target.files);
-    }
 
     const changeFormVisibility = () => {
         setFormVisibility(!formVisibility);
-    }
-
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        addPost(title, description, category, price, address, formImages);
-        loadUserListings();
     }
 
     return (
@@ -47,60 +25,17 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadUserL
             <button onClick={changeFormVisibility}>{formVisibility ? 'Hide Form' : 'Add Post +'}</button>
 
             <div className="dashboard-right-panel-content">
-                {formVisibility ?
-                    <form onSubmit={onSubmit}>
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" name="title" placeholder="Title" value={title} onChange={onChange}/>
-
-                        <label htmlFor="description">Description</label>
-                        <textarea id="description" name="description" placeholder="Description" value={description} onChange={onChange}></textarea>
-
-                        <label htmlFor="price">Price</label>
-                        <input type="number" id="price" name="price" placeholder="Price" value={price} onChange={onChange}/>
-
-                        <label htmlFor="category">Category</label>
-                        <select id="category" name="category" value={category} onChange={onChange}>
-                            <option>Select category...</option>
-                            {categories.results.map((category) => (
-                                <option value={category.id}>{category.name}</option>
-                            ))}
-                        </select>
-
-                        <label htmlFor="address">Address</label>
-                        <input type="text" id="address" name="address" placeholder="Address" value={address} onChange={onChange}/>
-
-                        <label htmlFor="images">Images</label>
-                        <input type="file" id="images" name="images" accept="image/*" onChange={onImageChange} multiple/>
-
-                        <button type="submit">Add Post</button>
-                    </form>
-                    : null
-                }
+                {formVisibility ? <ListingForm/> : null}
 
                 <hr/>
 
                 <div className="dashboard-right-panel-content-listings">
                     {
-                        // TODO: Make a component for this
                         listings?.map((listing) => (
-                            <a href="" className="listings-item-link-wrapper">
-                                <div className="listings-item">
-                                    <div className="listings-item-image">
-                                        <img src={listing.images[0].image} alt={listing.title}/>
-                                    </div>
-
-                                    <div className="listings-item-info">
-                                        <h1>{listing.title}</h1>
-                                        <p>{listing.description}</p>
-                                        <p>{listing.price}</p>
-                                        <p>{listing.address}</p>
-                                    </div>
-                                </div>
-                            </a>
+                            <ListingLink listing={listing} url={"/account/user-posts/"}/>
                         ))
                     }
                 </div>
-
             </div>
         </>
     )
@@ -108,7 +43,6 @@ const UserPostsPage = ({listings, categories, addPost, loadCategories, loadUserL
 
 const mapStateToProps = state => ({
     listings: state.listing.listings,
-    categories: state.listing.categories,
 });
 
-export default connect(mapStateToProps, {addPost, loadCategories, loadUserListings})(UserPostsPage);
+export default connect(mapStateToProps, {loadUserListings})(UserPostsPage);

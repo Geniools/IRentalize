@@ -1,12 +1,13 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import Header from "../../components/Header";
-import {Link, Navigate, Route, Routes} from "react-router-dom";
+import {Link, Navigate, NavLink, Route, Routes} from "react-router-dom";
 import {LOGIN_URL, USER_DETAILS_URL, USER_ORDERS_URL, USER_POSTS_URL, USER_RECENTLY_VIEWED_URL} from "../../UrlPaths";
 import UserDetailsPage from "./UserDetailsPage";
 import UserOrdersPage from "./UserOrdersPage";
 import UserPostsPage from "./UserPostsPage";
 import UserRecentlyViewedPage from "./UserRecentlyViewedPage";
+import UserPostDetailsPage from "./UserPostDetailsPage";
 
 const UserDashboardPage = ({isAuthenticated, user}) => {
     useEffect(() => {
@@ -34,19 +35,20 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
                         </div>
 
                         <ul className="dashboard-nav-bar">
-                            <li><Link to={USER_DETAILS_URL}>My Details</Link></li>
-                            <li><Link to={USER_ORDERS_URL}>My Orders</Link></li>
-                            <li><Link to={USER_POSTS_URL}>My Posts</Link></li>
-                            <li><Link to={USER_RECENTLY_VIEWED_URL}>Recently Viewed</Link></li>
+                            <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_DETAILS_URL}>My Details</NavLink></li>
+                            <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_ORDERS_URL}>My Orders</NavLink></li>
+                            <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_POSTS_URL}>My Posts</NavLink></li>
+                            <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_RECENTLY_VIEWED_URL}>Recently Viewed</NavLink></li>
                         </ul>
                     </div>
 
                     <div className="dashboard-right-panel">
                         <Routes>
-                            <Route path='user-details' element={<UserDetailsPage/>}/>
-                            <Route path='user-orders' element={<UserOrdersPage/>}/>
-                            <Route path='user-posts' element={<UserPostsPage/>}/>
-                            <Route path='user-recently-viewed' element={<UserRecentlyViewedPage/>}/>
+                            <Route exact path='/user-details' element={<UserDetailsPage/>}/>
+                            <Route exact path='/user-orders' element={<UserOrdersPage/>}/>
+                            <Route exact path='/user-posts' element={<UserPostsPage/>}/>
+                            <Route exact path='/user-posts/:id' element={<UserPostDetailsPage/>}/>
+                            <Route exact path='/user-recently-viewed' element={<UserRecentlyViewedPage/>}/>
                         </Routes>
                     </div>
                 </div>

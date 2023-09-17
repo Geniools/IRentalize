@@ -5,6 +5,7 @@
 	--color-grey                 : #808080;
 	--header-height              : 7rem;
 	--dashboard-left-panel-width : 35%;
+	--color-red                  : #F11717;
 	--color-white                : #FFFFFF;
 }
 
@@ -54,6 +55,14 @@ li {
 
 .green-text {
 	color : var(--color-green);
+}
+
+.red-text {
+	color : var(--color-red);
+}
+
+.delete {
+	background-color : var(--color-red);
 }
 
 .hidden {

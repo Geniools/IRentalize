@@ -26,6 +26,7 @@ import {
     SIGNUP_URL,
     USER_DETAILS_URL,
     USER_ORDERS_URL,
+    USER_POST_DETAILS_URL,
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL
 } from "./UrlPaths";
@@ -37,6 +38,7 @@ import UserDetailsPage from "./pages/userdashboard/UserDetailsPage";
 import UserPostsPage from "./pages/userdashboard/UserPostsPage";
 import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage";
 import UserOrdersPage from "./pages/userdashboard/UserOrdersPage";
+import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage";
 
 const App = () => {
     return (
@@ -51,10 +53,11 @@ const App = () => {
 
                         {/* User Dashboard */}
                         <Route path={ACCOUNT_URL} element={<UserDashboardPage/>}>
-                            <Route path={USER_DETAILS_URL} element={<UserDetailsPage/>}/>
-                            <Route path={USER_ORDERS_URL} element={<UserOrdersPage/>}/>
-                            <Route path={USER_POSTS_URL} element={<UserPostsPage/>}/>
-                            <Route path={USER_RECENTLY_VIEWED_URL} element={<UserRecentlyViewedPage/>}/>
+                            <Route exact path={USER_DETAILS_URL} element={<UserDetailsPage/>}/>
+                            <Route exact path={USER_ORDERS_URL} element={<UserOrdersPage/>}/>
+                            <Route exact path={USER_POSTS_URL} element={<UserPostsPage/>}/>
+                            <Route exact path={USER_POST_DETAILS_URL} element={<UserPostDetailsPage/>}/>
+                            <Route exact path={USER_RECENTLY_VIEWED_URL} element={<UserRecentlyViewedPage/>}/>
                         </Route>
 
                         {/* Authentication */}
@@ -65,6 +68,9 @@ const App = () => {
                         <Route exact path={PASSWORD_RESET_CONFIRM_URL} element={<ResetPasswordConfirmPage/>}/>
                         <Route exact path={EMAIL_RESET_URL} element={<ResetEmailPage/>}/>
                         <Route exact path={EMAIL_RESET_CONFIRM_URL} element={<ResetEmailConfirmPage/>}/>
+
+                        {/* Other */}
+                        <Route path="*" element={<h1>404 Not Found :(</h1>}/>
                     </Routes>
                 </Layout>
             </Router>

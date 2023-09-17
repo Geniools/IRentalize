@@ -11,9 +11,9 @@ urlpatterns = [
     path('account/', views.index, name='account'),
     path('account/user-details/', views.index, name='user-details'),
     path('account/user-orders/', views.index, name='user-orders'),
-    path('account/user-orders/<int:id>', views.index, name='user-order-details'),
+    path('account/user-orders/<int:id>/', views.index, name='user-order-details'),
     path('account/user-posts/', views.index, name='user-posts'),
-    path('account/user-posts/<int:id>', views.index, name='user-posts-details'),
+    path('account/user-posts/<int:id>/', views.index, name='user-posts-details'),
     path('account/user-recently-viewed/', views.index, name='user-recently-viewed'),
     # Authentication
     path('login/', views.index, name='login'),
