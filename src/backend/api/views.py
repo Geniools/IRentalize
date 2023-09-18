@@ -2,6 +2,7 @@ import requests
 from django.conf import settings
 from django.core.mail import send_mail
 from django_filters import rest_framework as filters
+from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -11,6 +12,7 @@ from rest_framework.views import APIView
 
 from backend.api.serializers import *
 from backend.listings.filters import ListingSearchFilter
+from .permissions import IsListingOwner, IsListingImageOwner
 from .utils import get_client_ip
 
 
@@ -21,14 +23,39 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
 
 
+# Listing images
+class ListingImageViewSet(mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    queryset = ListingImage.objects.all()
+    permission_classes = [IsAuthenticated, IsListingImageOwner]
+    serializer_class = ListingImageSerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        # First retrieve all the listings attributed to the logged-in user
+        listings = Listing.objects.filter(host=self.request.user)
+        # Then retrieve all the images attributed to the listings
+        return ListingImage.objects.filter(listing__in=listings)
+
+
 # Listings
-class ListingViewSet(viewsets.ModelViewSet):
+class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     parser_classes = [MultiPartParser, FormParser]
     filterset_class = ListingSearchFilter
+
+
+# User listings (api endpoint to retrieve only the listings attributed to the logged-in user)
+class UserListingViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsListingOwner]
+    serializer_class = ListingSerializer
+    queryset = Listing.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    parser_classes = [MultiPartParser, FormParser]
+    filterset_class = ListingSearchFilter
+    pagination_class = None
     
     def create(self, request, *args, **kwargs):
         # Make a "copy" of the request data so that we can modify it (QueryDict is immutable)
@@ -44,25 +71,6 @@ class ListingViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def update(self, request, *args, **kwargs):
-        # Check of the user is the host of the listing
-        listing = Listing.objects.get(pk=kwargs['pk'])
-        if request.user != listing.host:
-            return Response({'message': 'You are not allowed to edit this listing'}, status=status.HTTP_403_FORBIDDEN)
-        
-        return super().update(request, *args, **kwargs)
-
-
-# User listings (api endpoint to retrieve only the listings attributed to the logged-in user)
-class UserListingViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
-    serializer_class = ListingSerializer
-    queryset = Listing.objects.all()
-    filter_backends = (filters.DjangoFilterBackend,)
-    parser_classes = [MultiPartParser, FormParser]
-    filterset_class = ListingSearchFilter
-    pagination_class = None
     
     def get_queryset(self):
         return Listing.objects.filter(host=self.request.user)

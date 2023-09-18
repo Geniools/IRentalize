@@ -31,9 +31,11 @@ const UserPostsPage = ({listings, loadUserListings}) => {
 
                 <div className="dashboard-right-panel-content-listings">
                     {
-                        listings?.map((listing) => (
-                            <ListingLink listing={listing} url={"/account/user-posts/"}/>
-                        ))
+                        // TODO: Add a loading spinner
+                        !listings ? <h1>Loading...</h1> :
+                            listings?.map((listing) => (
+                                <ListingLink listing={listing} url={"/account/user-posts/"}/>
+                            ))
                     }
                 </div>
             </div>

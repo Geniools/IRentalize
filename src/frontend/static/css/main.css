@@ -7,6 +7,7 @@
 	--dashboard-left-panel-width : 35%;
 	--color-red                  : #F11717;
 	--color-white                : #FFFFFF;
+	--color-yellow               : #B79900;
 }
 
 * {
@@ -63,6 +64,10 @@ li {
 
 .delete {
 	background-color : var(--color-red);
+}
+
+.warning {
+	background-color : var(--color-yellow);
 }
 
 .hidden {
@@ -165,3 +170,38 @@ header select {
 	font-size        : 1rem;
 	font-weight      : bold;
 }
+
+/* Popup message */
+.popup-confirmation {
+	background-color : rgba(0, 0, 0, 0.5);
+	bottom           : 0;
+	height           : 100%;
+	left             : 0;
+	position         : fixed;
+	right            : 0;
+	top              : 0;
+	width            : 100%;
+}
+
+.popup-confirmation-content {
+	align-items     : center;
+	background      : var(--color-white);
+	border-color    : var(--color-black);
+	border-radius   : 1rem;
+	bottom          : 30%;
+	box-shadow      : rgba(0, 0, 0, 0.35) 0 5px 15px;
+	display         : flex;
+	flex-flow       : column;
+	gap             : 1.5rem;
+	justify-content : center;
+	left            : 30%;
+	position        : absolute;
+	right           : 30%;
+	top             : 30%;
+}
+
+.popup-confirmation-buttons {
+	display : flex;
+	gap     : 1rem;
+}
+

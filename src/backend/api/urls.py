@@ -7,6 +7,7 @@ from backend.api import views
 router = routers.DefaultRouter()
 router.register(r'listings', views.ListingViewSet)
 router.register(r'user-listings', views.UserListingViewSet)
+router.register(r'listing-images', views.ListingImageViewSet)
 router.register(r'categories', views.CategoryViewSet)
 
 # The API URLs are now determined automatically by the router.

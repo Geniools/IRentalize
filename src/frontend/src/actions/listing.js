@@ -1,7 +1,7 @@
 import {ADD_POST_FAIL, ADD_POST_SUCCESS, GET_CATEGORIES_FAIL, GET_CATEGORIES_SUCCESS, GET_LISTINGS_FAIL, GET_LISTINGS_SUCCESS} from "./types";
 import axiosAuthInstanceAPI from "../utils/axios/axios";
 
-export const addPost = (title, description, category, price, address, images) => async (dispatch, getState) => {
+export const addListing = (title, description, category, price, address, images) => async (dispatch, getState) => {
     const accessToken = getState().auth.access;
 
     const config = {
@@ -24,7 +24,7 @@ export const addPost = (title, description, category, price, address, images) =>
     }
 
     try {
-        const res = await axiosAuthInstanceAPI.post('/api/listings/', formData, config);
+        const res = await axiosAuthInstanceAPI.post('/api/user-listings/', formData, config);
 
         dispatch({
             type: ADD_POST_SUCCESS,
