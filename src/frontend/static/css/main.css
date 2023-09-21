@@ -8,8 +8,10 @@
 	--footer-height              : 14rem;
 	--header-height              : 7rem;
 	--dashboard-left-panel-width : 35%;
+	--border-radius              : 1rem;
 	--color-red                  : #F11717;
 	--color-white                : #FFFFFF;
+	--text-width-span            : 70%;
 	--color-yellow               : #E17E11;
 }
 
@@ -28,7 +30,7 @@ a {
 button {
 	background-color : var(--color-green);
 	border           : none;
-	border-radius    : 1rem;
+	border-radius    : var(--border-radius);
 	color            : var(--color-white);
 	cursor           : pointer;
 	font-weight      : bold;
@@ -51,12 +53,19 @@ textarea {
 
 input, textarea, select, option {
 	border        : 1px solid var(--color-black);
-	border-radius : 1rem;
+	border-radius : var(--border-radius);
 	padding       : calc(var(--padding) / 2);
 }
 
 li {
 	list-style : none;
+}
+
+img {
+	max-height : 100%;
+	max-width  : 100%;
+	object-fit : cover;
+	overflow   : auto;
 }
 
 .green-text {
@@ -104,12 +113,38 @@ li {
 	align-items     : center;
 	display         : flex;
 	justify-content : center;
+	text-align      : center;
+}
+
+.flex-vertically-centered {
+	align-items : center;
+	display     : flex;
+	flex-flow   : column;
+}
+
+.flex-left-content {
+	align-items : flex-start;
+	display     : flex;
+	text-align  : start;
+}
+
+.flex-right-content {
+	align-items : flex-end;
+	display     : flex;
+	margin-left : calc(100% - var(--text-width-span));
+	text-align  : end;
+}
+
+.content-wrapper {
+	padding-bottom : var(--footer-height);
+	position       : relative;
 }
 
 /* Header */
 
 header {
 	align-items     : center;
+	border-radius   : var(--border-radius);
 	display         : flex;
 	height          : var(--header-height);
 	justify-content : space-between;
@@ -150,7 +185,7 @@ header {
 
 .header-green-link {
 	background-color : var(--color-green);
-	border-radius    : 1.5rem;
+	border-radius    : var(--border-radius);
 	color            : var(--color-white);
 	padding          : 0.8rem;
 }
@@ -161,16 +196,11 @@ header {
 	height  : 100%;
 }
 
-.icon img {
-	height : 80%;
-	width  : 100%;
-}
-
 header select {
 	appearance       : auto;
 	background-color : var(--color-white);
 	border           : none;
-	border-radius    : 1rem;
+	border-radius    : var(--border-radius);
 	font-size        : 1rem;
 	font-weight      : bold;
 }
@@ -179,7 +209,7 @@ header select {
 footer {
 	align-items     : center;
 	background      : var(--color-cyan);
-	border-radius   : 1rem;
+	border-radius   : var(--border-radius);
 	bottom          : 0;
 	display         : flex;
 	font-size       : 1.5rem;
@@ -225,7 +255,7 @@ footer .footer-links {
 	align-items     : center;
 	background      : var(--color-white);
 	border-color    : var(--color-black);
-	border-radius   : 1rem;
+	border-radius   : var(--border-radius);
 	bottom          : 30%;
 	box-shadow      : rgba(0, 0, 0, 0.35) 0 5px 15px;
 	display         : flex;

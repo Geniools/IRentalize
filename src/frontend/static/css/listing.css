@@ -6,7 +6,7 @@
 .listings-item {
 	background-color      : #FFFFFF;
 	border                : 1px solid #CCCCCC;
-	border-radius         : 1rem;
+	border-radius         : var(--border-radius);
 	box-shadow            : 0 2px 4px rgba(0, 0, 0, 0.1);
 	display               : grid;
 	grid-template-columns : 1.3fr 2fr;
@@ -65,7 +65,5 @@
 }
 
 .listing-editable-image-container img {
-	height     : 100%;
 	max-height : 50rem;
-	width      : 100%;
 }
