@@ -14,8 +14,8 @@ const ListingLink = ({listing, url}) => {
                 <div className="listings-item-info">
                     <h1>{listing.title}</h1>
                     <p>{listing.description}</p>
-                    <p>{listing.price}</p>
-                    <p>{listing.address}</p>
+                    <p>{listing.price} <b><span>&euro;</span></b></p>
+                    <i><p>{listing.address}</p></i>
                 </div>
             </div>
         </Link>

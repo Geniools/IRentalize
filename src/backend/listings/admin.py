@@ -6,7 +6,7 @@ from backend.listings.models import Listing, ListingImage, Category
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'host', 'description', 'price', 'address')
+    list_display = ('id', 'title', 'category', 'host', 'description', 'image_number', 'price', 'address')
     list_display_links = ('id', 'title')
     list_filter = ('category', 'host')
     search_fields = ('title', 'description', 'address', 'host__email', 'host__first_name', 'host__last_name', 'host__username', 'price')
@@ -35,6 +35,10 @@ class ListingAdmin(admin.ModelAdmin):
     
     display_images.allow_tags = True
     display_images.short_description = 'Images'
+    
+    @admin.display(description='Image number')
+    def image_number(self, obj):
+        return obj.images.count()
 
 
 @admin.register(ListingImage)

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {addListing, loadCategories, loadUserListings} from "../actions/listing";
+import {addListing, loadCategories, loadUserListings, updateListing} from "../actions/listing";
 
-const ListingForm = ({categories, loadCategories, addListing, loadUserListings, listingDetails}) => {
+const ListingForm = ({categories, loadCategories, addListing, updateListing, loadUserListings, listingDetails, onSubmitExtraFunc, update = false}) => {
     useEffect(() => {
         loadCategories();
 
@@ -32,20 +32,28 @@ const ListingForm = ({categories, loadCategories, addListing, loadUserListings, 
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        // TODO: Check if the listing exists. If it does, update it. If it doesn't, create it.
-        
-        addListing(title, description, category, price, address, formImages);
-        // Reload the user's listings
-        loadUserListings();
-        // Clear the form
-        setFormData({
-            title: '',
-            description: '',
-            category: '',
-            price: '',
-            address: '',
-        });
-        setFormImages([]);
+
+        if (update === true) {
+            // Update the listing
+            updateListing(listingDetails.id, title, description, category, price, address, formImages);
+        } else {
+            addListing(title, description, category, price, address, formImages);
+            // Reload the user's listings
+            loadUserListings();
+            // Clear the form
+            setFormData({
+                title: '',
+                description: '',
+                category: '',
+                price: '',
+                address: '',
+            });
+            setFormImages([]);
+        }
+
+        if (onSubmitExtraFunc) {
+            onSubmitExtraFunc();
+        }
     }
 
     return (
@@ -84,4 +92,4 @@ const mapStateToProps = state => ({
     categories: state.listing.categories,
 });
 
-export default connect(mapStateToProps, {addListing, loadCategories, loadUserListings})(ListingForm);
+export default connect(mapStateToProps, {addListing, updateListing, loadCategories, loadUserListings})(ListingForm);

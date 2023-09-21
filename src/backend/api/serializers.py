@@ -36,8 +36,22 @@ class ListingSerializer(serializers.ModelSerializer):
         ]
     
     def create(self, validated_data):
+        # Retrieve the uploaded images from the validated data
         uploaded_images = validated_data.pop("uploaded_images")
+        # Create the listing
         listing = Listing.objects.create(**validated_data)
+        
+        # Create and save the images to the listing
+        for image in uploaded_images:
+            ListingImage.objects.create(listing=listing, image=image)
+        
+        return listing
+    
+    def update(self, instance, validated_data):
+        # Retrieve the uploaded images from the validated data
+        uploaded_images = validated_data.pop("uploaded_images")
+        # Update the listing
+        listing = super().update(instance, validated_data)
         
         # Create and save the images to the listing
         for image in uploaded_images:

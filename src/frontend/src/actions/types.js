@@ -29,6 +29,8 @@ export const USERNAME_RESET_CONFIRM_SUCCESS = 'USERNAME_RESET_CONFIRM_SUCCESS';
 
 // Listings ==================================================================================================================
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
+export const UPDATE_POST_FAIL = 'UPDATE_POST_FAIL';
 export const ADD_POST_FAIL = 'ADD_POST_FAIL';
 export const GET_LISTINGS_SUCCESS = 'GET_LISTINGS_SUCCESS';
 export const GET_LISTINGS_FAIL = 'GET_LISTINGS_FAIL';

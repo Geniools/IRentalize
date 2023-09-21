@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Navigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {connect} from "react-redux";
 import ListingForm from "../../components/ListingForm";
 import {USER_POSTS_URL} from "../../UrlPaths";
@@ -7,6 +7,7 @@ import PopupConfirmation from "../../components/PopupConfirmation";
 import axiosAuthInstanceAPI from "../../utils/axios/axios";
 
 const UserPostDetailsPage = ({loadCategories}) => {
+    const navigate = useNavigate();
     // Listing's id in the database
     const {id} = useParams();
     const [listing, setListing] = useState(null);
@@ -21,15 +22,16 @@ const UserPostDetailsPage = ({loadCategories}) => {
         // Retrieve the listing based on the id
         axiosAuthInstanceAPI.get(`/api/user-listings/${id}`)
             .then(data => {
+                console.log("Got the listing!");
                 setListing(data.data);
             })
             .catch(err => {
-                console.log(err);
-                return (
-                    <Navigate to={USER_POSTS_URL}/>
-                )
+                console.log("Error getting the listing:", err);
+                navigate(USER_POSTS_URL);
             });
     }
+
+    // Deletion functions
     const onDeleteImage = (id) => {
         setImageToDelete(id);
     }
@@ -38,6 +40,7 @@ const UserPostDetailsPage = ({loadCategories}) => {
         setPostDeleted(true);
     }
 
+    // Confirmation functions
     const onConfirmDeleteImage = () => {
         console.log("Image is being deleted!: ", imageToDelete);
 
@@ -62,18 +65,19 @@ const UserPostDetailsPage = ({loadCategories}) => {
         axiosAuthInstanceAPI.delete(`/api/user-listings/${id}`)
             .then(data => {
                 console.log(data);
-                setPostDeleted(true);
+                navigate(USER_POSTS_URL);
             })
             .catch(err => {
-                console.log(err);
+                console.log("Error deleting the post:", err);
             });
 
         // Close the popup
         setPostDeleted(false);
     }
 
+    // Cancellation functions
     const onCancelDeleteImage = () => {
-        setImageToDelete(null);
+        setImageToDelete(false);
     }
 
     const onCancelDeletePost = () => {
@@ -93,7 +97,7 @@ const UserPostDetailsPage = ({loadCategories}) => {
                     <h1>EDIT <i>{listing.title}</i></h1>
                 </div>
 
-                <ListingForm listingDetails={listing}/>
+                <ListingForm listingDetails={listing} update={true} onSubmitExtraFunc={getListing}/>
                 <button className={"delete"} onClick={onPostDelete}>Delete</button>
 
                 <hr/>
@@ -115,6 +119,7 @@ const UserPostDetailsPage = ({loadCategories}) => {
                     }
                 </div>
 
+                {/* Popups */}
                 {
                     imageToDelete && (
                         <PopupConfirmation
@@ -135,6 +140,7 @@ const UserPostDetailsPage = ({loadCategories}) => {
                         />
                     )
                 }
+                {/* ============ */}
             </>
         )
     }

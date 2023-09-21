@@ -11,7 +11,6 @@ const UserPostsPage = ({listings, loadUserListings}) => {
 
     const [formVisibility, setFormVisibility] = useState(null);
 
-
     const changeFormVisibility = () => {
         setFormVisibility(!formVisibility);
     }
@@ -25,17 +24,15 @@ const UserPostsPage = ({listings, loadUserListings}) => {
             <button onClick={changeFormVisibility}>{formVisibility ? 'Hide Form' : 'Add Post +'}</button>
 
             <div className="dashboard-right-panel-content">
-                {formVisibility ? <ListingForm/> : null}
+                {formVisibility ? <ListingForm update={false}/> : null}
 
                 <hr/>
 
                 <div className="dashboard-right-panel-content-listings">
                     {
-                        // TODO: Add a loading spinner
-                        !listings ? <h1>Loading...</h1> :
-                            listings?.map((listing) => (
-                                <ListingLink listing={listing} url={"/account/user-posts/"}/>
-                            ))
+                        listings?.map((listing) => (
+                            <ListingLink listing={listing} url={"/account/user-posts/"}/>
+                        ))
                     }
                 </div>
             </div>

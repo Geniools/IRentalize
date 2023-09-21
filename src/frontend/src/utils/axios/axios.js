@@ -4,6 +4,23 @@ import {refreshToken} from "../../actions/auth";
 
 const axiosAuthInstanceAPI = axios.create();
 
+
+// Request interceptor for API calls to add the access token header to the request
+axiosAuthInstanceAPI.interceptors.request.use(
+    async config => {
+        const access = localStorage.getItem("access") || sessionStorage.getItem("access");
+
+        if (access) {
+            config.headers['Authorization'] = `JWT ${access}`;
+        }
+
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+)
+
 // Response interceptor for API calls to refresh the token
 axiosAuthInstanceAPI.interceptors.response.use(
     response => response,

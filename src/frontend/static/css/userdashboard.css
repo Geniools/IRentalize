@@ -24,7 +24,7 @@
 .dashboard-left-panel-header {
 	align-items : center;
 	display     : flex;
-	gap         : 5rem;
+	gap         : 2rem;
 }
 
 .dashboard-left-panel-header img {

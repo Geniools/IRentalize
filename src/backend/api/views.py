@@ -1,4 +1,3 @@
-import requests
 from django.conf import settings
 from django.core.mail import send_mail
 from django_filters import rest_framework as filters
@@ -10,10 +9,10 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAu
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from backend.api.permissions import IsListingOwner, IsListingImageOwner
 from backend.api.serializers import *
+from backend.api.utils import is_valid_captcha
 from backend.listings.filters import ListingSearchFilter
-from .permissions import IsListingOwner, IsListingImageOwner
-from .utils import get_client_ip
 
 
 # Categories
@@ -96,16 +95,8 @@ class ContactUsView(APIView):
             
             # Validate the captcha
             captcha = serializer.validated_data['g_recaptcha_response']
-            captcha_response = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data={
-                    'response': captcha,
-                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-                    'remote_ip': get_client_ip(request),
-                }
-            )
             
-            if not captcha_response.json()['success']:
+            if not is_valid_captcha(request=request, captcha=captcha):
                 return Response({'message': 'Invalid captcha'}, status=status.HTTP_406_NOT_ACCEPTABLE)
             
             # Send email if captcha is valid
