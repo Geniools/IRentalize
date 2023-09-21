@@ -1,0 +1,11 @@
+.content-wrapper {
+	padding-bottom : var(--footer-height);
+}
+
+.background-image-container {
+	background-position : center;
+	background-size     : cover;
+	height              : 70vh;
+	opacity             : 70%;
+	width               : 100%;
+}

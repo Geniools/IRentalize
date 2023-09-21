@@ -1,13 +1,16 @@
 :root {
 	--padding                    : 2rem;
 	--color-black                : #000000;
+	--color-blue                 : #5092FF;
+	--color-cyan                 : #68EDCB;
 	--color-green                : #50C878;
 	--color-grey                 : #808080;
+	--footer-height              : 14rem;
 	--header-height              : 7rem;
 	--dashboard-left-panel-width : 35%;
 	--color-red                  : #F11717;
 	--color-white                : #FFFFFF;
-	--color-yellow               : #B79900;
+	--color-yellow               : #E17E11;
 }
 
 * {
@@ -33,9 +36,11 @@ button {
 }
 
 main {
-	display   : flex;
-	flex-flow : column;
-	width     : 100%;
+	display    : flex;
+	flex-flow  : column;
+	min-height : 100vh;
+	position   : relative;
+	width      : 100%;
 }
 
 textarea {
@@ -140,8 +145,7 @@ header {
 }
 
 .header-panel ul li a:hover {
-	border-bottom  : 0.2rem solid var(--color-green);
-	padding-bottom : 0.2rem;
+	color : var(--color-green);
 }
 
 .header-green-link {
@@ -169,6 +173,40 @@ header select {
 	border-radius    : 1rem;
 	font-size        : 1rem;
 	font-weight      : bold;
+}
+
+/* Footer */
+footer {
+	align-items     : center;
+	background      : var(--color-cyan);
+	border-radius   : 1rem;
+	bottom          : 0;
+	display         : flex;
+	font-size       : 1.5rem;
+	gap             : var(--padding);
+	height          : var(--footer-height);
+	justify-content : space-between;
+	padding         : 0 var(--padding);
+	position        : absolute;
+	width           : 100%;
+}
+
+footer .footer-links {
+	display : flex;
+	gap     : 1rem;
+}
+
+.footer-links a {
+	color : var(--color-black);
+}
+
+.footer-links a:hover {
+	color : var(--color-white);
+}
+
+.copyright {
+	color     : var(--color-black);
+	font-size : 12px;
 }
 
 /* Popup message */
