@@ -6,7 +6,7 @@ import {USER_POSTS_URL} from "../../UrlPaths";
 import PopupConfirmation from "../../components/PopupConfirmation";
 import axiosAuthInstanceAPI from "../../utils/axios/axios";
 
-const UserPostDetailsPage = ({loadCategories}) => {
+const UserPostDetailsPage = () => {
     const navigate = useNavigate();
     // Listing's id in the database
     const {id} = useParams();
@@ -22,7 +22,6 @@ const UserPostDetailsPage = ({loadCategories}) => {
         // Retrieve the listing based on the id
         axiosAuthInstanceAPI.get(`/api/user-listings/${id}`)
             .then(data => {
-                console.log("Got the listing!");
                 setListing(data.data);
             })
             .catch(err => {
@@ -47,7 +46,6 @@ const UserPostDetailsPage = ({loadCategories}) => {
         // Delete the image from the database
         axiosAuthInstanceAPI.delete(`/api/listing-images/${imageToDelete}`)
             .then(data => {
-                console.log(data);
                 getListing();
             })
             .catch(err => {
@@ -64,7 +62,6 @@ const UserPostDetailsPage = ({loadCategories}) => {
         // Delete the post from the database
         axiosAuthInstanceAPI.delete(`/api/user-listings/${id}`)
             .then(data => {
-                console.log(data);
                 navigate(USER_POSTS_URL);
             })
             .catch(err => {

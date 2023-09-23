@@ -60,3 +60,11 @@
 .index-div-link:hover {
 	opacity : 70%;
 }
+
+.listings {
+	display         : flex;
+	flex-flow       : row wrap;
+	gap             : 2rem;
+	justify-content : space-between;
+	padding         : var(--padding);
+}

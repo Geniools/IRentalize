@@ -39,6 +39,7 @@ import UserPostsPage from "./pages/userdashboard/UserPostsPage";
 import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage";
 import UserOrdersPage from "./pages/userdashboard/UserOrdersPage";
 import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage";
+import NotFoundPage from "./pages/404NotFoundPage";
 
 const App = () => {
     return (
@@ -70,7 +71,7 @@ const App = () => {
                         <Route exact path={EMAIL_RESET_CONFIRM_URL} element={<ResetEmailConfirmPage/>}/>
 
                         {/* Other */}
-                        <Route path="*" element={<h1>404 Not Found :(</h1>}/>
+                        <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
                 </Layout>
             </Router>
