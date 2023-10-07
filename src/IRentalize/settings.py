@@ -29,7 +29,7 @@ ADMINS = local_settings.ADMINS
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = local_settings.DEBUG
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = local_settings.ALLOWED_HOSTS
 CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
