@@ -28,6 +28,8 @@ urlpatterns = [
     # path('api-auth/', include('rest_framework.urls')),
 ]
 
+handler404 = 'frontend.views.handler404'
+
 # In order to serve media files in development, we need to add the following to the project's urls.py file:
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
