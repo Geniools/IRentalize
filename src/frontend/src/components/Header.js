@@ -60,6 +60,7 @@ const Header = ({
             )}
 
             <div className={"header-panel"}>
+                {/*TODO: Integrate the ListingSearchForm in the header. It must display/hide when clicking the link below*/}
                 {showSearch && (
                     <Link className={"header-green-link"} to={""}>
                         &#128269;

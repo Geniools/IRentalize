@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.core.mail import send_mail
-from django_filters import rest_framework as filters
 from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
@@ -41,17 +40,14 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    parser_classes = [MultiPartParser, FormParser]
     filterset_class = ListingSearchFilter
 
 
 # User listings (api endpoint to retrieve only the listings attributed to the logged-in user)
 class UserListingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsListingOwner]
-    serializer_class = ListingSerializer
     queryset = Listing.objects.all()
-    filter_backends = (filters.DjangoFilterBackend,)
+    serializer_class = ListingSerializer
     parser_classes = [MultiPartParser, FormParser]
     filterset_class = ListingSearchFilter
     pagination_class = None
@@ -103,7 +99,7 @@ class ContactUsView(APIView):
             subject = f'New Contact Us Form - {full_name}'
             email_message = f'Full Name: {full_name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}'
             from_email = settings.DEFAULT_FROM_EMAIL
-            send_mail(subject, email_message, from_email, ['gumaniuc.alexandru@gmail.com'])
+            send_mail(subject, email_message, from_email, [settings.DEFAULT_FROM_EMAIL])
             
             return Response({'message': 'Contact form submitted successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

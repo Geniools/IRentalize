@@ -2,8 +2,9 @@ import React, {useEffect, useState} from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import axios from "../utils/axios/axios";
 import ListingLink from "../components/ListingLink";
+import ListingSearchForm from "../components/ListingSearchForm";
+import axios from "axios";
 
 const IndexPage = () => {
     const [listings, setListings] = useState([]);
@@ -11,10 +12,25 @@ const IndexPage = () => {
     const [next, setNext] = useState(null);
 
     useEffect(() => {
-        getListings();
+        getListings({});
     }, []);
 
-    const getListings = (url = "/api/listings") => {
+    const getListings = ({url = "/api/listings/", filters}) => {
+        let queryParams = "";
+
+        // Loop through the filters object and append each key and value to the queryParams string
+        for (const key in filters) {
+            if (filters[key] !== "") {
+                queryParams += `${key}=${filters[key]}&`;
+            }
+        }
+        if (queryParams !== "") {
+            // Remove the last character from the queryParams string (which will be a &)
+            url = `${url}?${queryParams.slice(0, -1)}`;
+        }
+
+        console.log(url);
+
         axios.get(url)
             .then(res => {
                 setListings(res.data.results);
@@ -27,11 +43,11 @@ const IndexPage = () => {
     }
 
     const handlePrevious = () => {
-        getListings(previous);
+        getListings({url: previous});
     }
 
     const handleNext = () => {
-        getListings(next);
+        getListings({url: next});
     }
 
     return (
@@ -39,6 +55,8 @@ const IndexPage = () => {
             <Header/>
 
             <div className="content-wrapper">
+                <ListingSearchForm onSubmit={getListings}/>
+
                 <div className="listings">
                     {listings.map(listing => (
                         <ListingLink listing={listing} url=""/>
