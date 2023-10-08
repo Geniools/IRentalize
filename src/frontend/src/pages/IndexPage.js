@@ -58,7 +58,7 @@ const IndexPage = () => {
                 <ListingSearchForm onSubmit={getListings}/>
 
                 <div className="listings">
-                    {listings.map(listing => (
+                    {listings?.map(listing => (
                         <ListingLink listing={listing} url=""/>
                     ))}
                 </div>
