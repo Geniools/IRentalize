@@ -4,7 +4,6 @@ import axios from "axios";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import ListingLink from "../../components/ListingLink/ListingLink";
-import ListingSearchForm from "../../components/ListingSearchForm/ListingSearchForm";
 
 import "./IndexPage.css";
 
@@ -17,6 +16,7 @@ const IndexPage = () => {
         getListings({});
     }, []);
 
+    // TODO: Implement this function to be accessible to the ListingSearchForm component (use redux to save listings to the store)
     const getListings = ({url = "/api/listings/", filters}) => {
         let queryParams = "";
 
@@ -30,7 +30,7 @@ const IndexPage = () => {
             // Remove the last character from the queryParams string (which will be a &)
             url = `${url}?${queryParams.slice(0, -1)}`;
         }
-        
+
         axios.get(url)
             .then(res => {
                 setListings(res.data.results);
@@ -55,7 +55,7 @@ const IndexPage = () => {
             <Header/>
 
             <div className="content-wrapper">
-                <ListingSearchForm onSubmit={getListings}/>
+                {/*<ListingSearchForm onSubmit={getListings}/>*/}
 
                 <div className="listings">
                     {listings?.map(listing => (

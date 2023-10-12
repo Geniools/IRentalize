@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
+
 import {addListing, loadCategories, loadUserListings, updateListing} from "../../actions/listing";
+
 
 const ListingForm = ({categories, loadCategories, addListing, updateListing, loadUserListings, listingDetails, onSubmitExtraFunc, update = false}) => {
     useEffect(() => {

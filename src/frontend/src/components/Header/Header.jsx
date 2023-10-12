@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Link, NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from "../../actions/auth";
@@ -6,6 +6,7 @@ import {logout} from "../../actions/auth";
 import "./Header.css";
 
 import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../../URL_PATHS";
+import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
 
 const Header = ({
                     logout,
@@ -17,6 +18,12 @@ const Header = ({
                     showAuth = true,
                     showLogout = false
                 }) => {
+    const [showSearchForm, setShowSearchForm] = useState(false);
+
+    const toggleSearchForm = () => {
+        setShowSearchForm(!showSearchForm);
+    }
+
     const authLink = () => {
         if (showLogout) {
             return (
@@ -64,11 +71,10 @@ const Header = ({
             )}
 
             <div className={"header-panel"}>
-                {/*TODO: Integrate the ListingSearchForm in the header. It must display/hide when clicking the link below*/}
                 {showSearch && (
-                    <Link className={"header-green-link"} to={""}>
+                    <button className={"header-green-link"} onClick={toggleSearchForm}>
                         &#128269;
-                    </Link>
+                    </button>
                 )}
 
                 <select>
@@ -80,6 +86,8 @@ const Header = ({
                     isAuthenticated ? authLink() : guestLink
                 )}
             </div>
+
+            {showSearchForm && <ListingSearchForm isActive={showSearchForm}/>}
         </header>
     );
 }

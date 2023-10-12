@@ -1,0 +1,26 @@
+.listing-search-form {
+	background-color : var(--color-white);
+	border-radius    : var(--border-radius);
+	box-shadow       : var(--color-black) 0 0 0.5rem;
+	display          : flex;
+	justify-content  : space-between;
+	left             : 50%;
+	opacity          : 0;
+	padding          : var(--padding);
+	position         : absolute;
+	top              : 100%;
+	transform        : translateX(-50%);
+	transition       : opacity 2s ease-in-out, visibility 0.3s ease-in-out;
+	visibility       : hidden;
+	width            : 80%;
+	z-index          : 10;
+}
+
+.listing-search-form.active {
+	opacity    : 100;
+	visibility : visible;
+}
+
+.listing-search-form.active header {
+	height : calc(var(--header-height) * 2);
+}

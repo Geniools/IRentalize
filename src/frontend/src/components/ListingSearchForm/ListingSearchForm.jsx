@@ -1,7 +1,9 @@
 // SearchForm.js
 import React, {useState} from 'react';
 
-const SearchForm = ({onSubmit}) => {
+import "./ListingSearchForm.css";
+
+const SearchForm = ({onSubmit, isActive}) => {
     const [formData, setFormData] = useState({
         category: '',
         title: '',
@@ -21,7 +23,7 @@ const SearchForm = ({onSubmit}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className={`listing-search-form ${isActive ? 'active' : ''}`} onSubmit={handleSubmit}>
             <input type="text" name="category" value={formData.category} onChange={handleChange} placeholder="Category"/>
             <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title"/>
             <input type="text" name="description" value={formData.description} onChange={handleChange} placeholder="Description"/>
