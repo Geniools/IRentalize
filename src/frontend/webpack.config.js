@@ -7,14 +7,21 @@ module.exports = {
         path: path.resolve(__dirname, "./static/frontend"),
         filename: "[name].js",
     },
+    resolve: {
+        extensions: [".js", ".jsx"],
+    },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
                 },
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
             },
         ],
     },
@@ -24,7 +31,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             "process.env": {
-// This has effect on the react lib size
+                // This has effect on the React lib size
                 NODE_ENV: JSON.stringify("production"),
             },
         }),

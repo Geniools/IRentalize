@@ -1,0 +1,16 @@
+.listing-editable-image-container {
+	align-items     : center;
+	display         : flex;
+	justify-content : center;
+	position        : relative;
+}
+
+.listing-editable-image-container button {
+	position : absolute;
+	right    : 0;
+	top      : 0;
+}
+
+.listing-editable-image-container img {
+	max-height : 50rem;
+}

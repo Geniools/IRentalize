@@ -4,14 +4,29 @@ import {Provider} from "react-redux";
 import store from "./utils/store/store";
 
 // Import the pages
-import IndexPage from "./pages/IndexPage";
-import AboutUsPage from "./pages/AboutUsPage";
-import UserLoginPage from "./pages/authentication/UserLoginPage";
-import UserRegistrationPage from "./pages/authentication/UserRegistrationPage";
-import UserDashboardPage from "./pages/userdashboard/UserDashboardPage";
-import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
-import ResetPasswordConfirmPage from "./pages/authentication/ResetPasswordConfirmPage";
 import Layout from "./hocs/Layout";
+// Main pages
+import IndexPage from "./pages/IndexPage/IndexPage";
+import AboutUsPage from "./pages/main/AboutUsPage/AboutUsPage";
+import ContactUsPage from "./pages/main/ContactUsPage/ContactUsPage";
+import NotFoundPage from "./pages/main/404NotFoundPage/404NotFoundPage";
+// Authentication pages
+import UserLoginPage from "./pages/authentication/UserLoginPage/UserLoginPage";
+import UserRegistrationPage from "./pages/authentication/UserRegistrationPage/UserRegistrationPage";
+import ResetPasswordPage from "./pages/authentication/ResetPasswordPage/ResetPasswordPage";
+import ResetPasswordConfirmPage from "./pages/authentication/ResetPasswordConfirmPage/ResetPasswordConfirmPage";
+import UserActivatePage from "./pages/authentication/UserActivatePage/UserActivatePage";
+import ResetEmailPage from "./pages/authentication/ResetEmailPage/ResetEmailPage";
+import ResetEmailConfirmPage from "./pages/authentication/ResetEmailConfirmPage/ResetEmailConfirmPage";
+// User dashboard pages
+import UserDashboardPage from "./pages/userdashboard/UserDashboardPage/UserDashboardPage";
+import UserDetailsPage from "./pages/userdashboard/UserDetailsPage/UserDetailsPage";
+import UserPostsPage from "./pages/userdashboard/UserPostsPage/UserPostsPage";
+import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage/UserRecentlyViewedPage";
+import UserOrdersPage from "./pages/userdashboard/UserOrdersPage/UserOrdersPage";
+import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage/UserPostDetailsPage";
+
+// Import the URL paths
 import {
     ABOUT_US_URL,
     ACCOUNT_URL,
@@ -29,17 +44,7 @@ import {
     USER_POST_DETAILS_URL,
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL
-} from "./UrlPaths";
-import UserActivatePage from "./pages/authentication/UserActivatePage";
-import ContactUsPage from "./pages/ContactUsPage";
-import ResetEmailPage from "./pages/authentication/ResetEmailPage";
-import ResetEmailConfirmPage from "./pages/authentication/ResetEmailConfirmPage";
-import UserDetailsPage from "./pages/userdashboard/UserDetailsPage";
-import UserPostsPage from "./pages/userdashboard/UserPostsPage";
-import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage";
-import UserOrdersPage from "./pages/userdashboard/UserOrdersPage";
-import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage";
-import NotFoundPage from "./pages/404NotFoundPage";
+} from "./URL_PATHS";
 
 const App = () => {
     return (

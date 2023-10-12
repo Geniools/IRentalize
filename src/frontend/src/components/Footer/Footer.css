@@ -1,0 +1,32 @@
+footer {
+	align-items     : center;
+	background      : var(--color-cyan);
+	border-radius   : var(--border-radius);
+	bottom          : 0;
+	display         : flex;
+	font-size       : 1.5rem;
+	gap             : var(--padding);
+	height          : var(--footer-height);
+	justify-content : space-between;
+	padding         : 0 var(--padding);
+	position        : absolute;
+	width           : 100%;
+}
+
+footer .footer-links {
+	display : flex;
+	gap     : 1rem;
+}
+
+.footer-links a {
+	color : var(--color-black);
+}
+
+.footer-links a:hover {
+	color : var(--color-white);
+}
+
+.copyright {
+	color     : var(--color-black);
+	font-size : 12px;
+}

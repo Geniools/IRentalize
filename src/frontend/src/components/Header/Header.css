@@ -1,0 +1,62 @@
+header {
+	align-items     : center;
+	border-radius   : var(--border-radius);
+	display         : flex;
+	height          : var(--header-height);
+	justify-content : space-between;
+	padding         : 0 var(--padding);
+	position        : relative;
+	width           : 100%;
+}
+
+.header-panel {
+	align-items : center;
+	display     : flex;
+	gap         : 3rem;
+	height      : 100%;
+}
+
+.header-panel ul {
+	display   : flex;
+	font-size : 1.5rem;
+	gap       : 5rem;
+	height    : 100%;
+}
+
+.header-panel ul li {
+	align-items : center;
+	display     : flex;
+	height      : 100%;
+}
+
+.header-panel ul li a {
+	color       : var(--color-black);
+	display     : flex;
+	font-weight : bold;
+}
+
+.header-panel ul li a:hover {
+	color : var(--color-green);
+}
+
+.header-green-link {
+	background-color : var(--color-green);
+	border-radius    : var(--border-radius);
+	color            : var(--color-white);
+	padding          : 0.8rem;
+}
+
+.icon {
+	display : flex;
+	gap     : 0.5rem;
+	height  : 100%;
+}
+
+header select {
+	appearance       : auto;
+	background-color : var(--color-white);
+	border           : none;
+	border-radius    : var(--border-radius);
+	font-size        : 1rem;
+	font-weight      : bold;
+}
