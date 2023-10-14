@@ -5,12 +5,15 @@ import {
     GET_CATEGORIES_SUCCESS,
     GET_LISTINGS_FAIL,
     GET_LISTINGS_SUCCESS,
+    GET_USER_LISTINGS_SUCCESS,
     UPDATE_POST_FAIL,
     UPDATE_POST_SUCCESS
 } from "../actions/types";
 
 const initialState = {
     listings: [],
+    previousPageListings: null,
+    nextPageListings: null,
     categories: [],
 }
 
@@ -32,6 +35,13 @@ export default function (state = initialState, action) {
         case GET_LISTINGS_SUCCESS:
             return {
                 ...state,
+                listings: payload.results,
+                previousPageListings: payload.previous,
+                nextPageListings: payload.next,
+            }
+        case GET_USER_LISTINGS_SUCCESS:
+            return {
+                ...state,
                 listings: payload,
             }
         case GET_CATEGORIES_SUCCESS:
@@ -43,6 +53,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 listings: [],
+                previousPageListings: null,
+                nextPageListings: null,
             }
         case GET_CATEGORIES_FAIL:
             return {

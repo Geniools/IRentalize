@@ -89,32 +89,21 @@ export const checkAuthenticated = () => async (dispatch, getState) => {
     }
 }
 
-export const loadUser = () => async (dispatch, getState) => {
-    const accessToken = getState().auth.access;
-    if (accessToken) {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `JWT ${accessToken}`,
-                "Accept": "application/json",
-            }
+export const loadUser = () => async dispatch => {
+    const config = {
+        headers: {
+            "Accept": "application/json",
         }
+    }
 
-        try {
-            const res = await axiosAuthInstanceAPI.get("/auth/users/me/", config);
+    try {
+        const res = await axiosAuthInstanceAPI.get("/auth/users/me/", config);
 
-            console.log("LOAD USER:", res.data)
-
-            dispatch({
-                type: USER_LOADED_SUCCESS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: USER_LOADED_FAIL,
-            });
-        }
-    } else {
+        dispatch({
+            type: USER_LOADED_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
         dispatch({
             type: USER_LOADED_FAIL,
         });
@@ -147,35 +136,26 @@ export const login = (email, password, rememberMe) => async dispatch => {
     }
 }
 
-export const updateUserInfo = (username, first_name, last_name, address, phone) => async (dispatch, getState) => {
+export const updateUserInfo = (username, first_name, last_name, address, phone) => async dispatch => {
     dispatch({
         type: UPDATE_USER_REQUEST,
     })
 
-    const accessToken = getState().auth.access;
-    if (accessToken) {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `JWT ${accessToken}`,
-                "Accept": "application/json",
-            }
+    const config = {
+        headers: {
+            "Accept": "application/json",
         }
+    }
 
-        const body = JSON.stringify({username, first_name, last_name, address, phone});
-        try {
-            const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
+    const body = JSON.stringify({username, first_name, last_name, address, phone});
+    try {
+        const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
 
-            dispatch({
-                type: UPDATE_USER_SUCCESS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: UPDATE_USER_FAILURE,
-            });
-        }
-    } else {
+        dispatch({
+            type: UPDATE_USER_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
         dispatch({
             type: UPDATE_USER_FAILURE,
         });

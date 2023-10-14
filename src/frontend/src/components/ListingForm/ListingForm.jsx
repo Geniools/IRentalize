@@ -73,9 +73,11 @@ const ListingForm = ({categories, loadCategories, addListing, updateListing, loa
                 <label htmlFor="category">Category</label>
                 <select id="category" name="category" value={category} onChange={onChange}>
                     <option>Select category...</option>
-                    {categories?.map((category) => (
-                        <option value={category.id}>{category.name}</option>
-                    ))}
+                    {
+                        categories?.map((category) => (
+                            <option value={category.id}>{category.name}</option>
+                        ))
+                    }
                 </select>
 
                 <label htmlFor="address">Address</label>

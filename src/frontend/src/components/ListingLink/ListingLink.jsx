@@ -9,17 +9,6 @@ const ListingLink = ({listing, url}) => {
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
 
-    // TODO: Fix the previous and next buttons display
-    // useEffect(() => {
-    //     if (listing.images.length > 0 && currentImageIndex < listing.images.length) {
-    //         setNext(true);
-    //     }
-    //
-    //     if (currentImageIndex > 0) {
-    //         setPrevious(true);
-    //     }
-    // }, [previous, next]);
-
     const handleImageRightSlide = (event) => {
         if (currentImageIndex === listing.images.length - 1) {
             setCurrentImageIndex(0);

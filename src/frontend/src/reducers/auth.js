@@ -44,7 +44,6 @@ export default function (state = initialState, action) {
             }
         case REFRESH_TOKEN_SUCCESS:
         case LOGIN_SUCCESS:
-            console.log("remember", remember);
             if (remember) {
                 localStorage.setItem("access", payload.access);
                 localStorage.setItem("refresh", payload.refresh);

@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
+
+import {loadListings} from "../../actions/listing";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -7,47 +9,17 @@ import ListingLink from "../../components/ListingLink/ListingLink";
 
 import "./IndexPage.css";
 
-const IndexPage = () => {
-    const [listings, setListings] = useState([]);
-    const [previous, setPrevious] = useState(null);
-    const [next, setNext] = useState(null);
-
+const IndexPage = ({loadListings, listings, next, previous}) => {
     useEffect(() => {
-        getListings({});
+        document.title = "Home";
     }, []);
-
-    // TODO: Implement this function to be accessible to the ListingSearchForm component (use redux to save listings to the store)
-    const getListings = ({url = "/api/listings/", filters}) => {
-        let queryParams = "";
-
-        // Loop through the filters object and append each key and value to the queryParams string
-        for (const key in filters) {
-            if (filters[key] !== "") {
-                queryParams += `${key}=${filters[key]}&`;
-            }
-        }
-        if (queryParams !== "") {
-            // Remove the last character from the queryParams string (which will be a &)
-            url = `${url}?${queryParams.slice(0, -1)}`;
-        }
-
-        axios.get(url)
-            .then(res => {
-                setListings(res.data.results);
-                setPrevious(res.data.previous);
-                setNext(res.data.next);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
+    
     const handlePrevious = () => {
-        getListings({url: previous});
+        loadListings({url: previous});
     }
 
     const handleNext = () => {
-        getListings({url: next});
+        loadListings({url: next});
     }
 
     return (
@@ -55,12 +27,18 @@ const IndexPage = () => {
             <Header/>
 
             <div className="content-wrapper">
-                {/*<ListingSearchForm onSubmit={getListings}/>*/}
-
                 <div className="listings">
-                    {listings?.map(listing => (
-                        <ListingLink listing={listing} url=""/>
-                    ))}
+                    {
+                        listings?.length === 0 ? (
+                            <div className="flex-center space-filler">
+                                <h1>No listings found :(</h1>
+                            </div>
+                        ) : (
+                            listings?.map(listing => (
+                                <ListingLink listing={listing} url=""/>
+                            ))
+                        )
+                    }
                 </div>
             </div>
 
@@ -69,4 +47,10 @@ const IndexPage = () => {
     );
 }
 
-export default IndexPage;
+const mapStateToProps = state => ({
+    listings: state.listing.listings,
+    previous: state.listing.previous,
+    next: state.listing.next
+});
+
+export default connect(mapStateToProps, {loadListings})(IndexPage);

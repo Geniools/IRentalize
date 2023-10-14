@@ -1,15 +1,18 @@
-import React, {Fragment, useState} from 'react';
-import {Link, NavLink} from "react-router-dom";
+import React, {Fragment, useEffect, useState} from 'react';
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
+
 import {logout} from "../../actions/auth";
+import {loadListings} from "../../actions/listing";
+
+import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
+import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../../URL_PATHS";
 
 import "./Header.css";
 
-import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../../URL_PATHS";
-import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
-
 const Header = ({
                     logout,
+                    loadListings,
                     user,
                     isAuthenticated,
                     showIcon = true,
@@ -18,6 +21,13 @@ const Header = ({
                     showAuth = true,
                     showLogout = false
                 }) => {
+
+    useEffect(() => {
+        console.log("Header useEffect");
+        loadListings({});
+    }, []);
+
+    const navigator = useNavigate();
     const [showSearchForm, setShowSearchForm] = useState(false);
 
     const toggleSearchForm = () => {
@@ -49,23 +59,44 @@ const Header = ({
         </Link>
     )
 
+    const handleLoadListings = event => {
+        navigator('/');
+
+        event.preventDefault();
+
+        const filters = {
+            category_name: event.target.text
+        }
+
+        loadListings({filters: filters});
+
+    }
+
     return (
         <header>
             {showIcon && (
                 <div className={"header-panel"}>
-                    <a className="icon" href="/">
+                    <Link className="icon" to="/" onClick={loadListings}>
                         <img src="/static/assets/favicon.png" alt="IRentalize"/>
-                    </a>
+                    </Link>
                 </div>
             )}
 
             {showLinks && (
                 <nav className={"header-panel"}>
                     <ul>
-                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={""}>Housing</NavLink></li>
-                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={""}>Furniture</NavLink></li>
-                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={""}>Accessories</NavLink></li>
-                        <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>Contact Us</NavLink></li>
+                        <li>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to="/" onClick={handleLoadListings}>Housing</NavLink>
+                        </li>
+                        <li>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to="/" onClick={handleLoadListings}>Furniture</NavLink>
+                        </li>
+                        <li>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to="/" onClick={handleLoadListings}>Accessories</NavLink>
+                        </li>
+                        <li>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>Contact Us</NavLink>
+                        </li>
                     </ul>
                 </nav>
             )}
@@ -97,4 +128,4 @@ const mapStateToProps = state => ({
     user: state.auth.user ? state.auth.user : {},
 });
 
-export default connect(mapStateToProps, {logout})(Header);
+export default connect(mapStateToProps, {logout, loadListings})(Header);

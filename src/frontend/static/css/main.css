@@ -32,6 +32,7 @@ main {
 
 a {
 	color           : var(--color-black);
+	cursor          : pointer;
 	text-decoration : none;
 }
 
@@ -125,4 +126,9 @@ img {
 .content-wrapper {
 	padding-bottom : var(--footer-height);
 	position       : relative;
+}
+
+.space-filler {
+	height : 100%;
+	width  : 100%;
 }

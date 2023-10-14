@@ -14,6 +14,10 @@ axiosAuthInstanceAPI.interceptors.request.use(
             config.headers['Authorization'] = `JWT ${access}`;
         }
 
+        if (!config.headers['Content-Type']) {
+            config.headers['Content-Type'] = 'application/json';
+        }
+
         return config;
     },
     error => {

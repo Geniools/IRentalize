@@ -4,8 +4,9 @@ from backend.listings.models import Listing
 
 
 class ListingSearchFilter(filters.FilterSet):
-    category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')
     title = filters.CharFilter(field_name='title', lookup_expr='icontains')
+    category = filters.CharFilter(field_name='category__pk', lookup_expr='icontains')
+    category_name = filters.CharFilter(field_name='category__name', lookup_expr='iexact')
     
     class Meta:
         model = Listing

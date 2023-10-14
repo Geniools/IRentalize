@@ -5,18 +5,16 @@ import {
     GET_CATEGORIES_SUCCESS,
     GET_LISTINGS_FAIL,
     GET_LISTINGS_SUCCESS,
+    GET_USER_LISTINGS_SUCCESS,
     UPDATE_POST_FAIL,
     UPDATE_POST_SUCCESS
 } from "./types";
 import axiosAuthInstanceAPI from "../utils/axios/axios";
 
-export const addListing = (title, description, category, price, address, images) => async (dispatch, getState) => {
-    const accessToken = getState().auth.access;
-
+export const addListing = (title, description, category, price, address, images) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data; ',
-            "Authorization": `JWT ${accessToken}`,
         }
     }
 
@@ -46,13 +44,10 @@ export const addListing = (title, description, category, price, address, images)
     }
 }
 
-export const updateListing = (id, title, description, category, price, address, images) => async (dispatch, getState) => {
-    const accessToken = getState().auth.access;
-
+export const updateListing = (id, title, description, category, price, address, images) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data; ',
-            "Authorization": `JWT ${accessToken}`,
         }
     }
 
@@ -82,78 +77,59 @@ export const updateListing = (id, title, description, category, price, address, 
     }
 }
 
-export const loadCategories = () => async (dispatch, getState) => {
-    const accessToken = getState().auth.access;
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `JWT ${accessToken}`,
-        }
-    }
-
+export const loadCategories = () => async dispatch => {
     try {
-        const res = await axiosAuthInstanceAPI.get('/api/categories/', config);
+        const res = await axiosAuthInstanceAPI.get('/api/categories/');
 
         dispatch({
             type: GET_CATEGORIES_SUCCESS,
             payload: res.data,
         });
     } catch (err) {
-        console.log(err);
-
         dispatch({
             type: GET_CATEGORIES_FAIL,
         });
     }
 }
 
-export const loadListings = () => async (dispatch, getState) => {
-    const accessToken = getState().auth.access;
+export const loadListings = ({url = "/api/listings/", filters}) => async dispatch => {
+    if (filters) {
+        let queryParams = "";
 
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `JWT ${accessToken}`,
+        for (const key in filters) {
+            if (filters[key] !== "") {
+                queryParams += `${key}=${filters[key]}&`;
+            }
+        }
+
+        if (queryParams !== "") {
+            url = `${url}?${queryParams.slice(0, -1)}`;
         }
     }
 
     try {
-        const res = await axiosAuthInstanceAPI.get('/api/listings/', config);
+        const res = await axiosAuthInstanceAPI.get(url);
 
         dispatch({
             type: GET_LISTINGS_SUCCESS,
             payload: res.data,
         });
     } catch (err) {
-        console.log(err);
-
         dispatch({
             type: GET_LISTINGS_FAIL,
         });
     }
 }
 
-export const loadUserListings = () => async (dispatch, getState) => {
-    const accessToken = getState().auth.access;
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `JWT ${accessToken}`,
-        }
-    }
-
+export const loadUserListings = () => async dispatch => {
     try {
-        const res = await axiosAuthInstanceAPI.get('/api/user-listings/', config);
+        const res = await axiosAuthInstanceAPI.get('/api/user-listings/');
 
         dispatch({
-            type: GET_LISTINGS_SUCCESS,
+            type: GET_USER_LISTINGS_SUCCESS,
             payload: res.data,
         });
     } catch (err) {
-        console.log(err);
-
         dispatch({
             type: GET_LISTINGS_FAIL,
         });

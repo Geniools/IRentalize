@@ -37,7 +37,7 @@ class ListingSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         # Retrieve the uploaded images from the validated data
-        uploaded_images = validated_data.pop("uploaded_images")
+        uploaded_images = validated_data.pop("uploaded_images", ())
         # Create the listing
         listing = Listing.objects.create(**validated_data)
         
@@ -49,7 +49,7 @@ class ListingSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         # Retrieve the uploaded images from the validated data
-        uploaded_images = validated_data.pop("uploaded_images")
+        uploaded_images = validated_data.pop("uploaded_images", ())
         # Update the listing
         listing = super().update(instance, validated_data)
         
