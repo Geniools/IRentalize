@@ -26,7 +26,7 @@ const IndexPage = ({loadListings, listings, next, previous}) => {
         <>
             <Header/>
 
-            <div className="content-wrapper">
+            <div className="page-container">
                 <div className="listings">
                     {
                         listings?.length === 0 ? (
@@ -35,7 +35,7 @@ const IndexPage = ({loadListings, listings, next, previous}) => {
                             </div>
                         ) : (
                             listings?.map(listing => (
-                                <ListingLink listing={listing} url="/listings/"/>
+                                <ListingLink listing={listing} url="/listing/"/>
                             ))
                         )
                     }

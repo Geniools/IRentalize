@@ -38,7 +38,7 @@ const ListingLink = ({listing, url}) => {
                     </div>
 
                     {/* TODO: Do not display the arrow if there are no images in that direction */}
-                    <div className={`${!previous ? 'hidden' : ''} image-thumbnail image-thumbnail-right `}>
+                    <div className={`${!next ? 'hidden' : ''} image-thumbnail image-thumbnail-right `}>
                         <button type="button" className="image-thumbnail-button" onClick={handleImageRightSlide}>&#10095;</button>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ const NotFoundPage = () => {
         <>
             <Header/>
 
-            <div className="content-wrapper">
+            <div className="page-container">
 
                 <div className="flex-center">
                     <div style={{width: "30%"}}>

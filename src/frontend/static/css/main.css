@@ -89,13 +89,6 @@ img {
 	display : none;
 }
 
-.page-container {
-	min-height : calc(100vh - var(--header-height));
-	padding    : 0 var(--padding) var(--header-height) var(--padding);
-	position   : relative;
-	width      : 100%;
-}
-
 .flex-center {
 	align-content   : center;
 	align-items     : center;
@@ -123,12 +116,15 @@ img {
 	text-align  : end;
 }
 
-.content-wrapper {
-	padding-bottom : var(--footer-height);
-	position       : relative;
-}
-
 .space-filler {
 	height : 100%;
 	width  : 100%;
+}
+
+/* The content of a page is wrapped in this class to keep the padding and footer in the right position */
+.page-container {
+	min-height : calc(100vh - var(--header-height));
+	padding    : 0 var(--padding) var(--footer-height) var(--padding);
+	position   : relative;
+	width      : 100%;
 }
