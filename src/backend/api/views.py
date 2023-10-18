@@ -16,6 +16,7 @@ from backend.listings.filters import ListingSearchFilter
 
 # Categories
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     pagination_class = None

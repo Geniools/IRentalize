@@ -9,7 +9,8 @@ import Layout from "./hocs/Layout";
 import IndexPage from "./pages/IndexPage/IndexPage";
 import AboutUsPage from "./pages/main/AboutUsPage/AboutUsPage";
 import ContactUsPage from "./pages/main/ContactUsPage/ContactUsPage";
-import NotFoundPage from "./pages/main/404NotFoundPage/404NotFoundPage";
+// Listing pages
+import ListingDetailsPage from "./pages/listings/ListingDetailsPage/ListingDetailsPage";
 // Authentication pages
 import UserLoginPage from "./pages/authentication/UserLoginPage/UserLoginPage";
 import UserRegistrationPage from "./pages/authentication/UserRegistrationPage/UserRegistrationPage";
@@ -25,7 +26,8 @@ import UserPostsPage from "./pages/userdashboard/UserPostsPage/UserPostsPage";
 import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage/UserRecentlyViewedPage";
 import UserOrdersPage from "./pages/userdashboard/UserOrdersPage/UserOrdersPage";
 import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage/UserPostDetailsPage";
-
+// Other pages
+import NotFoundPage from "./pages/main/404NotFoundPage/404NotFoundPage";
 // Import the URL paths
 import {
     ABOUT_US_URL,
@@ -35,6 +37,7 @@ import {
     EMAIL_RESET_CONFIRM_URL,
     EMAIL_RESET_URL,
     HOME_URL,
+    LISTING_DETAILS_URL,
     LOGIN_URL,
     PASSWORD_RESET_CONFIRM_URL,
     PASSWORD_RESET_URL,
@@ -54,6 +57,14 @@ const App = () => {
                     <Routes>
                         {/* Pages */}
                         <Route exact path={HOME_URL} element={<IndexPage/>}/>
+                        <Route exact path={HOME_URL + 'housing/'} element={<IndexPage/>}/>
+                        <Route exact path={HOME_URL + 'furniture/'} element={<IndexPage/>}/>
+                        <Route exact path={HOME_URL + 'accessories/'} element={<IndexPage/>}/>
+
+                        {/* Listing Details */}
+                        <Route exact path={LISTING_DETAILS_URL} element={<ListingDetailsPage/>}/>
+
+                        {/* "Main" Pages */}
                         <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>
                         <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
 

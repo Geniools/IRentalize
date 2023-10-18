@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 
 import {loadCategories, loadListings} from "../../actions/listing";
+
 import "./ListingSearchForm.css";
 
-const SearchForm = ({categories, loadListings, loadCategories, isActive}) => {
+const SearchForm = ({categories, loadListings, loadCategories}) => {
     useEffect(() => {
         loadCategories();
     }, []);
-    
+
     const [formData, setFormData] = useState({
         category: '',
         title: '',
@@ -27,7 +28,7 @@ const SearchForm = ({categories, loadListings, loadCategories, isActive}) => {
     };
 
     return (
-        <form className={`listing-search-form ${isActive ? 'active' : ''}`} onSubmit={handleSubmit}>
+        <form className={`listing-search-form`} onSubmit={handleSubmit}>
             <select id="category" name="category" value={formData.category} onChange={handleChange}>
                 <option>Select category...</option>
                 {

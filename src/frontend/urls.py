@@ -3,8 +3,15 @@ from django.urls import path
 from frontend import views
 
 urlpatterns = [
-    # Pages
+    # Home Page
     path('', views.index, name='index'),
+    # Filtered Listing Pages
+    path('housing/', views.index, name='housing_listings'),
+    path('furniture/', views.index, name='furniture_listings'),
+    path('accessories/', views.index, name='accessories_listings'),
+    # Listing Details Page
+    path('listing/<int:id>/', views.index, name='listing_details'),
+    # "Main" Pages
     path('about-us/', views.index, name='about_us'),
     path('contact-us/', views.index, name='contact_us'),
     # Dashboard

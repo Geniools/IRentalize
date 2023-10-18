@@ -1,5 +1,11 @@
-// Pages
 export const HOME_URL = '/';
+// Listing Filtered Search
+// export const LISTING_HOUSING_URL = '/housing/';
+// export const LISTING_FURNITURE_URL = '/furniture/';
+// export const LISTING_ACCESSORIES_URL = '/accessories/';
+// Listing Details
+export const LISTING_DETAILS_URL = '/housing/:id/';
+// "Main" Pages
 export const ABOUT_US_URL = '/about-us/';
 export const CONTACT_US_URL = '/contact-us/';
 // User Dashboard

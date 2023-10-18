@@ -13,7 +13,7 @@ const IndexPage = ({loadListings, listings, next, previous}) => {
     useEffect(() => {
         document.title = "Home";
     }, []);
-    
+
     const handlePrevious = () => {
         loadListings({url: previous});
     }
@@ -35,12 +35,14 @@ const IndexPage = ({loadListings, listings, next, previous}) => {
                             </div>
                         ) : (
                             listings?.map(listing => (
-                                <ListingLink listing={listing} url=""/>
+                                <ListingLink listing={listing} url="/listings/"/>
                             ))
                         )
                     }
                 </div>
             </div>
+
+            {/* TODO: Implement pagination */}
 
             <Footer/>
         </>

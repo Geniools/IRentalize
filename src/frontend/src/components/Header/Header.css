@@ -30,8 +30,6 @@ header {
 }
 
 .header-panel ul li a {
-	color       : var(--color-black);
-	display     : flex;
 	font-weight : bold;
 }
 
@@ -59,4 +57,24 @@ header select {
 	border-radius    : var(--border-radius);
 	font-size        : 1rem;
 	font-weight      : bold;
+}
+
+/* Search form container */
+.search-form-container {
+	border-radius : var(--border-radius);
+	box-shadow    : var(--color-black) 0 0 0.5rem;
+	left          : 50%;
+	opacity       : 0;
+	position      : absolute;
+	top           : 100%;
+	transform     : translateX(-50%);
+	transition    : opacity 2s ease-in-out, visibility 0.3s ease-in-out;
+	visibility    : hidden;
+	width         : 80%;
+	z-index       : 10;
+}
+
+.search-form-container.active {
+	opacity    : 100;
+	visibility : visible;
 }

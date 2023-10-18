@@ -1,14 +1,15 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import React, {Fragment, useEffect, useRef, useState} from 'react';
+import {Link, NavLink, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {logout} from "../../actions/auth";
 import {loadListings} from "../../actions/listing";
 
 import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
-import {ACCOUNT_URL, CONTACT_US_URL, LOGIN_URL} from "../../URL_PATHS";
+import {ACCOUNT_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL} from "../../URL_PATHS";
 
 import "./Header.css";
+import PropTypes from "prop-types";
 
 const Header = ({
                     logout,
@@ -22,25 +23,73 @@ const Header = ({
                     showLogout = false
                 }) => {
 
+    const location = useLocation();
+    const searchFormRef = useRef();
+    const searchFormButtonRef = useRef();
+
+    const [filters, setFilters] = useState({});
+    const [showSearchForm, setShowSearchForm] = useState(false);
+
     useEffect(() => {
-        console.log("Header useEffect");
-        loadListings({});
+        // Load listings based on the current path
+        if (location.pathname === "/") {
+            handleLoadListings("");
+        } else if (location.pathname === "/housing/") {
+            handleLoadListings("housing")
+        } else if (location.pathname === "/furniture/") {
+            handleLoadListings("furniture")
+        } else if (location.pathname === "/accessories/") {
+            handleLoadListings("accessories")
+        }
+    }, [filters]);
+
+    useEffect(() => {
+        // Function to handle outside clicks
+        const handleOutsideClick = event => {
+            if (
+                // Check if the click was outside the search form
+                searchFormRef.current && !searchFormRef.current.contains(event.target) &&
+                // Also check if it was not the button that toggles the search form
+                searchFormButtonRef.current && !searchFormButtonRef.current.contains(event.target)
+            ) {
+                // Hide search form on outside click
+                setShowSearchForm(false);
+            }
+        }
+
+        // Add click event listener to the document
+        document.addEventListener('click', handleOutsideClick);
+
+        // Cleanup - remove event listener when the component is unmounted
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        }
     }, []);
 
-    const navigator = useNavigate();
-    const [showSearchForm, setShowSearchForm] = useState(false);
 
     const toggleSearchForm = () => {
         setShowSearchForm(!showSearchForm);
+    }
+
+    const handleLoadListings = categoryName => {
+        if (categoryName === "") {
+            loadListings({});
+        } else {
+            const filters = {
+                category_name: categoryName
+            }
+
+            loadListings({filters: filters});
+        }
     }
 
     const authLink = () => {
         if (showLogout) {
             return (
                 <Fragment>
-                    <a className={"header-green-link"} href="" onClick={logout}>
+                    <Link className={"header-green-link"} to="" onClick={logout}>
                         LOG OUT
-                    </a>
+                    </Link>
                 </Fragment>
             )
         } else {
@@ -59,19 +108,6 @@ const Header = ({
         </Link>
     )
 
-    const handleLoadListings = event => {
-        navigator('/');
-
-        event.preventDefault();
-
-        const filters = {
-            category_name: event.target.text
-        }
-
-        loadListings({filters: filters});
-
-    }
-
     return (
         <header>
             {showIcon && (
@@ -86,13 +122,16 @@ const Header = ({
                 <nav className={"header-panel"}>
                     <ul>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to="/" onClick={handleLoadListings}>Housing</NavLink>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "housing/"}
+                                     onClick={() => setFilters("housing")}>Housing</NavLink>
                         </li>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to="/" onClick={handleLoadListings}>Furniture</NavLink>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "furniture/"}
+                                     onClick={() => setFilters("furniture")}>Furniture</NavLink>
                         </li>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to="/" onClick={handleLoadListings}>Accessories</NavLink>
+                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "accessories/"}
+                                     onClick={() => setFilters("accessories")}>Accessories</NavLink>
                         </li>
                         <li>
                             <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>Contact Us</NavLink>
@@ -103,7 +142,7 @@ const Header = ({
 
             <div className={"header-panel"}>
                 {showSearch && (
-                    <button className={"header-green-link"} onClick={toggleSearchForm}>
+                    <button ref={searchFormButtonRef} className={"header-green-link"} onClick={toggleSearchForm}>
                         &#128269;
                     </button>
                 )}
@@ -118,10 +157,27 @@ const Header = ({
                 )}
             </div>
 
-            {showSearchForm && <ListingSearchForm isActive={showSearchForm}/>}
+            {
+                showSearchForm &&
+                <div className={`search-form-container ${showSearchForm ? 'active' : ''}`} ref={searchFormRef}>
+                    <ListingSearchForm/>
+                </div>
+            }
         </header>
     );
 }
+
+Header.propTypes = {
+    logout: PropTypes.func.isRequired,
+    loadListings: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object,
+    showIcon: PropTypes.bool,
+    showLinks: PropTypes.bool,
+    showSearch: PropTypes.bool,
+    showAuth: PropTypes.bool,
+    showLogout: PropTypes.bool
+};
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
