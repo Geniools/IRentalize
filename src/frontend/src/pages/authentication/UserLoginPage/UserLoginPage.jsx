@@ -57,9 +57,11 @@ const UserLoginPage = ({isAuthenticated, login}) => {
                         <input type="password" name="password" value={password} required={true} minLength={8} placeholder="Password" onChange={onChange}/>
 
                         <div className="authentication-field-info">
-                            <input id="rememberMe" type="checkbox" name="rememberMe" checked={rememberMe} required={false} onChange={onChange}/>
-                            <label htmlFor="rememberMe">Remember me</label>
-
+                            <div>
+                                <input id="rememberMe" type="checkbox" name="rememberMe" checked={rememberMe} required={false} onChange={onChange}/>
+                                <label htmlFor="rememberMe">Remember me</label>
+                            </div>
+                            
                             <Link to={PASSWORD_RESET_URL}>Forgot Password</Link>
                         </div>
 

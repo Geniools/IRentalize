@@ -1,0 +1,71 @@
+.newtons-cradle {
+	align-items     : center;
+	--uib-color     : #474554;
+	display         : flex;
+	height          : var(--uib-size);
+	justify-content : center;
+	position        : relative;
+	--uib-size      : 50px;
+	--uib-speed     : 1.2s;
+	width           : var(--uib-size);
+}
+
+.newtons-cradle__dot {
+	align-items      : center;
+	display          : flex;
+	height           : 100%;
+	position         : relative;
+	transform-origin : center top;
+	width            : 25%;
+}
+
+.newtons-cradle__dot::after {
+	background-color : var(--uib-color);
+	border-radius    : 50%;
+	content          : '';
+	display          : block;
+	height           : 25%;
+	width            : 100%;
+}
+
+.newtons-cradle__dot:first-child {
+	animation : swing var(--uib-speed) linear infinite;
+}
+
+.newtons-cradle__dot:last-child {
+	animation : swing2 var(--uib-speed) linear infinite;
+}
+
+@keyframes swing {
+	0% {
+		transform                 : rotate(0deg);
+		animation-timing-function : ease-out;
+	}
+	
+	25% {
+		transform                 : rotate(70deg);
+		animation-timing-function : ease-in;
+	}
+	
+	50% {
+		transform                 : rotate(0deg);
+		animation-timing-function : linear;
+	}
+}
+
+@keyframes swing2 {
+	0% {
+		transform                 : rotate(0deg);
+		animation-timing-function : linear;
+	}
+	
+	50% {
+		transform                 : rotate(0deg);
+		animation-timing-function : ease-out;
+	}
+	
+	75% {
+		transform                 : rotate(-70deg);
+		animation-timing-function : ease-in;
+	}
+}

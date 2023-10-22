@@ -5,9 +5,10 @@ import {loadListings} from "../../actions/listing";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import ListingLink from "../../components/ListingLink/ListingLink";
+import Loader from "../../components/Loader/Loader";
 
 import "./IndexPage.css";
+import ListingLink from "../../components/ListingLink/ListingLink";
 
 const IndexPage = ({loadListings, listings, next, previous}) => {
     useEffect(() => {
@@ -29,14 +30,20 @@ const IndexPage = ({loadListings, listings, next, previous}) => {
             <div className="page-container">
                 <div className="listings">
                     {
-                        listings?.length === 0 ? (
+                        !listings ? (
                             <div className="flex-center space-filler">
-                                <h1>No listings found :(</h1>
+                                <Loader/>
                             </div>
                         ) : (
-                            listings?.map(listing => (
-                                <ListingLink listing={listing} url="/listing/"/>
-                            ))
+                            listings?.length === 0 ? (
+                                <div className="flex-center space-filler">
+                                    <h1>No listings found</h1>
+                                </div>
+                            ) : (
+                                listings?.map(listing => (
+                                    <ListingLink listing={listing} url="/listing/"/>
+                                ))
+                            )
                         )
                     }
                 </div>

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {loadCategories, loadListings} from "../../actions/listing";
@@ -6,6 +7,7 @@ import {loadCategories, loadListings} from "../../actions/listing";
 import "./ListingSearchForm.css";
 
 const SearchForm = ({categories, loadListings, loadCategories}) => {
+    const navigator = useNavigate();
     useEffect(() => {
         loadCategories();
     }, []);
@@ -24,6 +26,7 @@ const SearchForm = ({categories, loadListings, loadCategories}) => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        navigator("/");
         loadListings({filters: formData});
     };
 

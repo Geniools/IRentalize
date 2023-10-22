@@ -53,10 +53,10 @@ const ContactUsPage = ({sendContactUsForm}) => {
                     <p>Please enter your details</p>
                 </div>
 
-                <form onSubmit={onSubmit} className={"contact-us-form"}>
-                    <div className={"contact-us-form-container"}>
-                        <label className="green-text" htmlFor="fullName">
-                            Full Name*
+                <form onSubmit={onSubmit} className="contact-us-form">
+                    <div className="contact-us-form-container">
+                        <div className="contact-us-form-container-input">
+                            <label className="green-text" htmlFor="fullName">Full Name*</label>
                             <input
                                 type="text"
                                 id="fullName"
@@ -66,10 +66,10 @@ const ContactUsPage = ({sendContactUsForm}) => {
                                 placeholder="Full Name"
                                 onChange={onChange}
                             />
-                        </label>
+                        </div>
 
-                        <label className="green-text" htmlFor="email">
-                            Email*
+                        <div className="contact-us-form-container-input">
+                            <label className="green-text" htmlFor="email">Email*</label>
                             <input
                                 type="email"
                                 id="email"
@@ -79,10 +79,10 @@ const ContactUsPage = ({sendContactUsForm}) => {
                                 placeholder="Email"
                                 onChange={onChange}
                             />
-                        </label>
+                        </div>
 
-                        <label htmlFor="phoneNumber">
-                            Phone
+                        <div className="contact-us-form-container-input">
+                            <label htmlFor="phoneNumber">Phone</label>
                             <input
                                 type="tel"
                                 id="phoneNumber"
@@ -91,27 +91,27 @@ const ContactUsPage = ({sendContactUsForm}) => {
                                 placeholder="Phone Number"
                                 onChange={onChange}
                             />
-                        </label>
-
-                    </div>
-
-                    <div className={"contact-us-form-container"}>
-                        <label htmlFor="message" className={"green-text"}>Message*</label>
-                        <textarea name="message" id="message" placeholder={"Enter your message here"} value={message} onChange={onChange}></textarea>
-                    </div>
-
-                    <div className={"contact-us-form-container"}>
-                        <div className="input-field-container">
-                            <input
-                                type="checkbox"
-                                name={"termsAndConditions"}
-                                id={"termsAndConditions"}
-                                checked={termsAndConditions}
-                                required={true}
-                                onChange={onChange}
-                            />
-                            <label htmlFor={"termsAndConditions"}>I agree with all <a className={"green-text"} href="">Terms and Conditions*</a></label>
                         </div>
+
+                    </div>
+
+                    <div className="contact-us-form-container">
+                        <div className="contact-us-form-container-input">
+                            <label htmlFor="message" className={"green-text"}>Message*</label>
+                            <textarea name="message" id="message" placeholder={"Enter your message here"} value={message} onChange={onChange}></textarea>
+                        </div>
+                    </div>
+
+                    <div className="contact-us-form-container">
+                        <input
+                            type="checkbox"
+                            name="termsAndConditions"
+                            id="termsAndConditions"
+                            checked={termsAndConditions}
+                            required={true}
+                            onChange={onChange}
+                        />
+                        <label htmlFor={"termsAndConditions"}>I agree with all <a className={"green-text"} href="">Terms and Conditions*</a></label>
                     </div>
 
                     <ReCAPTCHA
@@ -121,9 +121,9 @@ const ContactUsPage = ({sendContactUsForm}) => {
                     />
 
                     <div className="contact-us-form-container">
-                        <button type={"submit"}>
-                            CONTACT US
-                        </button>
+                        <div className="contact-us-form-container-input">
+                            <button type="submit"> CONTACT US</button>
+                        </div>
                     </div>
                 </form>
 

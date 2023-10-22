@@ -13,7 +13,6 @@ const ListingDetailsPage = () => {
     const [listing, setListing] = useState(null);
 
     useEffect(() => {
-        // Fetch listing data by ID. Replace with your API endpoint.
         axios.get(`/api/listings/${id}`)
             .then(res => {
                 // console.log("Listing data:", res);
@@ -37,32 +36,30 @@ const ListingDetailsPage = () => {
 
             <div className="page-container">
                 {/* TODO: Style this page */}
-                <div className={styles.container}>
-                    <div className={styles.header}>
-                        <h1>{listing.title}</h1>
-                        <p>{listing.address}</p>
-                    </div>
+                <div className={styles.header}>
+                    <h1>{listing.title}</h1>
+                    <p>{listing.address}</p>
+                </div>
 
-                    <div className={styles.images}>
-                        {
-                            listing.images?.map(image => (
-                                <div key={image.id}>
-                                    <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
-                                </div>
-                            ))
-                        }
-                    </div>
+                <div className={styles.imageGallery}>
+                    {
+                        listing.images?.map(image => (
+                            <div className={styles.imageContainer}>
+                                <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
+                            </div>
+                        ))
+                    }
+                </div>
 
-                    <div className={styles.amenities}>
-                        <h2>About</h2>
-                        <p>{listing.description}</p>
-                    </div>
+                <div className={styles.info}>
+                    <h2>About</h2>
+                    <p>{listing.description}</p>
+                </div>
 
-                    <div className={styles.footer}>
-                        <h2>Host Extraordinaire</h2>
-                        <p>{listing.host}</p>
-                        <button>Book Now</button>
-                    </div>
+                <div className={styles.footer}>
+                    <h2>Host Extraordinaire</h2>
+                    <p>{listing.host}</p>
+                    <button>Book Now</button>
                 </div>
             </div>
 

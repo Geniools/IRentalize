@@ -1,25 +1,32 @@
-.container {
-	margin    : 0 auto;
-	max-width : 800px;
-	padding   : 20px;
-}
-
 .header {
-	padding    : 20px;
+	padding    : var(--padding);
 	text-align : center;
 }
 
-.images {
-	display         : flex;
-	flex-wrap       : wrap;
-	gap             : 20px;
-	justify-content : center;
-	padding         : 20px 0;
+.imageGallery {
+	display               : grid;
+	gap                   : var(--padding);
+	grid-template-columns : repeat(auto-fill, minmax(25%, 1fr));
+	padding               : var(--padding);
 }
 
-.amenities {
-	margin-top : 20px;
-	padding    : 20px;
+.imageContainer {
+	border-radius : var(--border-radius);
+	height        : auto;
+	transition    : transform 0.3s ease-in-out;
+	width         : 100%;
+}
+
+.imageContainer img {
+	border-radius : inherit;
+}
+
+.imageContainer:hover {
+	transform : scale(1.05);
+}
+
+.info {
+	padding : var(--padding);
 }
 
 .footer {
