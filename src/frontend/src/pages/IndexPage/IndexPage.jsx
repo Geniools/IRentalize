@@ -6,9 +6,9 @@ import {loadListings} from "../../actions/listing";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Loader from "../../components/Loader/Loader";
+import ListingLink from "../../components/ListingLink/ListingLink";
 
 import "./IndexPage.css";
-import ListingLink from "../../components/ListingLink/ListingLink";
 
 const IndexPage = ({loadListings, listings, next, previous}) => {
     useEffect(() => {

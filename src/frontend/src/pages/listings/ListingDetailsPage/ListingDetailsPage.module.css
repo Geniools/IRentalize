@@ -3,6 +3,10 @@
 	text-align : center;
 }
 
+.section {
+
+}
+
 .imageGallery {
 	display               : grid;
 	gap                   : var(--padding);

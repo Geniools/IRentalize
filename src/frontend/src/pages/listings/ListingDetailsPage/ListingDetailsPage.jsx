@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
+import Loader from "../../../components/Loader/Loader";
 
 import styles from "./ListingDetailsPage.module.css";
 
@@ -27,7 +28,7 @@ const ListingDetailsPage = () => {
 
     if (!listing) return <>
         <Header/>
-        <div>Loading...</div>
+        <Loader/>
     </>;
 
     return (
@@ -35,32 +36,65 @@ const ListingDetailsPage = () => {
             <Header/>
 
             <div className="page-container">
-                {/* TODO: Style this page */}
-                <div className={styles.header}>
-                    <h1>{listing.title}</h1>
-                    <p>{listing.address}</p>
+                {/* Title and address */}
+                <div className={styles.section}>
+                    <div className={styles.header}>
+                        <h1>{listing.title}</h1>
+                        <p>{listing.address}</p>
+                    </div>
                 </div>
 
-                <div className={styles.imageGallery}>
-                    {
-                        listing.images?.map(image => (
-                            <div className={styles.imageContainer}>
-                                <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
-                            </div>
-                        ))
-                    }
+                <hr/>
+
+                {/* Image gallery */}
+                <div className={styles.section}>
+                    <div className={styles.imageGallery}>
+                        {
+                            listing.images?.map(image => (
+                                <div className={styles.imageContainer}>
+                                    <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
 
-                <div className={styles.info}>
-                    <h2>About</h2>
-                    <p>{listing.description}</p>
+                <hr/>
+
+                {/* Description */}
+                <div className={styles.section}>
+                    <div className={styles.info}>
+                        <h2>About</h2>
+                        <p>{listing.description}</p>
+                    </div>
                 </div>
 
-                <div className={styles.footer}>
-                    <h2>Host Extraordinaire</h2>
-                    <p>{listing.host}</p>
-                    <button>Book Now</button>
+                <hr/>
+
+                {/* Host */}
+                <div className={styles.section}>
+                    <div className={styles.footer}>
+                        <h2>Host Extraordinaire</h2>
+                        <p>{listing.host}</p>
+                        <button>Book Now</button>
+                    </div>
                 </div>
+
+                <hr/>
+
+                {/* Reviews */}
+
+                <hr/>
+
+                {/* Similar listings */}
+
+                <hr/>
+
+                {/* Map */}
+
+                <hr/>
+
+                {/* Book now and Calendar with availability */}
             </div>
 
             <Footer/>
