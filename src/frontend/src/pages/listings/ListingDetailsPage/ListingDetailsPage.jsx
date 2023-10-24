@@ -7,11 +7,14 @@ import Footer from "../../../components/Footer/Footer";
 import Loader from "../../../components/Loader/Loader";
 
 import styles from "./ListingDetailsPage.module.css";
+import ModalImage from "../../../components/ModalImage/ModalImage";
+import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 
 const ListingDetailsPage = () => {
     const navigator = useNavigate();
     const {id} = useParams();
     const [listing, setListing] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         axios.get(`/api/listings/${id}`)
@@ -38,10 +41,8 @@ const ListingDetailsPage = () => {
             <div className="page-container">
                 {/* Title and address */}
                 <div className={styles.section}>
-                    <div className={styles.header}>
-                        <h1>{listing.title}</h1>
-                        <p>{listing.address}</p>
-                    </div>
+                    <HeadTitle title={listing.title} capitalize={true}/>
+                    <p>{listing.address}</p>
                 </div>
 
                 <hr/>
@@ -50,14 +51,24 @@ const ListingDetailsPage = () => {
                 <div className={styles.section}>
                     <div className={styles.imageGallery}>
                         {
-                            listing.images?.map(image => (
-                                <div className={styles.imageContainer}>
+                            listing.images?.slice(0, 8).map(image => (
+                                <div className={styles.imageContainer} onClick={() => setSelectedImage(image.image)}>
                                     <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
                                 </div>
                             ))
                         }
                     </div>
+
+                    {
+                        // If there are more than 8 images, display a button to view all images
+                        listing.images?.length > 8 && <button className={styles.button} onClick={() => navigator(`/listing/${id}/all-images/`)}>View more</button>
+                    }
                 </div>
+
+                {
+                    // If an image is selected, display it in a modal
+                    selectedImage && <ModalImage selectedImage={selectedImage} setSelectedImage={setSelectedImage}/>
+                }
 
                 <hr/>
 

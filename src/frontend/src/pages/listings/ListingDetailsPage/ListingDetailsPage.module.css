@@ -1,17 +1,12 @@
-.header {
-	padding    : var(--padding);
-	text-align : center;
-}
-
 .section {
-
+	padding  : var(--padding) 0;
+	position : relative;
 }
 
 .imageGallery {
 	display               : grid;
 	gap                   : var(--padding);
-	grid-template-columns : repeat(auto-fill, minmax(25%, 1fr));
-	padding               : var(--padding);
+	grid-template-columns : repeat(auto-fill, minmax(20%, 1fr));
 }
 
 .imageContainer {
@@ -23,6 +18,7 @@
 
 .imageContainer img {
 	border-radius : inherit;
+	max-height    : 30rem;
 }
 
 .imageContainer:hover {
@@ -30,10 +26,14 @@
 }
 
 .info {
-	padding : var(--padding);
+}
+
+.button {
+	bottom   : var(--padding);
+	position : absolute;
+	right    : var(--padding);
 }
 
 .footer {
-	padding    : 20px 0;
 	text-align : center;
 }
