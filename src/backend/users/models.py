@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 from backend.users.manager import UserManager
+from backend.users.utils import is_valid_number
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -11,11 +12,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=80, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    # password = models.CharField(max_length=255)
     
-    # TODO: Add address model
     address = models.CharField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=15, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True, validators=[is_valid_number])
     
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

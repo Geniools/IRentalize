@@ -14,6 +14,5 @@ class ListingSearchFilter(filters.FilterSet):
         fields = {
             # 'title': ['icontains'],
             'description': ['icontains'],
-            'address': ['icontains'],
             'price': []
         }

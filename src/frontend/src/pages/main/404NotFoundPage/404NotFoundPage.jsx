@@ -11,13 +11,13 @@ const NotFoundPage = () => {
 
             <div className="page-container">
 
-                <div className="flex-center">
+                <div className="flex-horizontally-center">
                     <div style={{width: "30%"}}>
                         <img src="/static/assets/sorry_not_sorry.jpg" alt="Sorry Not Sorry"/>
                     </div>
                 </div>
 
-                <div className="flex-center">
+                <div className="flex-horizontally-center">
                     <h1>
                         404 Not Found :(
                     </h1>

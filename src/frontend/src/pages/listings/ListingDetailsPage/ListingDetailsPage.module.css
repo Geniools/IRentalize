@@ -10,10 +10,16 @@
 }
 
 .imageContainer {
-	border-radius : var(--border-radius);
-	height        : auto;
-	transition    : transform 0.3s ease-in-out;
-	width         : 100%;
+	border-radius   : var(--border-radius);
+	display         : flex;
+	height          : auto;
+	justify-content : center;
+	transition      : transform 0.3s ease-in-out;
+	width           : 100%;
+}
+
+.imageContainer:hover {
+	cursor : pointer;
 }
 
 .imageContainer img {
@@ -29,9 +35,17 @@
 }
 
 .button {
-	bottom   : var(--padding);
-	position : absolute;
-	right    : var(--padding);
+	background-color : transparent;
+	bottom           : var(--padding);
+	color            : black;
+	position         : absolute;
+	right            : var(--padding);
+	transition       : background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+	background-color : var(--color-green);
+	color            : var(--color-white);
 }
 
 .footer {

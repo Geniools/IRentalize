@@ -64,7 +64,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container flex-center">
+            <div className="page-container flex-horizontally-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Welcome to IRentalize</h1>

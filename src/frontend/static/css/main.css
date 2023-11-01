@@ -89,18 +89,17 @@ img {
 	display : none;
 }
 
-.flex-center {
-	align-content   : center;
-	align-items     : center;
+.flex-horizontally-center {
 	display         : flex;
 	justify-content : center;
 	text-align      : center;
 }
 
 .flex-vertically-centered {
-	align-items : center;
-	display     : flex;
-	flex-flow   : column;
+	align-content : center;
+	align-items   : center;
+	display       : flex;
+	flex-flow     : column;
 }
 
 .flex-left-content {

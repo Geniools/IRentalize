@@ -37,6 +37,7 @@ import {
     EMAIL_RESET_CONFIRM_URL,
     EMAIL_RESET_URL,
     HOME_URL,
+    LISTING_ALL_IMAGES_URL,
     LISTING_DETAILS_URL,
     LOGIN_URL,
     PASSWORD_RESET_CONFIRM_URL,
@@ -48,6 +49,7 @@ import {
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL
 } from "./URL_PATHS";
+import ListingAllImagesPage from "./pages/listings/ListingAllImagesPage/ListingAllImagesPage";
 
 const App = () => {
     return (
@@ -63,6 +65,7 @@ const App = () => {
 
                         {/* Listing Details */}
                         <Route exact path={LISTING_DETAILS_URL} element={<ListingDetailsPage/>}/>
+                        <Route exact path={LISTING_ALL_IMAGES_URL} element={<ListingAllImagesPage/>}/>
 
                         {/* "Main" Pages */}
                         <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>

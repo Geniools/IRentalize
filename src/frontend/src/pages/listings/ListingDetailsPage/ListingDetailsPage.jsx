@@ -5,10 +5,11 @@ import axios from "axios";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import Loader from "../../../components/Loader/Loader";
-
-import styles from "./ListingDetailsPage.module.css";
 import ModalImage from "../../../components/ModalImage/ModalImage";
 import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer";
+
+import styles from "./ListingDetailsPage.module.css";
 
 const ListingDetailsPage = () => {
     const navigator = useNavigate();
@@ -29,9 +30,14 @@ const ListingDetailsPage = () => {
             });
     }, [id]);
 
+    // Format the date - Example: "Aug 30, 2023, 02:11 PM"
+    const dateOptions = {year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'}
+
     if (!listing) return <>
         <Header/>
-        <Loader/>
+        <div className={"flex-vertically-centered flex-horizontally-center space-filler"}>
+            <Loader/>
+        </div>
     </>;
 
     return (
@@ -75,8 +81,10 @@ const ListingDetailsPage = () => {
                 {/* Description */}
                 <div className={styles.section}>
                     <div className={styles.info}>
-                        <h2>About</h2>
                         <p>{listing.description}</p>
+
+                        <p><b>Created at: </b>{new Date(listing.created_at).toLocaleString('en-US', dateOptions)}</p>
+                        <p><b>Updated at: </b>{new Date(listing.updated_at).toLocaleString('en-US', dateOptions)}</p>
                     </div>
                 </div>
 
@@ -85,7 +93,7 @@ const ListingDetailsPage = () => {
                 {/* Host */}
                 <div className={styles.section}>
                     <div className={styles.footer}>
-                        <h2>Host Extraordinaire</h2>
+                        {/*TODO: Display Host info*/}
                         <p>{listing.host}</p>
                         <button>Book Now</button>
                     </div>
@@ -94,18 +102,30 @@ const ListingDetailsPage = () => {
                 <hr/>
 
                 {/* Reviews */}
+                <div className={styles.section}>
 
-                <hr/>
-
-                {/* Similar listings */}
+                </div>
 
                 <hr/>
 
                 {/* Map */}
+                <div className={styles.section}>
+                    <h2>{listing.zip_code} {listing.street} {listing.house_number} {listing.house_addition}</h2>
+
+                    <GoogleMapContainer latitude={listing.latitude} longitude={listing.longitude}/>
+                </div>
 
                 <hr/>
 
                 {/* Book now and Calendar with availability */}
+                <div className={styles.section}>
+                </div>
+
+                <hr/>
+
+                {/* Similar listings */}
+                <div className={styles.section}>
+                </div>
             </div>
 
             <Footer/>

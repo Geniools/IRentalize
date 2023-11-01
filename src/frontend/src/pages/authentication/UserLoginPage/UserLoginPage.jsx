@@ -45,7 +45,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container flex-center">
+            <div className="page-container flex-horizontally-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Welcome back &#128075;</h1>
@@ -61,7 +61,7 @@ const UserLoginPage = ({isAuthenticated, login}) => {
                                 <input id="rememberMe" type="checkbox" name="rememberMe" checked={rememberMe} required={false} onChange={onChange}/>
                                 <label htmlFor="rememberMe">Remember me</label>
                             </div>
-                            
+
                             <Link to={PASSWORD_RESET_URL}>Forgot Password</Link>
                         </div>
 

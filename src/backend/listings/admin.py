@@ -6,7 +6,7 @@ from backend.listings.models import Listing, ListingImage, Category
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'host', 'description', 'image_number', 'price', 'address')
+    list_display = ('id', 'title', 'category', 'host', 'description', 'image_number', 'price')
     list_display_links = ('id', 'title')
     list_filter = ('category', 'host')
     search_fields = ('title', 'description', 'address', 'host__email', 'host__first_name', 'host__last_name', 'host__username', 'price')
@@ -14,7 +14,10 @@ class ListingAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('General Information', {
-            'fields': ('category', 'host', 'title', 'description', 'price', 'address')
+            'fields': ('category', 'host', 'title', 'description', 'price'),
+        }),
+        ('Address', {
+            'fields': ('street', 'house_number', 'house_addition', 'zip_code')
         }),
         ('Images', {
             'fields': ('display_images',),

@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from backend.api.utils import validate_listing_image
 # Import all the models that will be used in the serializers
 from backend.listings.models import Listing, Category, ListingImage
+from backend.listings.utils import is_valid_image
 
 
 # Listings
@@ -26,13 +26,14 @@ class ListingSerializer(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(max_length=None, allow_empty_file=False, use_url=False),
         write_only=True,
-        validators=[validate_listing_image],
+        validators=[is_valid_image],
     )
     
     class Meta:
         model = Listing
         fields = [
-            'id', 'category', 'host', 'title', 'description', 'price', 'address', 'images', 'uploaded_images'
+            'id', 'category', 'host', 'title', 'description', 'price', 'images', 'uploaded_images', 'street', 'house_number', 'house_addition', 'zip_code',
+            'latitude', 'longitude', 'views', 'created_at', 'updated_at',
         ]
     
     def create(self, validated_data):

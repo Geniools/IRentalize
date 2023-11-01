@@ -11,6 +11,7 @@ urlpatterns = [
     path('accessories/', views.index, name='accessories_listings'),
     # Listing Details Page
     path('listing/<int:id>/', views.index, name='listing_details'),
+    path('listing/<int:id>/all-images/', views.index, name='listing_all_images'),
     # "Main" Pages
     path('about-us/', views.index, name='about_us'),
     path('contact-us/', views.index, name='contact_us'),

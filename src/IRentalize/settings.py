@@ -224,3 +224,6 @@ AUTH_USER_MODEL = 'users.User'
 
 # Google reCAPTCHA v2 settings
 GOOGLE_RECAPTCHA_SECRET_KEY = local_settings.GOOGLE_RECAPTCHA_SECRET_KEY
+
+# Google Maps API key
+GOOGLE_MAPS_API_KEY = local_settings.GOOGLE_MAPS_API_KEY

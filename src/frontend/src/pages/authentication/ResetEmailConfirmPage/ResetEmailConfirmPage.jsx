@@ -37,7 +37,7 @@ const ResetEmailConfirmPage = ({resetEmailConfirm}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container flex-center">
+            <div className="page-container flex-horizontally-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Change your Email</h1>
@@ -47,7 +47,7 @@ const ResetEmailConfirmPage = ({resetEmailConfirm}) => {
                     <form onSubmit={onSubmit}>
                         <input type="email" name="new_email" value={new_email} required={true} minLength={8} placeholder="New Email" onChange={onChange}/>
                         <input type="text" name="re_new_email" value={re_new_email} required={true} minLength={8} placeholder="Confirm New Email" onChange={onChange}/>
-                        
+
                         <button type="submit" className="authentication-input">Change your email</button>
                     </form>
                 </div>

@@ -5,6 +5,7 @@ export const HOME_URL = '/';
 // export const LISTING_ACCESSORIES_URL = '/accessories/';
 // Listing Details
 export const LISTING_DETAILS_URL = '/listing/:id/';
+export const LISTING_ALL_IMAGES_URL = '/listing/:id/all-images/';
 // "Main" Pages
 export const ABOUT_US_URL = '/about-us/';
 export const CONTACT_US_URL = '/contact-us/';

@@ -31,12 +31,12 @@ const IndexPage = ({loadListings, listings, next, previous}) => {
                 <div className="listings">
                     {
                         !listings ? (
-                            <div className="flex-center space-filler">
+                            <div className="flex-horizontally-center space-filler">
                                 <Loader/>
                             </div>
                         ) : (
                             listings?.length === 0 ? (
-                                <div className="flex-center space-filler">
+                                <div className="flex-horizontally-center space-filler">
                                     <h1>No listings found</h1>
                                 </div>
                             ) : (

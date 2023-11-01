@@ -36,7 +36,7 @@ const ResetEmailPage = ({resetEmail}) => {
         <>
             <Header showLinks={false} showSearch={false} showAuth={false}/>
 
-            <div className="page-container flex-center">
+            <div className="page-container flex-horizontally-center">
                 <div className="authentication-form">
                     <div className="authentication-header">
                         <h1>Change your Email</h1>
