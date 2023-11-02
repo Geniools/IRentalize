@@ -8,6 +8,8 @@ import Loader from "../../../components/Loader/Loader";
 import ModalImage from "../../../components/ModalImage/ModalImage";
 import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer";
+import DateFormatter from "../../../components/DateFormatter/DateFormatter";
+import ProfileHostCard from "../../../components/ProfileHostCard/ProfileHostCard";
 
 import styles from "./ListingDetailsPage.module.css";
 
@@ -30,15 +32,14 @@ const ListingDetailsPage = () => {
             });
     }, [id]);
 
-    // Format the date - Example: "Aug 30, 2023, 02:11 PM"
-    const dateOptions = {year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'}
-
     if (!listing) return <>
         <Header/>
         <div className={"flex-vertically-centered flex-horizontally-center space-filler"}>
             <Loader/>
         </div>
     </>;
+
+    console.log("Listing data:", listing)
 
     return (
         <>
@@ -81,10 +82,12 @@ const ListingDetailsPage = () => {
                 {/* Description */}
                 <div className={styles.section}>
                     <div className={styles.info}>
-                        <p>{listing.description}</p>
+                        <pre>{listing.description}</pre>
 
-                        <p><b>Created at: </b>{new Date(listing.created_at).toLocaleString('en-US', dateOptions)}</p>
-                        <p><b>Updated at: </b>{new Date(listing.updated_at).toLocaleString('en-US', dateOptions)}</p>
+                        <div>
+                            <p><b>Created at: </b><DateFormatter date={listing.created_at} showTime={false}/></p>
+                            <p><b>Updated at: </b><DateFormatter date={listing.updated_at} showTime={false}/></p>
+                        </div>
                     </div>
                 </div>
 
@@ -94,8 +97,9 @@ const ListingDetailsPage = () => {
                 <div className={styles.section}>
                     <div className={styles.footer}>
                         {/*TODO: Display Host info*/}
-                        <p>{listing.host}</p>
-                        <button>Book Now</button>
+                        <p>{listing.host_username}</p>
+
+                        <ProfileHostCard hostFirstName={listing.first_name} hostUsername={listing.host_username} hostImage={listing.host_image}/>
                     </div>
                 </div>
 
@@ -103,7 +107,7 @@ const ListingDetailsPage = () => {
 
                 {/* Reviews */}
                 <div className={styles.section}>
-
+                    <h1>Reviews</h1>
                 </div>
 
                 <hr/>
@@ -119,12 +123,14 @@ const ListingDetailsPage = () => {
 
                 {/* Book now and Calendar with availability */}
                 <div className={styles.section}>
+                    <h1>Book now calendar</h1>
                 </div>
 
                 <hr/>
 
                 {/* Similar listings */}
                 <div className={styles.section}>
+                    <h1>Similar listings</h1>
                 </div>
             </div>
 

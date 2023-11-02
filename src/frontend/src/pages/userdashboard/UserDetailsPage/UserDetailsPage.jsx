@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 
 import {updateUserInfo} from "../../../actions/auth";
 
+import DateFormatter from "../../../components/DateFormatter/DateFormatter";
+
 import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../URL_PATHS";
 
 import "../Userdashboard.css";
@@ -45,11 +47,6 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
     }
 
     if (user) {
-        // Format the date - Example: "Aug 30, 2023, 02:11 PM"
-        const dateOptions = {year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'}
-        // Save the formatted dates to variables
-        const userLastLogin = new Date(user.last_login).toLocaleString('en-US', dateOptions);
-        const userDateJoined = new Date(user.date_joined).toLocaleString('en-US', dateOptions);
         return (
             <>
                 <div className="dashboard-right-panel-header">
@@ -103,8 +100,8 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                     </div>
 
                     <div className="dashboard-right-panel-content-readinfo">
-                        <p><i>Date joined:</i> <b>{userDateJoined}</b></p>
-                        <p><i>Last login:</i> <b>{userLastLogin}</b></p>
+                        <p><i>Date joined:</i> <b><DateFormatter date={user.last_login}/></b></p>
+                        <p><i>Last login:</i> <b><DateFormatter date={user.date_joined}/></b></p>
                     </div>
                 </div>
             </>

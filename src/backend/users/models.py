@@ -13,6 +13,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     
+    # about_me = models.TextField(null=True, blank=True)
+    # profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
+    
     address = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=15, null=True, blank=True, validators=[is_valid_number])
     

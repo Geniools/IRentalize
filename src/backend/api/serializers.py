@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
+from backend.api.utils import is_valid_image_list
 # Import all the models that will be used in the serializers
 from backend.listings.models import Listing, Category, ListingImage
-from backend.listings.utils import is_valid_image
 
 
 # Listings
@@ -26,14 +26,29 @@ class ListingSerializer(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(max_length=None, allow_empty_file=False, use_url=False),
         write_only=True,
-        validators=[is_valid_image],
+        validators=[is_valid_image_list],
     )
+    # Host details
+    host_username = serializers.CharField(source='host.username', read_only=True)
+    host_first_name = serializers.CharField(source='host.first_name', read_only=True)
+    
+    # TODO: Add host profile picture and "about me"
     
     class Meta:
         model = Listing
         fields = [
-            'id', 'category', 'host', 'title', 'description', 'price', 'images', 'uploaded_images', 'street', 'house_number', 'house_addition', 'zip_code',
-            'latitude', 'longitude', 'views', 'created_at', 'updated_at',
+            # Listing details/info
+            'id', 'category', 'title', 'description', 'price', 'images', 'uploaded_images',
+            # Host
+            'host_username', 'host_first_name',
+            # Address
+            'street', 'house_number', 'house_addition', 'zip_code',
+            # Location coordinates
+            'latitude', 'longitude',
+            # Timestamps
+            'created_at', 'updated_at',
+            # Other
+            'views',
         ]
     
     def create(self, validated_data):

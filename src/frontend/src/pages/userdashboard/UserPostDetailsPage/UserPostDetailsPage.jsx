@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {connect} from "react-redux";
 
+import axiosAuthInstanceAPI from "../../../utils/axios/axios";
+
 import ListingForm from "../../../components/ListingForm/ListingForm";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
-import axiosAuthInstanceAPI from "../../../utils/axios/axios";
 
 import {USER_POSTS_URL} from "../../../URL_PATHS";
 
@@ -23,16 +24,18 @@ const UserPostDetailsPage = () => {
         getListing();
     }, []);
 
-    const getListing = () => {
-        // Retrieve the listing based on the id
-        axiosAuthInstanceAPI.get(`/api/user-listings/${id}`)
-            .then(data => {
-                setListing(data.data);
-            })
-            .catch(err => {
-                console.log("Error getting the listing:", err);
-                navigate(USER_POSTS_URL);
-            });
+    const getListing = (delay = 0) => {
+        setTimeout(() => {
+            // Retrieve the listing based on the id
+            axiosAuthInstanceAPI.get(`/api/user-listings/${id}`)
+                .then(data => {
+                    setListing(data.data);
+                })
+                .catch(err => {
+                    console.log("Error getting the listing:", err);
+                    navigate(USER_POSTS_URL);
+                });
+        }, delay);
     }
 
     // Deletion functions
@@ -99,7 +102,7 @@ const UserPostDetailsPage = () => {
                     <h1>EDIT <i>{listing.title}</i></h1>
                 </div>
 
-                <ListingForm listingDetails={listing} update={true} onSubmitExtraFunc={getListing}/>
+                <ListingForm listingDetails={listing} update={true} onSubmitExtraFunc={() => getListing(500)}/>
                 <button className={"delete"} onClick={onPostDelete}>Delete</button>
 
                 <hr/>

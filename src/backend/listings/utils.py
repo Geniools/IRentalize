@@ -41,6 +41,7 @@ def is_valid_dutch_zip_code(zip_code):
         raise ValidationError('Invalid Dutch zip code')
 
 
+# TODO: This function does not work yet and doesnt seem to have any advantages over the get_location_location_coordinates function
 def is_valid_address(street, house_number, house_addition, zip_code, region='NL'):
     """
     Checks if the given address is a valid address using google's Address Validation API

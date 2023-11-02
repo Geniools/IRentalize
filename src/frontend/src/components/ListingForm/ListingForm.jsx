@@ -50,8 +50,9 @@ const ListingForm = ({categories, loadCategories, addListing, updateListing, loa
                 price: '',
                 address: '',
             });
-            setFormImages([]);
         }
+        
+        setFormImages([]);
 
         if (onSubmitExtraFunc) {
             onSubmitExtraFunc();
