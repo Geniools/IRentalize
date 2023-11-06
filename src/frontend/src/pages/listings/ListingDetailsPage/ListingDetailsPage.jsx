@@ -18,6 +18,7 @@ const ListingDetailsPage = () => {
     const {id} = useParams();
     const [listing, setListing] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [showMoreDescription, setShowMoreDescription] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/listings/${id}`)
@@ -39,7 +40,7 @@ const ListingDetailsPage = () => {
         </div>
     </>;
 
-    console.log("Listing data:", listing)
+    // console.log("Listing data:", listing)
 
     return (
         <>
@@ -82,11 +83,19 @@ const ListingDetailsPage = () => {
                 {/* Description */}
                 <div className={styles.section}>
                     <div className={styles.info}>
-                        <pre>{listing.description}</pre>
+                        <div className={styles.descriptionContainer}>
+                            <pre style={{display: showMoreDescription ? 'block' : '-webkit-box'}} className={styles.description}>
+                                {listing.description}
+                            </pre>
 
-                        <div>
-                            <p><b>Created at: </b><DateFormatter date={listing.created_at} showTime={false}/></p>
-                            <p><b>Updated at: </b><DateFormatter date={listing.updated_at} showTime={false}/></p>
+                            <button onClick={() => setShowMoreDescription(!showMoreDescription)} className={styles.button}>
+                                {showMoreDescription ? "Show less" : "Show more"}
+                            </button>
+                        </div>
+
+                        <div className={styles.infoDates}>
+                            <p><b>Posted on: </b><DateFormatter date={listing.created_at} showTime={false}/></p>
+                            <p><b>Updated on: </b><DateFormatter date={listing.updated_at} showTime={false}/></p>
                         </div>
                     </div>
                 </div>
@@ -95,11 +104,15 @@ const ListingDetailsPage = () => {
 
                 {/* Host */}
                 <div className={styles.section}>
-                    <div className={styles.footer}>
-                        {/*TODO: Display Host info*/}
-                        <p>{listing.host_username}</p>
-
-                        <ProfileHostCard hostFirstName={listing.first_name} hostUsername={listing.host_username} hostImage={listing.host_image}/>
+                    <div className={`${styles.hostInfo}`}>
+                        <div>
+                            <ProfileHostCard hostFirstName={listing.first_name} hostUsername={listing.host_username} hostImage={listing.host_image}/>
+                        </div>
+                        <div>
+                            <p><b>Member since: </b><DateFormatter date={listing.host_created_at} showTime={false}/></p>
+                            <p><b>Response rate: </b>{listing.response_rate}%</p>
+                            <p><b>Response time: </b>{listing.response_time}</p>
+                        </div>
                     </div>
                 </div>
 

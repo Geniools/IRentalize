@@ -1,7 +1,15 @@
+/* Section */
 .section {
 	padding  : var(--padding) 0;
 	position : relative;
 }
+
+.positionRight {
+	display         : flex;
+	justify-content : end;
+}
+
+/* Image gallery section */
 
 .imageGallery {
 	display               : grid;
@@ -10,6 +18,7 @@
 }
 
 .imageContainer {
+	align-items     : center;
 	border-radius   : var(--border-radius);
 	display         : flex;
 	height          : auto;
@@ -31,23 +40,53 @@
 	transform : scale(1.05);
 }
 
+/* Info section */
+
 .info {
+	display        : flex;
+	flex-direction : column;
+	gap            : var(--padding);
 }
 
+.description {
+	-webkit-box-orient : vertical;
+	display            : -webkit-box;
+	-webkit-line-clamp : 10; /* number of lines to show */
+	line-clamp         : 2;
+	line-height        : 1.5rem;
+	overflow           : hidden;
+}
+
+.descriptionContainer {
+	position : relative;
+}
+
+.descriptionContainer .button {
+	bottom : calc(var(--padding) * -1);
+}
+
+.infoDates {
+	line-height : 1.5rem;
+}
+
+/* Host info section */
+
+.hostInfo {
+	display : flex;
+	gap     : var(--padding);
+}
+
+/* Buttons */
 .button {
-	background-color : transparent;
-	bottom           : var(--padding);
-	color            : black;
-	position         : absolute;
-	right            : var(--padding);
-	transition       : background-color 0.3s ease-in-out;
+	background : rgba(211, 211, 211, 0.2);
+	bottom     : var(--padding);
+	color      : black;
+	position   : absolute;
+	right      : var(--padding);
+	transition : background-color 0.3s ease-in-out;
 }
 
 .button:hover {
 	background-color : var(--color-green);
 	color            : var(--color-white);
-}
-
-.footer {
-	text-align : center;
 }

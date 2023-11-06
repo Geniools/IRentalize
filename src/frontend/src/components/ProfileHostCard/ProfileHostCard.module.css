@@ -99,8 +99,10 @@
 .card .bottom .bottomBottom {
 	align-items     : center;
 	bottom          : 1rem;
+	color           : var(--color-white);
 	display         : flex;
-	justify-content : right;
+	font-size       : 0.8rem;
+	justify-content : space-between;
 	left            : 1.5rem;
 	position        : absolute;
 	right           : 1.5rem;
@@ -150,9 +152,9 @@
 }
 
 .card:hover .profilePic img {
-	-o-object-position : 0 25px;
-	object-position    : 0 25px;
-	transform          : scale(2.5);
+	-o-object-position : 0 1rem;
+	object-position    : 0 1rem;
+	transform          : scale(1.5);
 	transition         : all 0.5s ease-in-out 0.5s;
 }
 

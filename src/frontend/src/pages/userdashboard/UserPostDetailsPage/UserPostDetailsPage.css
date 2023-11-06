@@ -1,5 +1,5 @@
 .listing-editable-image-container {
-	align-items     : center;
+	align-items     : start;
 	display         : flex;
 	justify-content : center;
 	position        : relative;

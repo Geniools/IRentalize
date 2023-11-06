@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
 
-from backend.users.models import User
+from backend.users.models import User, UserProfile
 
 
 class UserCreationForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class UserCreationForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'address', 'phone']
+        fields = ['username', 'email', 'first_name', 'last_name']
     
     def clean_password2(self):
         # Check that the two password entries match
@@ -54,17 +54,40 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'username', 'email', 'first_name', 'last_name', 'address', 'phone',
+            'username', 'email', 'first_name', 'last_name',
             'is_active', 'is_staff', 'is_superuser', 'user_permissions'
         ]
 
 
+class UserProfileInLine(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'Profile'
+    readonly_fields = ['id', 'response_rate', 'response_time']
+    empty_value_display = '-'
+    # fk_name = 'user'  # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/#django.contrib.admin.InlineModelAdmin.fk_name
+    
+    fieldsets = (
+        ('User Profile', {
+            'fields': (
+                'about_me', 'phone', 'profile_picture', 'default_address'
+            ),
+        }),
+        ('Response', {
+            'fields': (
+                'response_rate', 'response_time',
+            ),
+        }),
+    )
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ['id', 'username', 'email', 'first_name', 'last_name', 'address', 'phone', 'is_active', 'is_staff', 'is_superuser']
+    list_display = ['id', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser']
     list_display_links = ['id', 'username', 'email']
     readonly_fields = ['id', 'last_login', 'date_joined']
     empty_value_display = '-'
+    inlines = (UserProfileInLine,)
     
     # The form to add a new user
     add_form = UserCreationForm
@@ -72,7 +95,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'first_name', 'last_name', 'address', 'phone', 'password1', 'password2'),
+            'fields': ('username', 'email', 'first_name', 'last_name', 'password1', 'password2'),
         }),
     )
     
@@ -82,7 +105,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         ('User', {
             'fields': (
-                'id', 'username', 'email', 'first_name', 'last_name', 'address', 'phone', 'last_login', 'date_joined',
+                'id', 'username', 'email', 'first_name', 'last_name', 'last_login', 'date_joined',
             ),
         }),
         ('Permissions', {

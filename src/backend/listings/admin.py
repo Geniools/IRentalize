@@ -1,27 +1,56 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from backend.listings.models import Listing, ListingImage, Category
+from backend.listings.models import Listing, ListingImage, Category, Address
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('id', 'street_name', 'house_number', 'house_addition', 'zip_code', 'latitude', 'longitude')
+    list_display_links = ('id', 'street_name', 'house_number', 'house_addition', 'zip_code', 'latitude', 'longitude')
+    search_fields = ('street_name', 'house_number', 'house_addition', 'zip_code', 'latitude', 'longitude')
+    readonly_fields = ('latitude', 'longitude')
+    fieldsets = [
+        ('Address', {
+            'fields': [
+                'street_name', 'house_number', 'house_addition', 'zip_code',
+            ],
+        }),
+        ('Location', {
+            'fields': [
+                'latitude', 'longitude',
+            ],
+        }),
+    ]
 
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'host', 'description', 'image_number', 'price')
+    list_display = ('id', 'title', 'category', 'host', 'image_number', 'price', 'views', 'visible', 'created_at', 'updated_at')
     list_display_links = ('id', 'title')
     list_filter = ('category', 'host')
-    search_fields = ('title', 'description', 'address', 'host__email', 'host__first_name', 'host__last_name', 'host__username', 'price')
-    readonly_fields = ('display_images',)
+    search_fields = (
+        'title', 'description', 'host__email', 'host__first_name', 'host__last_name', 'host__username', 'price',
+        'address', 'address__street_name', 'address__house_number', 'address__house_addition', 'address__zip_code',
+    )
+    readonly_fields = ('display_images', 'created_at', 'updated_at', 'views', 'image_number')
     
     fieldsets = (
         ('General Information', {
-            'fields': ('category', 'host', 'title', 'description', 'price'),
+            'fields': ('category', 'host', 'title', 'description', 'price', 'views', 'image_number'),
         }),
         ('Address', {
-            'fields': ('street', 'house_number', 'house_addition', 'zip_code')
+            'fields': ('address',),
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
         }),
         ('Images', {
             'fields': ('display_images',),
             'classes': ('collapse',),
+        }),
+        ('Other', {
+            'fields': ('visible',),
         }),
     )
     

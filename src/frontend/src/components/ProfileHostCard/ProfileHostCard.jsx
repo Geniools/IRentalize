@@ -2,11 +2,12 @@ import React from "react";
 
 import styles from "./ProfileHostCard.module.css";
 
-const ProfileHostCard = ({hostUsername, hostFirstName, hostImage}) => {
+const ProfileHostCard = ({hostUsername, hostFirstName, hostAboutMe, hostImage}) => {
     const host = {
         username: hostUsername,
         first_name: hostFirstName,
-        image: hostImage,
+        about_me: hostAboutMe,
+        image: hostImage ? hostImage : "/static/assets/default_avatar_male.png",
         validName: hostUsername ? hostUsername : hostFirstName,
     }
 
@@ -20,19 +21,22 @@ const ProfileHostCard = ({hostUsername, hostFirstName, hostImage}) => {
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                     </svg>
                 </button>
+
                 <div className={styles.profilePic}>
                     <img src={host.image} alt={host.validName}/>
                 </div>
+
                 <div className={styles.bottom}>
                     <div className={styles.content}>
                         <span className={styles.name}>{host.validName}</span>
-                        <span className={styles.aboutMe}>Lorem ipsum dolor sit amet consectetur adipisicinFcls </span>
+                        <span className={styles.aboutMe}>{host.about_me}</span>
                     </div>
 
                     <div className={styles.bottomBottom}>
                         <div>
                             {/* TODO: Implement response time */}
-                            <span>Within a day</span>
+                            <span><b>Response rate: </b></span>
+                            <span><i>Within a day</i></span>
                         </div>
 
                         <button className={styles.button}>Contact Me</button>

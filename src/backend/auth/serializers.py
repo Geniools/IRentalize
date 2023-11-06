@@ -15,6 +15,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # TODO: Modify the serializer to include the user profile details
     class Meta:
         model = User
         fields = [

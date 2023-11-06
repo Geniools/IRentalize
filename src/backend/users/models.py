@@ -8,26 +8,20 @@ from backend.users.utils import is_valid_number
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
+    # User details
     username = models.CharField(max_length=50, unique=True, null=True, blank=True)
     email = models.EmailField(max_length=80, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    
-    # about_me = models.TextField(null=True, blank=True)
-    # profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
-    
-    address = models.CharField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=15, null=True, blank=True, validators=[is_valid_number])
-    
+    # Access control
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    # last_login = models.DateTimeField(auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    
+    # Authentication
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'password']
-    
+    # Manager (custom)
     objects = UserManager()
     
     class Meta:
@@ -37,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ['-date_joined']
     
     def __str__(self):
-        return self.username if self.username else self.email
+        return self.get_full_name()
     
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -47,3 +41,31 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def has_perm(self, perm, obj=None):
         return super().has_perm(perm, obj)
+
+
+class UserProfile(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    # User profile details
+    about_me = models.TextField(null=True, blank=True, help_text='Tell us something about yourself. This will be shown on your profile page.')
+    profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
+    default_address = models.OneToOneField(
+        'listings.Address', on_delete=models.SET_NULL, related_name='default_address', null=True, blank=True,
+        help_text='This will be used as your default address when creating a listing.'
+    )
+    phone = models.CharField(
+        max_length=15, null=True, blank=True, validators=[is_valid_number],
+        help_text='An non Dutch phone number must contain the country code with the "+" sign.'
+    )
+    # Response (auto-calculated)
+    response_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='This is the percentage of messages you respond to within 24 hours.')
+    response_time = models.DurationField(null=True, blank=True, help_text='This is the average time it takes you to respond to a message.')
+    
+    class Meta:
+        db_table = 'user_profile'
+        verbose_name = 'User Profile'
+        verbose_name_plural = 'User Profiles'
+        ordering = ['user__date_joined']
+    
+    def __str__(self):
+        return self.user.get_full_name()

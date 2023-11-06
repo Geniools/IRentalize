@@ -15,6 +15,7 @@
 	--footer-height              : 14rem;
 	--header-height              : 7rem;
 	--dashboard-left-panel-width : 35%;
+	--color-light-grey           : #EAEAEA;
 	--border-radius              : 1rem;
 	--color-red                  : #F11717;
 	--color-white                : #FFFFFF;
@@ -67,6 +68,14 @@ img {
 	max-width  : 100%;
 	object-fit : cover;
 	overflow   : auto;
+}
+
+pre {
+	white-space : -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space : -pre-wrap; /* Opera 4-6 */
+	white-space : -o-pre-wrap; /* Opera 7 */
+	white-space : pre-wrap; /* Since CSS 2.1 */
+	word-wrap   : break-word; /* Internet Explorer 5.5+ */
 }
 
 .green-text {
