@@ -7,6 +7,7 @@ from backend.api import views
 router = routers.DefaultRouter()
 router.register(r'listings', views.ListingViewSet)
 router.register(r'user-listings', views.UserListingViewSet)
+router.register(r'user-address', views.UserAddressViewSet)
 router.register(r'listing-images', views.ListingImageViewSet)
 router.register(r'categories', views.CategoryViewSet)
 

@@ -18,11 +18,13 @@ class Address(models.Model):
         home_addition_str = f" {self.house_addition}" if self.house_addition else ""
         return f"{self.street_name} {self.house_number}{home_addition_str}, {self.zip_code}"
     
-    def clean(self):
+    def save(self, *args, **kwargs):
+        # Remove the spaces from the zip code
+        self.zip_code = self.zip_code.replace(" ", "")
         # Set the location coordinates
         self.latitude, self.longitude = get_location_location_coordinates(self.street_name, self.house_number, self.house_addition, self.zip_code)
-        # Do the default model validation
-        super().clean()
+        # Do the default model save()
+        super().save(*args, **kwargs)
 
 
 class Category(models.Model):

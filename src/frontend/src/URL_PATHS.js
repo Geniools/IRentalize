@@ -11,6 +11,7 @@ export const ABOUT_US_URL = '/about-us/';
 export const CONTACT_US_URL = '/contact-us/';
 // User Dashboard
 export const ACCOUNT_URL = '/account/';
+export const USER_CHANGE_PROFILE_PICTURE_URL = '/account/change-profile-picture/';
 export const USER_DETAILS_URL = '/account/user-details/';
 export const USER_ORDERS_URL = '/account/user-orders/';
 export const USER_ORDER_DETAILS_URL = '/account/user-orders/:id/';

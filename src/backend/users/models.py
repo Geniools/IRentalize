@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
+from backend.listings.models import Address
 from backend.users.manager import UserManager
 from backend.users.utils import is_valid_number
 
@@ -17,7 +18,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    # Timestamps
     date_joined = models.DateTimeField(auto_now_add=True)
+    
     # Authentication
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'password']
@@ -32,6 +35,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.get_full_name()
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Create an empty profile for the user
+        if not hasattr(self, 'profile'):
+            UserProfile.objects.create(user=self)
     
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -58,8 +67,8 @@ class UserProfile(models.Model):
         help_text='An non Dutch phone number must contain the country code with the "+" sign.'
     )
     # Response (auto-calculated)
-    response_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='This is the percentage of messages you respond to within 24 hours.')
-    response_time = models.DurationField(null=True, blank=True, help_text='This is the average time it takes you to respond to a message.')
+    response_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='This is the percentage of messages replied to within 24 hours.')
+    response_time = models.DurationField(null=True, blank=True, help_text='This is the average time taken to reply to a message.')
     
     class Meta:
         db_table = 'user_profile'

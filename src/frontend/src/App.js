@@ -11,6 +11,7 @@ import AboutUsPage from "./pages/main/AboutUsPage/AboutUsPage";
 import ContactUsPage from "./pages/main/ContactUsPage/ContactUsPage";
 // Listing pages
 import ListingDetailsPage from "./pages/listings/ListingDetailsPage/ListingDetailsPage";
+import ListingAllImagesPage from "./pages/listings/ListingAllImagesPage/ListingAllImagesPage";
 // Authentication pages
 import UserLoginPage from "./pages/authentication/UserLoginPage/UserLoginPage";
 import UserRegistrationPage from "./pages/authentication/UserRegistrationPage/UserRegistrationPage";
@@ -26,8 +27,10 @@ import UserPostsPage from "./pages/userdashboard/UserPostsPage/UserPostsPage";
 import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage/UserRecentlyViewedPage";
 import UserOrdersPage from "./pages/userdashboard/UserOrdersPage/UserOrdersPage";
 import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage/UserPostDetailsPage";
+import UserChangeProfilePicture from "./pages/userdashboard/UserChangeProfilePicture/UserChangeProfilePicture";
 // Other pages
 import NotFoundPage from "./pages/main/404NotFoundPage/404NotFoundPage";
+
 // Import the URL paths
 import {
     ABOUT_US_URL,
@@ -43,13 +46,13 @@ import {
     PASSWORD_RESET_CONFIRM_URL,
     PASSWORD_RESET_URL,
     SIGNUP_URL,
+    USER_CHANGE_PROFILE_PICTURE_URL,
     USER_DETAILS_URL,
     USER_ORDERS_URL,
     USER_POST_DETAILS_URL,
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL
 } from "./URL_PATHS";
-import ListingAllImagesPage from "./pages/listings/ListingAllImagesPage/ListingAllImagesPage";
 
 const App = () => {
     return (
@@ -78,6 +81,7 @@ const App = () => {
                             <Route exact path={USER_POSTS_URL} element={<UserPostsPage/>}/>
                             <Route exact path={USER_POST_DETAILS_URL} element={<UserPostDetailsPage/>}/>
                             <Route exact path={USER_RECENTLY_VIEWED_URL} element={<UserRecentlyViewedPage/>}/>
+                            <Route exact path={USER_CHANGE_PROFILE_PICTURE_URL} element={<UserChangeProfilePicture/>}/>
                         </Route>
 
                         {/* Authentication */}

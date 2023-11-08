@@ -72,6 +72,26 @@ class UserListingViewSet(viewsets.ModelViewSet):
         return Listing.objects.filter(host=self.request.user)
 
 
+class UserAddressViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Address.objects.all()
+    serializer_class = UserAddressSerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)
+    
+    def create(self, request, *args, **kwargs):
+        # Save the Address and attach it to the logged-in user
+        serializer = UserAddressSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # Contact Us Form
 class ContactUsView(APIView):
     permission_classes = [AllowAny]

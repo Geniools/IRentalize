@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from backend.api.utils import is_valid_image_list
 # Import all the models that will be used in the serializers
-from backend.listings.models import Listing, Category, ListingImage
+from backend.listings.models import Listing, Category, ListingImage, Address
 
 
 # Listings
@@ -74,6 +74,19 @@ class ListingSerializer(serializers.ModelSerializer):
             ListingImage.objects.create(listing=listing, image=image)
         
         return listing
+
+
+# Address serializer
+class UserAddressSerializer(serializers.ModelSerializer):
+    latitude = serializers.FloatField(read_only=True)
+    longitude = serializers.FloatField(read_only=True)
+    
+    class Meta:
+        model = Address
+        fields = [
+            'street_name', 'house_number', 'house_addition', 'zip_code',
+            'latitude', 'longitude',
+        ]
 
 
 # Contact Us Form

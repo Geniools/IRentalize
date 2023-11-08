@@ -154,7 +154,7 @@
 .card:hover .profilePic img {
 	-o-object-position : 0 1rem;
 	object-position    : 0 1rem;
-	transform          : scale(1.5);
+	transform          : scale(1.8);
 	transition         : all 0.5s ease-in-out 0.5s;
 }
 

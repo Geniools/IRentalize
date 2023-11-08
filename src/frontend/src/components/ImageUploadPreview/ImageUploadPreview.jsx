@@ -2,12 +2,12 @@ import React, {useRef, useState} from 'react';
 
 import ProfileHostCard from "../ProfileHostCard/ProfileHostCard";
 
-import styles from './ImageUploadPreview.module.css'; // Your CSS module for this component
+import styles from './ImageUploadPreview.module.css';
 
-const ImageUploadPreview = () => {
-    const [imageSrc, setImageSrc] = useState('');
-    const [imageAspectValid, setImageAspectValid] = useState(true);
+const ImageUploadPreview = ({currentImage, hostUsername, hostFirstName}) => {
     const imageRef = useRef();
+    const [imageSrc, setImageSrc] = useState(currentImage);
+    const [imageAspectValid, setImageAspectValid] = useState(true);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -33,28 +33,31 @@ const ImageUploadPreview = () => {
     return (
         <div className={styles.previewContainer}>
             <input type="file" onChange={handleImageChange} accept="image/*"/>
-            {imageSrc && (
-                <>
-                    <ProfileHostCard host={{image: imageSrc}}/>
-                    <div className={styles.imagePreview}>
-                        <img
-                            ref={imageRef}
-                            src={imageSrc}
-                            onLoad={handleImageLoaded}
-                            alt="Preview"
-                            className={styles.previewImage}
-                        />
-                        {!imageAspectValid && (
-                            <>
-                                <p className={styles.error}>Image aspect ratio is not 1:1. Please upload a square image.</p>
-                            </>
-                        )}
-                        <p className={styles.error}>Make sure to hover over the card to check if the image is displayed the way you desire!</p>
-                    </div>
-                </>
-            )}
+
+            <div className={`${"flex-horizontally-center"} ${styles.imageContainerPreview}`}>
+                <ProfileHostCard hostUsername={hostUsername} hostFirstName={hostFirstName} hostImage={imageSrc}/>
+
+                <div className={styles.imagePreview}>
+                    <img
+                        ref={imageRef}
+                        src={imageSrc}
+                        onLoad={handleImageLoaded}
+                        alt="Preview"
+                        className={styles.previewImage}
+                    />
+                </div>
+            </div>
+
+            <div className={styles.errorContainer}>
+                <p className={`${styles.errorMessage} ${styles.warning}`}>Make sure to hover over the card to check if the image is displayed the way you desire!</p>
+                {
+                    !imageAspectValid && (
+                        <p className={`${styles.errorMessage} ${styles.error}`}>Image aspect ratio is not 1:1. Such an image is likely to not display properly!</p>
+                    )
+                }
+            </div>
         </div>
     );
-};
+}
 
 export default ImageUploadPreview;

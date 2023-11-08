@@ -59,6 +59,27 @@ class UserChangeForm(forms.ModelForm):
         ]
 
 
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'phone', 'default_address']
+    list_display_links = ['id', 'user']
+    readonly_fields = ['id', 'response_rate', 'response_time']
+    empty_value_display = '-'
+    
+    fieldsets = (
+        ('User Profile', {
+            'fields': (
+                'user', 'about_me', 'phone', 'profile_picture', 'default_address'
+            ),
+        }),
+        ('Response', {
+            'fields': (
+                'response_rate', 'response_time',
+            ),
+        }),
+    )
+
+
 class UserProfileInLine(admin.StackedInline):
     model = UserProfile
     can_delete = False

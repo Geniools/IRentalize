@@ -2,11 +2,10 @@ import React from "react";
 
 import styles from "./ProfileHostCard.module.css";
 
-const ProfileHostCard = ({hostUsername, hostFirstName, hostAboutMe, hostImage}) => {
+const ProfileHostCard = ({hostUsername, hostFirstName, hostImage}) => {
     const host = {
         username: hostUsername,
         first_name: hostFirstName,
-        about_me: hostAboutMe,
         image: hostImage ? hostImage : "/static/assets/default_avatar_male.png",
         validName: hostUsername ? hostUsername : hostFirstName,
     }
@@ -29,7 +28,7 @@ const ProfileHostCard = ({hostUsername, hostFirstName, hostAboutMe, hostImage}) 
                 <div className={styles.bottom}>
                     <div className={styles.content}>
                         <span className={styles.name}>{host.validName}</span>
-                        <span className={styles.aboutMe}>{host.about_me}</span>
+                        {/*<span className={styles.aboutMe}>{host.about_me}</span>*/}
                     </div>
 
                     <div className={styles.bottomBottom}>

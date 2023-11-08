@@ -1,15 +1,16 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Link, Navigate, NavLink, Route, Routes} from "react-router-dom";
+import {Link, Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
 
+import Header from "../../../components/Header/Header";
 import UserDetailsPage from "./../UserDetailsPage/UserDetailsPage";
 import UserOrdersPage from "./../UserOrdersPage/UserOrdersPage";
 import UserPostsPage from "./../UserPostsPage/UserPostsPage";
 import UserRecentlyViewedPage from "./../UserRecentlyViewedPage/UserRecentlyViewedPage";
 import UserPostDetailsPage from "./../UserPostDetailsPage/UserPostDetailsPage";
-import Header from "../../../components/Header/Header";
+import UserChangeProfilePicture from "../UserChangeProfilePicture/UserChangeProfilePicture";
 
-import {LOGIN_URL, USER_DETAILS_URL, USER_ORDERS_URL, USER_POSTS_URL, USER_RECENTLY_VIEWED_URL} from "../../../URL_PATHS";
+import {ACCOUNT_URL, LOGIN_URL, USER_CHANGE_PROFILE_PICTURE_URL, USER_DETAILS_URL, USER_ORDERS_URL, USER_POSTS_URL, USER_RECENTLY_VIEWED_URL} from "../../../URL_PATHS";
 
 import "../Userdashboard.css";
 
@@ -17,6 +18,8 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
     useEffect(() => {
         document.title = "Host Dashboard";
     }, []);
+    const navigate = useNavigate();
+
 
     if (!isAuthenticated) {
         return (
@@ -34,8 +37,11 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
                 <div className="dashboard-container">
                     <div className="dashboard-left-panel">
                         <div className="dashboard-left-panel-header">
-                            <img src="/static/assets/cowboy.png" alt="Avatar"/>
-                            <li><Link to={USER_DETAILS_URL}><h1>{user?.first_name}</h1></Link></li>
+                            <div className="dashboard-left-panel-image-container" onClick={() => navigate(USER_CHANGE_PROFILE_PICTURE_URL)}>
+                                <img src={user?.profile.profile_picture ? user?.profile.profile_picture : "/static/assets/default_avatar_male.png"} alt="Avatar"/>
+                                <div className="image-edit-text">Edit</div>
+                            </div>
+                            <li><Link to={ACCOUNT_URL}><h1>{user?.first_name}</h1></Link></li>
                         </div>
 
                         <ul className="dashboard-nav-bar">
@@ -53,6 +59,7 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
                             <Route exact path='/user-posts' element={<UserPostsPage/>}/>
                             <Route exact path='/user-posts/:id' element={<UserPostDetailsPage/>}/>
                             <Route exact path='/user-recently-viewed' element={<UserRecentlyViewedPage/>}/>
+                            <Route exact path='/change-profile-picture' element={<UserChangeProfilePicture/>}/>
                         </Routes>
                     </div>
                 </div>

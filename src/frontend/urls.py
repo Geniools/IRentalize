@@ -23,6 +23,7 @@ urlpatterns = [
     path('account/user-posts/', views.index, name='user-posts'),
     path('account/user-posts/<int:id>/', views.index, name='user-posts-details'),
     path('account/user-recently-viewed/', views.index, name='user-recently-viewed'),
+    path('account/change-profile-picture/', views.index, name='change-profile-picture'),
     # Authentication
     path('login/', views.index, name='login'),
     path('register/', views.index, name='register'),

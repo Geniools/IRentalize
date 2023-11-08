@@ -136,7 +136,7 @@ export const login = (email, password, rememberMe) => async dispatch => {
     }
 }
 
-export const updateUserInfo = (username, first_name, last_name, address, phone) => async dispatch => {
+export const updateUserInfo = (input) => async dispatch => {
     dispatch({
         type: UPDATE_USER_REQUEST,
     })
@@ -147,7 +147,24 @@ export const updateUserInfo = (username, first_name, last_name, address, phone) 
         }
     }
 
-    const body = JSON.stringify({username, first_name, last_name, address, phone});
+    const userDetails = {
+        'username': input.username,
+        'first_name': input.first_name,
+        'last_name': input.last_name,
+        'email': input.email,
+        'profile': {
+            'about_me': input.about_me,
+            'phone': input.phone,
+            'default_address': {
+                'street_name': input.street_name,
+                'house_number': input.house_number,
+                'house_addition': input.house_addition,
+                'zip_code': input.zip_code,
+            }
+        }
+    }
+    const body = JSON.stringify(userDetails);
+
     try {
         const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
 
