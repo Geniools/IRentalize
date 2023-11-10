@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 
-import {updateUserInfo} from "../../../actions/auth";
+import {updateUserInfo} from "../../../actions/user";
 
 import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../URL_PATHS";
 
@@ -15,25 +15,28 @@ import "../Userdashboard.css";
 import "./UserDetailsPage.css";
 
 const UserDetailsPage = ({user, updateUserInfo}) => {
+    // Display a loader if the user is not loaded yet
+    if (!user) {
+        return <Loader/>;
+    }
+
     useEffect(() => {
-        if (user) {
-            // Set the form data
-            setFormData({
-                // User's details
-                username: user.username,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                // User's profile details
-                about_me: user.profile.about_me,
-                phone: user.profile.phone,
-                // Address details
-                street_name: user.profile.default_address.street_name,
-                house_number: user.profile.default_address.house_number,
-                house_addition: user.profile.default_address.house_addition,
-                zip_code: user.profile.default_address.zip_code,
-            })
-        }
+        // Set the form data
+        setFormData({
+            // User's details
+            username: user.username,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            // User's profile details
+            about_me: user.profile?.about_me,
+            phone: user.profile?.phone,
+            // Address details
+            street_name: user.profile.default_address?.street_name,
+            house_number: user.profile.default_address?.house_number,
+            house_addition: user.profile.default_address?.house_addition,
+            zip_code: user.profile.default_address?.zip_code,
+        })
     }, [user]);
 
     // Updating the user's details
@@ -68,11 +71,6 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
     const onSubmitDetails = async (event) => {
         event.preventDefault();
         updateUserInfo(formData);
-    }
-
-    // Display a loader if the user is not loaded yet
-    if (!user) {
-        return <Loader/>;
     }
 
     return (
@@ -126,12 +124,15 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
 
                         <div>
                             <label htmlFor="house_addition">House addition:</label>
-                            <input onChange={onChange} type="text" id="house_addition" name="house_addition" placeholder="House addition"
-                                   value={house_addition}/>
+                            <input onChange={onChange} type="text" id="house_addition" name="house_addition" placeholder="House addition" value={house_addition}/>
                         </div>
                     </div>
 
-                    <GoogleMapContainer latitude={user.profile.default_address.latitude} longitude={user.profile.default_address.longitude}/>
+                    {
+                        user.profile.default_address && (
+                            <GoogleMapContainer latitude={user.profile.default_address.latitude} longitude={user.profile.default_address.longitude}/>
+                        )
+                    }
 
                     <button type="submit">Update Details</button>
                 </form>
@@ -162,8 +163,8 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                 <HeadTitle title="Host Statistics" capitalize={true}/>
 
                 <div className="dashboard-right-panel-content-readinfo">
-                    <p><i>Your response rate:</i> <b>{user.profile.response_rate ? user.profile.response_rate : "No information"}</b></p>
-                    <p><i>Your response time:</i> <b>{user.profile.response_time ? user.profile.response_time : "No information"}</b></p>
+                    <p><i>Your response rate:</i> <b>{user.profile?.response_rate ? user.profile?.response_rate : "No information"}</b></p>
+                    <p><i>Your response time:</i> <b>{user.profile?.response_time ? user.profile?.response_time : "No information"}</b></p>
                 </div>
 
                 <hr/>

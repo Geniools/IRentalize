@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
@@ -12,6 +13,8 @@ from backend.api.permissions import IsListingOwner, IsListingImageOwner
 from backend.api.serializers import *
 from backend.api.utils import is_valid_captcha
 from backend.listings.filters import ListingSearchFilter
+from backend.users.models import UserProfile
+from backend.users.serializers import UserProfileImageSerializer
 
 
 # Categories
@@ -72,24 +75,23 @@ class UserListingViewSet(viewsets.ModelViewSet):
         return Listing.objects.filter(host=self.request.user)
 
 
-class UserAddressViewSet(viewsets.ModelViewSet):
+class UserProfileImageUpdateAPI(generics.UpdateAPIView, generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Address.objects.all()
-    serializer_class = UserAddressSerializer
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileImageSerializer
+    parser_classes = [MultiPartParser, FormParser]
     pagination_class = None
     
-    def get_queryset(self):
-        return Address.objects.filter(user=self.request.user)
+    def get_object(self):
+        return self.request.user.profile
     
-    def create(self, request, *args, **kwargs):
-        # Save the Address and attach it to the logged-in user
-        serializer = UserAddressSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, *args, **kwargs):
+        # Get the user profile
+        profile = self.get_object()
+        # Delete the profile image
+        profile.profile_picture.delete()
+        # Return a response
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Contact Us Form

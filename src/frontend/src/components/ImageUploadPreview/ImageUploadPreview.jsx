@@ -6,21 +6,7 @@ import styles from './ImageUploadPreview.module.css';
 
 const ImageUploadPreview = ({currentImage, hostUsername, hostFirstName}) => {
     const imageRef = useRef();
-    const [imageSrc, setImageSrc] = useState(currentImage);
     const [imageAspectValid, setImageAspectValid] = useState(true);
-
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setImageSrc(reader.result);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
 
     const handleImageLoaded = () => {
         setImageAspectValid(isImageAspectValid(imageRef.current));
@@ -32,15 +18,14 @@ const ImageUploadPreview = ({currentImage, hostUsername, hostFirstName}) => {
 
     return (
         <div className={styles.previewContainer}>
-            <input type="file" onChange={handleImageChange} accept="image/*"/>
 
             <div className={`${"flex-horizontally-center"} ${styles.imageContainerPreview}`}>
-                <ProfileHostCard hostUsername={hostUsername} hostFirstName={hostFirstName} hostImage={imageSrc}/>
+                <ProfileHostCard hostUsername={hostUsername} hostFirstName={hostFirstName} hostImage={currentImage}/>
 
                 <div className={styles.imagePreview}>
                     <img
                         ref={imageRef}
-                        src={imageSrc}
+                        src={currentImage}
                         onLoad={handleImageLoaded}
                         alt="Preview"
                         className={styles.previewImage}

@@ -1,22 +1,76 @@
-import React from "react";
+import React, {useState} from "react";
+import {connect} from "react-redux";
+
+import {deleteUserProfilePicture, updateUserProfilePicture} from "../../../actions/user";
 
 import ImageUploadPreview from "../../../components/ImageUploadPreview/ImageUploadPreview";
 import HeadTitle from "../../../components/HeadTitle/HeadTitle";
-import {connect} from "react-redux";
 import Loader from "../../../components/Loader/Loader";
+import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
 
-const UserChangeProfilePicture = ({user}) => {
+const UserChangeProfilePicture = ({user, updateUserProfilePicture, deleteUserProfilePicture}) => {
     if (!user) {
-        return <Loader/>
+        return <Loader/>;
+    }
+
+    const [imageSrc, setImageSrc] = useState(user.profile.profile_picture);
+    const [imageFile, setImageFile] = useState(null);
+
+    const [toDelete, setToDelete] = useState(false);
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setImageFile(file);
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setImageSrc(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const onUpdateClick = (event) => {
+        event.preventDefault();
+        updateUserProfilePicture(imageFile);
+    }
+
+    const onDeleteClick = (event) => {
+        event.preventDefault();
+        deleteUserProfilePicture();
+        // Close the popup
+        setToDelete(false);
     }
 
     return (
         <>
             <HeadTitle title="Change Profile Picture"/>
 
-            <ImageUploadPreview hostUsername={user.username} hostFirstName={user.first_name} currentImage={user.profile.profile_image}/>
+            <form onSubmit="">
+                <label htmlFor="image">Upload a 1:1 image</label>
+                <input type="file" id={"image"} onChange={handleImageChange} accept="image/*"/>
+            </form>
 
-            <button>Update profile picture</button>
+            <ImageUploadPreview hostUsername={user.username} hostFirstName={user.first_name} currentImage={imageSrc}/>
+
+            <button onClick={onUpdateClick}>Update profile picture</button>
+            {
+                user.profile.profile_picture && (
+                    <button className={"delete"} onClick={() => setToDelete(true)}>Delete profile picture</button>
+                )
+            }
+            {
+                toDelete && (
+                    <PopupConfirmation
+                        title="Delete profile picture"
+                        message="Are you sure you want to delete your profile picture?"
+                        onConfirm={onDeleteClick}
+                        onCancel={() => setToDelete(false)}
+                    />
+                )
+            }
         </>
     )
 }
@@ -25,4 +79,4 @@ const mapStateToProps = state => ({
     user: state.auth.user,
 });
 
-export default connect(mapStateToProps, {})(UserChangeProfilePicture);
+export default connect(mapStateToProps, {updateUserProfilePicture, deleteUserProfilePicture})(UserChangeProfilePicture);

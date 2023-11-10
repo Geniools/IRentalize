@@ -15,9 +15,6 @@ import {
     REFRESH_TOKEN_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
-    UPDATE_USER_FAILURE,
-    UPDATE_USER_REQUEST,
-    UPDATE_USER_SUCCESS,
     USER_LOADED_FAIL,
     USER_LOADED_SUCCESS,
     USERNAME_RESET_CONFIRM_FAIL,
@@ -132,49 +129,6 @@ export const login = (email, password, rememberMe) => async dispatch => {
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL,
-        });
-    }
-}
-
-export const updateUserInfo = (input) => async dispatch => {
-    dispatch({
-        type: UPDATE_USER_REQUEST,
-    })
-
-    const config = {
-        headers: {
-            "Accept": "application/json",
-        }
-    }
-
-    const userDetails = {
-        'username': input.username,
-        'first_name': input.first_name,
-        'last_name': input.last_name,
-        'email': input.email,
-        'profile': {
-            'about_me': input.about_me,
-            'phone': input.phone,
-            'default_address': {
-                'street_name': input.street_name,
-                'house_number': input.house_number,
-                'house_addition': input.house_addition,
-                'zip_code': input.zip_code,
-            }
-        }
-    }
-    const body = JSON.stringify(userDetails);
-
-    try {
-        const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
-
-        dispatch({
-            type: UPDATE_USER_SUCCESS,
-            payload: res.data
-        });
-    } catch (err) {
-        dispatch({
-            type: UPDATE_USER_FAILURE,
         });
     }
 }

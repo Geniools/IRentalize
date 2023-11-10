@@ -3,6 +3,8 @@ import {
     ACTIVATION_SUCCESS,
     AUTHENTICATED_FAIL,
     AUTHENTICATED_SUCCESS,
+    DELETE_USER_PROFILE_IMAGE_FAILURE,
+    DELETE_USER_PROFILE_IMAGE_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -15,6 +17,8 @@ import {
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     UPDATE_USER_FAILURE,
+    UPDATE_USER_PROFILE_IMAGE_FAILURE,
+    UPDATE_USER_PROFILE_IMAGE_SUCCESS,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     USER_LOADED_FAIL,
@@ -68,6 +72,28 @@ export default function (state = initialState, action) {
                 ...state,
                 user: payload,
             }
+        case UPDATE_USER_PROFILE_IMAGE_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    profile: {
+                        ...state.user.profile,
+                        profile_picture: payload.profile_picture,
+                    }
+                }
+            }
+        case DELETE_USER_PROFILE_IMAGE_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    profile: {
+                        ...state.user.profile,
+                        profile_picture: null,
+                    }
+                }
+            }
         case REFRESH_TOKEN_FAIL:
         case LOGIN_FAIL:
         case SIGNUP_FAIL:
@@ -90,6 +116,8 @@ export default function (state = initialState, action) {
             }
         case UPDATE_USER_REQUEST:
         case UPDATE_USER_FAILURE:
+        case DELETE_USER_PROFILE_IMAGE_FAILURE:
+        case UPDATE_USER_PROFILE_IMAGE_FAILURE:
         case ACTIVATION_SUCCESS:
         case ACTIVATION_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:

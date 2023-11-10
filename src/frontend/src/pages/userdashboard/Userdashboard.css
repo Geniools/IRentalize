@@ -49,14 +49,20 @@
 	opacity : 0.2;
 }
 
+.dashboard-left-panel-image-container:hover .image-edit-text {
+	opacity : 1;
+}
+
 .image-edit-text {
 	font-size   : 0.7rem;
 	font-weight : bold;
 	left        : 50%;
+	opacity     : 0;
 	padding     : 0.5rem;
 	position    : absolute;
 	top         : 50%;
 	transform   : translate(-50%, -50%);
+	transition  : opacity 0.2s ease-in-out;
 	z-index     : -1;
 }
 

@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Link, Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
 
+import Loader from "../../../components/Loader/Loader";
 import Header from "../../../components/Header/Header";
 import UserDetailsPage from "./../UserDetailsPage/UserDetailsPage";
 import UserOrdersPage from "./../UserOrdersPage/UserOrdersPage";
@@ -15,17 +16,18 @@ import {ACCOUNT_URL, LOGIN_URL, USER_CHANGE_PROFILE_PICTURE_URL, USER_DETAILS_UR
 import "../Userdashboard.css";
 
 const UserDashboardPage = ({isAuthenticated, user}) => {
+    if (!isAuthenticated) {
+        return <Navigate to={LOGIN_URL}/>;
+    }
+
+    if (!user) {
+        return <Loader/>;
+    }
+
     useEffect(() => {
         document.title = "Host Dashboard";
     }, []);
     const navigate = useNavigate();
-
-
-    if (!isAuthenticated) {
-        return (
-            <Navigate to={LOGIN_URL}/>
-        )
-    }
 
     return (
         <>
@@ -38,10 +40,10 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
                     <div className="dashboard-left-panel">
                         <div className="dashboard-left-panel-header">
                             <div className="dashboard-left-panel-image-container" onClick={() => navigate(USER_CHANGE_PROFILE_PICTURE_URL)}>
-                                <img src={user?.profile.profile_picture ? user?.profile.profile_picture : "/static/assets/default_avatar_male.png"} alt="Avatar"/>
+                                <img src={user.profile?.profile_picture ? user.profile?.profile_picture : "/static/assets/default_avatar_male.png"} alt="Avatar"/>
                                 <div className="image-edit-text">Edit</div>
                             </div>
-                            <li><Link to={ACCOUNT_URL}><h1>{user?.first_name}</h1></Link></li>
+                            <li><Link to={ACCOUNT_URL}><h1>{user.first_name}</h1></Link></li>
                         </div>
 
                         <ul className="dashboard-nav-bar">

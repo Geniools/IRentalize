@@ -5,14 +5,17 @@ from backend.api import views
 
 # Create a router and register all the viewsets
 router = routers.DefaultRouter()
-router.register(r'listings', views.ListingViewSet)
-router.register(r'user-listings', views.UserListingViewSet)
-router.register(r'user-address', views.UserAddressViewSet)
-router.register(r'listing-images', views.ListingImageViewSet)
+
+# Listings
 router.register(r'categories', views.CategoryViewSet)
+router.register(r'listings', views.ListingViewSet)
+router.register(r'listing-images', views.ListingImageViewSet)
+# User
+router.register(r'user-listings', views.UserListingViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('', include(router.urls)),
-    path('contact-us/', views.ContactUsView.as_view()),
+    path('user-profile-image/', views.UserProfileImageUpdateAPI.as_view(), name='user-profile-image'),
+    path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
 ]
