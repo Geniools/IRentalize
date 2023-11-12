@@ -103,7 +103,7 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                     <textarea onChange={onChange} id="about_me" name="about_me" placeholder="What would you like others to know about you?" value={about_me}/>
 
                     <HeadSubTitle title="Default Address"/>
-
+        
                     <div className="dashboard-right-panel-content-line">
                         <div>
                             <label htmlFor="street_name">Street name:</label>

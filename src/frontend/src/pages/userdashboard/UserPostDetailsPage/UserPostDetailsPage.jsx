@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {connect} from "react-redux";
 
-import axiosAuthInstanceAPI from "../../../utils/axios/axios";
+import axiosInstanceJSONAPI from "../../../utils/axios/axios_content_type_json";
 
 import ListingForm from "../../../components/ListingForm/ListingForm";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
+import Loader from "../../../components/Loader/Loader";
 
 import {USER_POSTS_URL} from "../../../URL_PATHS";
 
@@ -27,7 +28,7 @@ const UserPostDetailsPage = () => {
     const getListing = (delay = 0) => {
         setTimeout(() => {
             // Retrieve the listing based on the id
-            axiosAuthInstanceAPI.get(`/api/user-listings/${id}`)
+            axiosInstanceJSONAPI.get(`/api/user-listings/${id}`)
                 .then(data => {
                     setListing(data.data);
                 })
@@ -49,10 +50,8 @@ const UserPostDetailsPage = () => {
 
     // Confirmation functions
     const onConfirmDeleteImage = () => {
-        console.log("Image is being deleted!: ", imageToDelete);
-
         // Delete the image from the database
-        axiosAuthInstanceAPI.delete(`/api/listing-images/${imageToDelete}`)
+        axiosInstanceJSONAPI.delete(`/api/listing-images/${imageToDelete}`)
             .then(data => {
                 getListing();
             })
@@ -65,10 +64,8 @@ const UserPostDetailsPage = () => {
     }
 
     const onConfirmDeletePost = () => {
-        console.log("Post is being deleted!: ", id);
-
         // Delete the post from the database
-        axiosAuthInstanceAPI.delete(`/api/user-listings/${id}`)
+        axiosInstanceJSONAPI.delete(`/api/user-listings/${id}`)
             .then(data => {
                 navigate(USER_POSTS_URL);
             })
@@ -90,65 +87,61 @@ const UserPostDetailsPage = () => {
     }
 
     if (!listing) {
-        return (
-            <div className="dashboard-right-panel-header">
-                <h1>Loading...</h1>
-            </div>
-        )
-    } else {
-        return (
-            <>
-                <div className="dashboard-right-panel-header">
-                    <h1>EDIT <i>{listing.title}</i></h1>
-                </div>
-
-                <ListingForm listingDetails={listing} update={true} onSubmitExtraFunc={() => getListing(500)}/>
-                <button className={"delete"} onClick={onPostDelete}>Delete</button>
-
-                <hr/>
-
-                <div className="dashboard-right-panel-header">
-                    <h1>Current pictures</h1>
-                </div>
-
-                <div className="dashboard-right-panel-content-listings">
-                    {
-                        listing.images.map(image => (
-                            <div key={image.id} className="listing-editable-image-container">
-                                <button className="delete" title="Delete the picture" onClick={() => onDeleteImage(image.id)}>
-                                    X
-                                </button>
-                                <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
-                            </div>
-                        ))
-                    }
-                </div>
-
-                {/* Popups */}
-                {
-                    imageToDelete && (
-                        <PopupConfirmation
-                            title={"Delete image"}
-                            message={"Are you sure you want to delete this image?"}
-                            onConfirm={onConfirmDeleteImage}
-                            onCancel={onCancelDeleteImage}
-                        />
-                    )
-                }
-                {
-                    postDeleted && (
-                        <PopupConfirmation
-                            title={"Delete post"}
-                            message={"Are you sure you want to delete this post?"}
-                            onConfirm={onConfirmDeletePost}
-                            onCancel={onCancelDeletePost}
-                        />
-                    )
-                }
-                {/* ============ */}
-            </>
-        )
+        return <Loader/>;
     }
+
+    return (
+        <>
+            <div className="dashboard-right-panel-header">
+                <h1>EDIT <i>{listing.title}</i></h1>
+            </div>
+
+            <ListingForm listingDetails={listing} update={true} onSubmitExtraFunc={() => getListing(500)}/>
+            <button className={"delete"} onClick={onPostDelete}>Delete</button>
+
+            <hr/>
+
+            <div className="dashboard-right-panel-header">
+                <h1>Current pictures</h1>
+            </div>
+
+            <div className="dashboard-right-panel-content-listings">
+                {
+                    listing.images.map(image => (
+                        <div key={image.id} className="listing-editable-image-container">
+                            <button className="delete" title="Delete the picture" onClick={() => onDeleteImage(image.id)}>
+                                X
+                            </button>
+                            <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
+                        </div>
+                    ))
+                }
+            </div>
+
+            {/* Popups */}
+            {
+                imageToDelete && (
+                    <PopupConfirmation
+                        title={"Delete image"}
+                        message={"Are you sure you want to delete this image?"}
+                        onConfirm={onConfirmDeleteImage}
+                        onCancel={onCancelDeleteImage}
+                    />
+                )
+            }
+            {
+                postDeleted && (
+                    <PopupConfirmation
+                        title={"Delete post"}
+                        message={"Are you sure you want to delete this post?"}
+                        onConfirm={onConfirmDeletePost}
+                        onCancel={onCancelDeletePost}
+                    />
+                )
+            }
+            {/* ============ */}
+        </>
+    )
 }
 
 export default connect(null, null)(UserPostDetailsPage);

@@ -1,4 +1,5 @@
-import axiosAuthInstanceAPI from "../utils/axios/axios";
+import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
+import axiosInstanceFormDataAPI from "../utils/axios/axios_content_type_formdata";
 
 import {
     DELETE_USER_PROFILE_IMAGE_FAILURE,
@@ -40,7 +41,7 @@ export const updateUserInfo = (input) => async dispatch => {
     const body = JSON.stringify(userDetails);
 
     try {
-        const res = await axiosAuthInstanceAPI.patch("/auth/users/me/", body, config);
+        const res = await axiosInstanceJSONAPI.patch("/auth/users/me/", body, config);
 
         dispatch({
             type: UPDATE_USER_SUCCESS,
@@ -58,17 +59,11 @@ export const updateUserProfilePicture = (profile_picture) => async dispatch => {
         type: UPDATE_USER_REQUEST,
     })
 
-    const config = {
-        headers: {
-            'Content-Type': 'multipart/form-data; ',
-        }
-    }
-
     const body = new FormData();
     body.append('profile_picture', profile_picture);
 
     try {
-        const res = await axiosAuthInstanceAPI.patch("/api/user-profile-image/", body, config);
+        const res = await axiosInstanceFormDataAPI.patch("/api/user-profile-image/", body);
 
         dispatch({
             type: UPDATE_USER_PROFILE_IMAGE_SUCCESS,
@@ -87,7 +82,7 @@ export const deleteUserProfilePicture = () => async dispatch => {
     })
 
     try {
-        const res = await axiosAuthInstanceAPI.delete("/api/user-profile-image/");
+        const res = await axiosInstanceJSONAPI.delete("/api/user-profile-image/");
 
         dispatch({
             type: DELETE_USER_PROFILE_IMAGE_SUCCESS,

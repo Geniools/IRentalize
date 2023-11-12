@@ -42,6 +42,8 @@ const UserChangeProfilePicture = ({user, updateUserProfilePicture, deleteUserPro
         deleteUserProfilePicture();
         // Close the popup
         setToDelete(false);
+        // Reset the image
+        setImageSrc(null);
     }
 
     return (
@@ -49,13 +51,14 @@ const UserChangeProfilePicture = ({user, updateUserProfilePicture, deleteUserPro
             <HeadTitle title="Change Profile Picture"/>
 
             <form onSubmit="">
-                <label htmlFor="image">Upload a 1:1 image</label>
-                <input type="file" id={"image"} onChange={handleImageChange} accept="image/*"/>
+                <label htmlFor="image">Upload a 1:1 size image in <b>.png, .jpg or jpeg</b> format:</label>
+                <input type="file" id={"image"} onChange={handleImageChange} accept="image/png, image/jpg, image/jpeg"/>
             </form>
 
             <ImageUploadPreview hostUsername={user.username} hostFirstName={user.first_name} currentImage={imageSrc}/>
 
-            <button onClick={onUpdateClick}>Update profile picture</button>
+            <button onClick={onUpdateClick} disabled={imageFile === null}>Update profile picture</button>
+
             {
                 user.profile.profile_picture && (
                     <button className={"delete"} onClick={() => setToDelete(true)}>Delete profile picture</button>

@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 # Listings
 router.register(r'categories', views.CategoryViewSet)
 router.register(r'listings', views.ListingViewSet)
-router.register(r'listing-images', views.ListingImageViewSet)
+router.register(r'listing-images', views.UserListingImageViewSet)
 # User
 router.register(r'user-listings', views.UserListingViewSet)
 

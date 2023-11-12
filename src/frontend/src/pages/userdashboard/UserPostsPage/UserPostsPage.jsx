@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 
 import {loadUserListings} from "../../../actions/listing";
-
-import ListingLink from "../../../components/ListingLink/ListingLink";
 import ListingForm from "../../../components/ListingForm/ListingForm";
 
 import "../Userdashboard.css";
+import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import ListingLink from "../../../components/ListingLink/ListingLink";
 
 const UserPostsPage = ({listings, loadUserListings}) => {
     useEffect(() => {
@@ -21,14 +21,12 @@ const UserPostsPage = ({listings, loadUserListings}) => {
 
     return (
         <>
-            <div className="dashboard-right-panel-header">
-                <h1>MY POSTS</h1>
-            </div>
+            <HeadTitle title={"My Posts"} capitalize={true}/>
 
             <button onClick={changeFormVisibility}>{formVisibility ? 'Hide Form' : 'Add Post +'}</button>
 
             <div className="dashboard-right-panel-content">
-                {formVisibility ? <ListingForm update={false}/> : null}
+                {formVisibility ? <ListingForm/> : null}
 
                 <hr/>
 

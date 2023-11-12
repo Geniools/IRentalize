@@ -9,29 +9,28 @@ import {
     UPDATE_POST_FAIL,
     UPDATE_POST_SUCCESS
 } from "./types";
-import axiosAuthInstanceAPI from "../utils/axios/axios";
+import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
+import axiosInstanceFormDataAPI from "../utils/axios/axios_content_type_formdata";
 
-export const addListing = (title, description, category, price, address, images) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'multipart/form-data; ',
-        }
-    }
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('category', category);
-    formData.append('price', price);
-    formData.append('address', address);
+export const addListing = ({formData, formImages}) => async dispatch => {
+    const body = new FormData();
+    body.append('title', formData.title);
+    body.append('description', formData.description);
+    body.append('category', formData.category);
+    body.append('price', formData.price);
+    // Address
+    body.append('street_name', formData.street_name);
+    body.append('zip_code', formData.zip_code);
+    body.append('house_number', formData.house_number);
+    body.append('house_addition', formData.house_addition);
 
     // Append the images to the form data
-    for (let i = 0; i < images.length; i++) {
-        formData.append('uploaded_images', images[i]);
+    for (let i = 0; i < formImages.length; i++) {
+        body.append('uploaded_images', formImages[i]);
     }
 
     try {
-        const res = await axiosAuthInstanceAPI.post('/api/user-listings/', formData, config);
+        const res = await axiosInstanceFormDataAPI.post('/api/user-listings/', body);
 
         dispatch({
             type: ADD_POST_SUCCESS,
@@ -44,27 +43,25 @@ export const addListing = (title, description, category, price, address, images)
     }
 }
 
-export const updateListing = (id, title, description, category, price, address, images) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'multipart/form-data; ',
-        }
-    }
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('category', category);
-    formData.append('price', price);
-    formData.append('address', address);
+export const updateListing = ({listingId, formData, formImages}) => async dispatch => {
+    const body = new FormData();
+    body.append('title', formData.title);
+    body.append('description', formData.description);
+    body.append('category', formData.category);
+    body.append('price', formData.price);
+    // Address
+    body.append('street_name', formData.street_name);
+    body.append('zip_code', formData.zip_code);
+    body.append('house_number', formData.house_number);
+    body.append('house_addition', formData.house_addition);
 
     // Append the images to the form data
-    for (let i = 0; i < images.length; i++) {
-        formData.append('uploaded_images', images[i]);
+    for (let i = 0; i < formImages.length; i++) {
+        body.append('uploaded_images', formImages[i]);
     }
 
     try {
-        const res = await axiosAuthInstanceAPI.patch(`/api/user-listings/${id}/`, formData, config);
+        const res = await axiosInstanceFormDataAPI.patch(`/api/user-listings/${listingId}/`, body);
 
         dispatch({
             type: UPDATE_POST_SUCCESS,
@@ -79,7 +76,7 @@ export const updateListing = (id, title, description, category, price, address, 
 
 export const loadCategories = () => async dispatch => {
     try {
-        const res = await axiosAuthInstanceAPI.get('/api/categories/');
+        const res = await axiosInstanceJSONAPI.get('/api/categories/');
 
         dispatch({
             type: GET_CATEGORIES_SUCCESS,
@@ -108,7 +105,7 @@ export const loadListings = ({url = "/api/listings/", filters}) => async dispatc
     }
 
     try {
-        const res = await axiosAuthInstanceAPI.get(url);
+        const res = await axiosInstanceJSONAPI.get(url);
 
         dispatch({
             type: GET_LISTINGS_SUCCESS,
@@ -123,7 +120,7 @@ export const loadListings = ({url = "/api/listings/", filters}) => async dispatc
 
 export const loadUserListings = () => async dispatch => {
     try {
-        const res = await axiosAuthInstanceAPI.get('/api/user-listings/');
+        const res = await axiosInstanceJSONAPI.get('/api/user-listings/');
 
         dispatch({
             type: GET_USER_LISTINGS_SUCCESS,

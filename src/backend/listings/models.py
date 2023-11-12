@@ -1,7 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from backend.listings.utils import is_valid_dutch_zip_code, UploadToPathAndRename, is_valid_image, get_location_location_coordinates
+from backend.listings.utils import is_valid_dutch_zip_code, is_valid_image, get_location_location_coordinates
+from backend.main.utils import UploadToPathAndRename
 
 
 class Address(models.Model):
@@ -84,7 +85,7 @@ class Listing(models.Model):
 class ListingImage(models.Model):
     id = models.AutoField(primary_key=True)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to=UploadToPathAndRename('listings'), validators=[is_valid_image])
+    image = models.ImageField(upload_to=UploadToPathAndRename('listings', 'listing.title'), validators=[is_valid_image])
     
     class Meta:
         db_table = 'listing_image'

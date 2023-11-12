@@ -64,6 +64,15 @@
 	white-space   : nowrap;
 }
 
+.listings-item-info pre {
+	display            : flex;
+	flex-direction     : row;
+	-webkit-line-clamp : 3; /* number of lines to show */
+	line-clamp         : 3;
+	line-height        : 1.4rem;
+	overflow           : hidden;
+}
+
 .image-thumbnail {
 	display    : none;
 	opacity    : 0;

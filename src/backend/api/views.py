@@ -25,29 +25,15 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
 
 
-# Listing images
-class ListingImageViewSet(mixins.DestroyModelMixin, viewsets.GenericViewSet):
-    queryset = ListingImage.objects.all()
-    permission_classes = [IsAuthenticated, IsListingImageOwner]
-    serializer_class = ListingImageSerializer
-    pagination_class = None
-    
-    def get_queryset(self):
-        # First retrieve all the listings attributed to the logged-in user
-        listings = Listing.objects.filter(host=self.request.user)
-        # Then retrieve all the images attributed to the listings
-        return ListingImage.objects.filter(listing__in=listings)
-
-
 # Listings
 class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Listing.objects.all()
+    queryset = Listing.objects.filter(visible=True)
     serializer_class = ListingSerializer
     filterset_class = ListingSearchFilter
 
 
-# User listings (api endpoint to retrieve only the listings attributed to the logged-in user)
+# User listings (api endpoint to be used only when interacting with the listings attributed to the logged-in user)
 class UserListingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsListingOwner]
     queryset = Listing.objects.all()
@@ -75,6 +61,21 @@ class UserListingViewSet(viewsets.ModelViewSet):
         return Listing.objects.filter(host=self.request.user)
 
 
+# Listing images (api endpoint to be used only when interacting with the images attributed to the logged-in user)
+class UserListingImageViewSet(mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    queryset = ListingImage.objects.all()
+    permission_classes = [IsAuthenticated, IsListingImageOwner]
+    serializer_class = ListingImageSerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        # First retrieve all the listings attributed to the logged-in user
+        listings = Listing.objects.filter(host=self.request.user)
+        # Then retrieve all the images attributed to the listings
+        return ListingImage.objects.filter(listing__in=listings)
+
+
+# API endpoint to update and delete the user profile image
 class UserProfileImageUpdateAPI(generics.UpdateAPIView, generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = UserProfile.objects.all()

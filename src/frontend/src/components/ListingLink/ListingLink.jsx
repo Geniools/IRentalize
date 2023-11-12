@@ -5,9 +5,9 @@ import "./ListingLink.css";
 
 const ListingLink = ({listing, url}) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const listingUrl = url + listing.id + "/";
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
+    const listingUrl = url + listing.id + "/";
 
     const handleImageRightSlide = (event) => {
         if (currentImageIndex === listing.images.length - 1) {
@@ -32,12 +32,10 @@ const ListingLink = ({listing, url}) => {
             <div className="listings-item">
                 <div className="listings-item-image">
                     <img src={listing.images[currentImageIndex].image} alt={listing.title}/>
-                    {/* TODO: Do not display the arrow if there are no images in that direction */}
                     <div className={`${!previous ? 'hidden' : ''} image-thumbnail image-thumbnail-left `}>
                         <button type="button" className="image-thumbnail-button" onClick={handleImageLeftSlide}>&#10094;</button>
                     </div>
 
-                    {/* TODO: Do not display the arrow if there are no images in that direction */}
                     <div className={`${!next ? 'hidden' : ''} image-thumbnail image-thumbnail-right `}>
                         <button type="button" className="image-thumbnail-button" onClick={handleImageRightSlide}>&#10095;</button>
                     </div>
@@ -45,9 +43,10 @@ const ListingLink = ({listing, url}) => {
 
                 <div className="listings-item-info">
                     <h1>{listing.title}</h1>
-                    <p>{listing.description}</p>
+                    <pre>{listing.description.slice(0, 100)}...</pre>
                     <p>{listing.price} <b><span>&euro;</span></b></p>
-                    <i><p>{listing.address}</p></i>
+                    <i><p>{listing.address.zip_code}</p></i>
+
                     <div className="listing-ranking">
                         {/*TODO: Implement ranking*/}
                         <span>5.0</span>

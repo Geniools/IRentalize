@@ -2,11 +2,11 @@ import axios from "axios";
 import store from "../store/store";
 import {refreshToken} from "../../actions/auth";
 
-const axiosAuthInstanceAPI = axios.create();
+const axiosInstanceJSONAPI = axios.create();
 
 
 // Request interceptor for API calls to add the access token header to the request
-axiosAuthInstanceAPI.interceptors.request.use(
+axiosInstanceJSONAPI.interceptors.request.use(
     async config => {
         const access = localStorage.getItem("access") || sessionStorage.getItem("access");
 
@@ -26,7 +26,7 @@ axiosAuthInstanceAPI.interceptors.request.use(
 )
 
 // Response interceptor for API calls to refresh the token
-axiosAuthInstanceAPI.interceptors.response.use(
+axiosInstanceJSONAPI.interceptors.response.use(
     response => response,
     async error => {
         const originalRequest = error.config;
@@ -36,10 +36,11 @@ axiosAuthInstanceAPI.interceptors.response.use(
             await store.dispatch(refreshToken());
 
             originalRequest.headers['Authorization'] = `JWT ${localStorage.getItem("access") || sessionStorage.getItem("access")}`;
-            return axiosAuthInstanceAPI(originalRequest);
+            return axiosInstanceJSONAPI(originalRequest);
         }
+
         return Promise.reject(error);
     }
 );
 
-export default axiosAuthInstanceAPI;
+export default axiosInstanceJSONAPI;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
 import {
     ACTIVATION_FAIL,
     ACTIVATION_SUCCESS,
@@ -22,7 +23,6 @@ import {
     USERNAME_RESET_FAIL,
     USERNAME_RESET_SUCCESS,
 } from "./types";
-import axiosAuthInstanceAPI from "../utils/axios/axios";
 
 
 export const refreshToken = () => async (dispatch, getState) => {
@@ -94,7 +94,7 @@ export const loadUser = () => async dispatch => {
     }
 
     try {
-        const res = await axiosAuthInstanceAPI.get("/auth/users/me/", config);
+        const res = await axiosInstanceJSONAPI.get("/auth/users/me/", config);
 
         dispatch({
             type: USER_LOADED_SUCCESS,

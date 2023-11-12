@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 
-from backend.api.serializers import UserAddressSerializer
+from backend.api.serializers import AddressSerializer
 from backend.users.models import UserProfile
 
 # Will retrieve the User model defined in AUTH_USER_MODEL in settings.py
@@ -18,7 +18,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    default_address = UserAddressSerializer(allow_null=True)
+    default_address = AddressSerializer(allow_null=True)
     profile_picture = serializers.ImageField(read_only=True)
     
     class Meta:
@@ -40,9 +40,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         # Update the address
         if address_data:
             if profile.default_address:
-                address = UserAddressSerializer(profile.default_address, data=address_data, partial=True)
+                address = AddressSerializer(profile.default_address, data=address_data, partial=True)
             else:
-                address = UserAddressSerializer(data=address_data)
+                address = AddressSerializer(data=address_data)
             
             # Save the address
             if address.is_valid(raise_exception=True):

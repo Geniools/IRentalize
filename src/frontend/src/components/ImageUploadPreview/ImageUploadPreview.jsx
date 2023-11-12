@@ -8,6 +8,7 @@ const ImageUploadPreview = ({currentImage, hostUsername, hostFirstName}) => {
     const imageRef = useRef();
     const [imageAspectValid, setImageAspectValid] = useState(true);
 
+
     const handleImageLoaded = () => {
         setImageAspectValid(isImageAspectValid(imageRef.current));
     };

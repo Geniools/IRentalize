@@ -3,6 +3,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 from backend.listings.models import Address
+from backend.listings.utils import is_valid_image
+from backend.main.utils import UploadToPathAndRename
 from backend.users.manager import UserManager
 from backend.users.utils import is_valid_number
 
@@ -57,7 +59,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     # User profile details
     about_me = models.TextField(null=True, blank=True, help_text='Tell us something about yourself. This will be shown on your profile page.')
-    profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
+    profile_picture = models.ImageField(
+        upload_to=UploadToPathAndRename('profile_pictures', 'user.first_name'),
+        validators=[is_valid_image],
+        null=True, blank=True
+    )
     default_address = models.OneToOneField(
         'listings.Address', on_delete=models.SET_NULL, related_name='default_address', null=True, blank=True,
         help_text='This will be used as your default address when creating a listing.'
