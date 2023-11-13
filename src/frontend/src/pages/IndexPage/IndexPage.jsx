@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {connect} from "react-redux";
 
 import {loadListings} from "../../actions/listing";
@@ -11,10 +11,6 @@ import ListingLink from "../../components/ListingLink/ListingLink";
 import "./IndexPage.css";
 
 const IndexPage = ({loadListings, listings, next, previous}) => {
-    useEffect(() => {
-        document.title = "Home";
-    }, []);
-
     const handlePrevious = () => {
         loadListings({url: previous});
     }

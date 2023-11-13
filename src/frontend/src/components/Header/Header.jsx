@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {Link, NavLink, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
 import {logout} from "../../actions/auth";
 import {loadListings} from "../../actions/listing";
@@ -9,7 +10,6 @@ import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
 import {ACCOUNT_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL} from "../../URL_PATHS";
 
 import "./Header.css";
-import PropTypes from "prop-types";
 
 const Header = ({
                     logout,

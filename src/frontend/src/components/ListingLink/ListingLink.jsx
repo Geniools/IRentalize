@@ -1,9 +1,16 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 
+import Loader from "../Loader/Loader";
+
 import "./ListingLink.css";
 
 const ListingLink = ({listing, url}) => {
+    // Display a loader if the listing is not loaded yet
+    if (!listing) {
+        return <Loader/>;
+    }
+
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
@@ -26,12 +33,12 @@ const ListingLink = ({listing, url}) => {
         }
         event.preventDefault()
     }
-
+    
     return (
         <Link to={listingUrl} className="listings-item-link-wrapper">
             <div className="listings-item">
                 <div className="listings-item-image">
-                    <img src={listing.images[currentImageIndex].image} alt={listing.title}/>
+                    <img src={listing.images[currentImageIndex]?.image} alt={listing.title}/>
                     <div className={`${!previous ? 'hidden' : ''} image-thumbnail image-thumbnail-left `}>
                         <button type="button" className="image-thumbnail-button" onClick={handleImageLeftSlide}>&#10094;</button>
                     </div>

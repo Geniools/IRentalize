@@ -18,7 +18,7 @@ module.exports = {
         filename: "[name].js",
     },
     resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", ".css"],
     },
     module: {
         rules: [
@@ -33,6 +33,18 @@ module.exports = {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.png$/,
+                use: {
+                    loader: "url-loader?limit=100000"
+                },
+            },
+            {
+                test: /\.jpg$/,
+                use: {
+                    loader: "file-loader"
+                },
+            }
         ],
     },
     optimization: {

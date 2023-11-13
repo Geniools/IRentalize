@@ -12,33 +12,40 @@ import DateFormatter from "../../../components/DateFormatter/DateFormatter";
 import ProfileHostCard from "../../../components/ProfileHostCard/ProfileHostCard";
 
 import styles from "./ListingDetailsPage.module.css";
+import HeadSubTitle from "../../../components/HeadSubTitle/HeadSubTitle";
+import BookingCalendar from "../../../components/BookingCalendar/BookingCalendar";
 
 const ListingDetailsPage = () => {
     const navigator = useNavigate();
     const {id} = useParams();
     const [listing, setListing] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [showMoreDescription, setShowMoreDescription] = useState(false);
+    const [showMoreDescriptionListing, setShowMoreDescriptionListing] = useState(false);
+    const [showMoreDescriptionHost, setShowMoreDescriptionHost] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/listings/${id}`)
             .then(res => {
                 // console.log("Listing data:", res);
                 setListing(res.data);
+                document.title = res.data.title;
             })
             .catch(error => {
-                // console.log("Error fetching listing data:", error);
+                console.log("Error fetching listing data:", error);
                 // Redirect to 404 page if listing is not found
                 navigator("/404");
             });
     }, [id]);
 
-    if (!listing) return <>
-        <Header/>
-        <div className={"flex-vertically-centered flex-horizontally-center space-filler"}>
-            <Loader/>
-        </div>
-    </>;
+    if (!listing) return (
+        <>
+            <Header/>
+
+            <div className={"flex-vertically-centered flex-horizontally-center space-filler"}>
+                <Loader/>
+            </div>
+        </>
+    );
 
     // console.log("Listing data:", listing)
 
@@ -50,7 +57,7 @@ const ListingDetailsPage = () => {
                 {/* Title and address */}
                 <div className={styles.section}>
                     <HeadTitle title={listing.title} capitalize={true}/>
-                    <p>{listing.address}</p>
+                    <HeadSubTitle title={listing.category_name}/>
                 </div>
 
                 <hr/>
@@ -84,12 +91,12 @@ const ListingDetailsPage = () => {
                 <div className={styles.section}>
                     <div className={styles.info}>
                         <div className={styles.descriptionContainer}>
-                            <pre style={{display: showMoreDescription ? 'block' : '-webkit-box'}} className={styles.description}>
+                            <pre style={{display: showMoreDescriptionListing ? 'block' : '-webkit-box'}} className={styles.description}>
                                 {listing.description}
                             </pre>
 
-                            <button onClick={() => setShowMoreDescription(!showMoreDescription)} className={styles.button}>
-                                {showMoreDescription ? "Show less" : "Show more"}
+                            <button onClick={() => setShowMoreDescriptionListing(!showMoreDescriptionListing)} className={styles.button}>
+                                {showMoreDescriptionListing ? "Show less" : "Show more"}
                             </button>
                         </div>
 
@@ -104,47 +111,63 @@ const ListingDetailsPage = () => {
 
                 {/* Host */}
                 <div className={styles.section}>
-                    <div className={`${styles.hostInfo}`}>
+                    <div className={`${styles.hostContainer}`}>
                         <div>
-                            <ProfileHostCard hostFirstName={listing.first_name} hostUsername={listing.host_username} hostImage={listing.host_image}/>
+                            <ProfileHostCard hostFirstName={listing.host_first_name} hostUsername={listing.host_username} hostImage={listing.host_profile_picture}/>
                         </div>
-                        <div>
-                            <p><b>Member since: </b><DateFormatter date={listing.host_created_at} showTime={false}/></p>
-                            <p><b>Response rate: </b>{listing.response_rate}%</p>
-                            <p><b>Response time: </b>{listing.response_time}</p>
+
+                        <div className={styles.hostInfo}>
+                            <p className={styles.descriptionContainer}><b>About me: </b>
+                                <pre style={{display: showMoreDescriptionHost ? 'block' : '-webkit-box'}} className={styles.description}>
+                                    {listing.host_about_me}
+                                </pre>
+
+                                <button onClick={() => setShowMoreDescriptionHost(!showMoreDescriptionHost)} className={styles.button}>
+                                    {showMoreDescriptionHost ? "Show less" : "Show more"}
+                                </button>
+                            </p>
+                            <p><b>Member since: </b><DateFormatter date={listing.host_member_since} showTime={false}/></p>
+                            {
+                                listing.host_response_time !== null && (
+                                    <p><b>Response time: </b>{listing.host_response_time}</p>
+                                )
+                            }
+                            {/*<p><b>Response rate: </b>{listing.host_response_rate}%</p>*/}
                         </div>
                     </div>
                 </div>
 
                 <hr/>
 
-                {/* Reviews */}
-                <div className={styles.section}>
-                    <h1>Reviews</h1>
-                </div>
-
-                <hr/>
-
                 {/* Map */}
                 <div className={styles.section}>
-                    <h2>{listing.zip_code} {listing.street} {listing.house_number} {listing.house_addition}</h2>
+                    <HeadSubTitle title="Location"/>
+                    <div className={styles.mapAddressInfo}>
+                        <p><b>Zip Code: </b>{listing.address.zip_code}</p>
+                        <p><b>Street: </b>{listing.address.street_name} {listing.address.house_number} {listing.address.house_addition}</p>
+                    </div>
 
-                    <GoogleMapContainer latitude={listing.latitude} longitude={listing.longitude}/>
+                    <GoogleMapContainer latitude={listing.address.latitude} longitude={listing.address.longitude}/>
                 </div>
 
                 <hr/>
 
                 {/* Book now and Calendar with availability */}
                 <div className={styles.section}>
-                    <h1>Book now calendar</h1>
+                    <BookingCalendar/>
                 </div>
 
-                <hr/>
+                {/* Reviews */}
+                {/*<div className={styles.section}>*/}
+                {/*    <h1>Reviews</h1>*/}
+                {/*</div>*/}
+
+                {/*<hr/>*/}
 
                 {/* Similar listings */}
-                <div className={styles.section}>
-                    <h1>Similar listings</h1>
-                </div>
+                {/*<div className={styles.section}>*/}
+                {/*    <h1>Similar listings</h1>*/}
+                {/*</div>*/}
             </div>
 
             <Footer/>

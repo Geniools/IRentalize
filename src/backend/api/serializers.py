@@ -34,6 +34,10 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class ListingSerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    # Overwrite timestamps to only return the date
+    created_at = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
     # Will retrieve all the images attributed to the listing
     images = ListingImageSerializer(many=True, read_only=True)
     # Will be used when creating or updating a listing
@@ -47,6 +51,9 @@ class ListingSerializer(serializers.ModelSerializer):
     host_first_name = serializers.CharField(source='host.first_name', read_only=True)
     host_about_me = serializers.CharField(source='host.profile.about_me', read_only=True)
     host_profile_picture = serializers.ImageField(source='host.profile.profile_picture', read_only=True)
+    host_member_since = serializers.DateTimeField(source='host.date_joined', read_only=True, format="%Y-%m-%d")
+    host_response_rate = serializers.DecimalField(source='host.profile.response_rate', read_only=True, max_digits=5, decimal_places=2)
+    host_response_time = serializers.CharField(source='host.profile.response_time', read_only=True)
     # Address details (read-only)
     address = AddressSerializer(read_only=True)
     # Address details (write-only)
@@ -59,9 +66,9 @@ class ListingSerializer(serializers.ModelSerializer):
         model = Listing
         fields = [
             # Listing details/info
-            'id', 'category', 'title', 'description', 'price', 'images', 'uploaded_images',
+            'id', 'category', 'category_name', 'title', 'description', 'price', 'images', 'uploaded_images',
             # Host
-            'host', 'host_username', 'host_first_name', 'host_about_me', 'host_profile_picture',
+            'host', 'host_username', 'host_first_name', 'host_about_me', 'host_profile_picture', 'host_member_since', 'host_response_rate', 'host_response_time',
             # Address (read-only)
             'address',
             # Address (write-only)

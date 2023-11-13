@@ -11,6 +11,7 @@ import {
 } from "./types";
 import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
 import axiosInstanceFormDataAPI from "../utils/axios/axios_content_type_formdata";
+import axios from "axios";
 
 export const addListing = ({formData, formImages}) => async dispatch => {
     const body = new FormData();
@@ -90,6 +91,15 @@ export const loadCategories = () => async dispatch => {
 }
 
 export const loadListings = ({url = "/api/listings/", filters}) => async dispatch => {
+    // Define the headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+    };
+
+    // Add the filters to the url
     if (filters) {
         let queryParams = "";
 
@@ -104,8 +114,9 @@ export const loadListings = ({url = "/api/listings/", filters}) => async dispatc
         }
     }
 
+    // Send the request
     try {
-        const res = await axiosInstanceJSONAPI.get(url);
+        const res = await axios.get(url, config);
 
         dispatch({
             type: GET_LISTINGS_SUCCESS,
