@@ -42,3 +42,10 @@ export const GET_LISTINGS_FAIL = 'GET_LISTINGS_FAIL';
 export const GET_USER_LISTINGS_SUCCESS = 'GET_USER_LISTINGS_SUCCESS';
 export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
 export const GET_CATEGORIES_FAIL = 'GET_CATEGORIES_FAIL';
+export const ADD_BOOKING_SUCCESS = 'ADD_BOOKING_SUCCESS';
+export const ADD_BOOKING_FAIL = 'ADD_BOOKING_FAIL';
+
+// Common ==================================================================================================================
+export const ADD_ERROR = 'ADD_ERROR';
+export const REMOVE_ERROR = 'REMOVE_ERROR';
+export const SET_NAVIGATE_TO_AFTER_AUTH = 'SET_NAVIGATE_TO_AFTER_AUTH';

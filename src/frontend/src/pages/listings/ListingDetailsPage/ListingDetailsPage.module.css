@@ -90,18 +90,28 @@
 	margin-bottom : 1rem;
 }
 
+/* Booking section */
+.bookingContainer {
+	position : relative;
+}
+
+.bookingContainer button {
+	opacity : 1;
+}
+
 /* Buttons */
 .button {
 	background : rgba(211, 211, 211, 0.2);
-	bottom     : var(--padding);
+	bottom     : 0;
 	color      : black;
-	opacity    : 0.8;
+	opacity    : 0.3;
 	position   : absolute;
-	right      : var(--padding);
+	right      : 0;
 	transition : background-color 0.3s ease-in-out;
 }
 
 .button:hover {
 	background-color : var(--color-green);
 	color            : var(--color-white);
+	opacity          : 1;
 }

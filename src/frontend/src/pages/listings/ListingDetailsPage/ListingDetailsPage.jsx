@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import {connect} from "react-redux";
+import {addBooking} from "../../../actions/listing";
+import {setNavigateToAfterAuth} from "../../../actions/common";
 
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -10,18 +13,27 @@ import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer";
 import DateFormatter from "../../../components/DateFormatter/DateFormatter";
 import ProfileHostCard from "../../../components/ProfileHostCard/ProfileHostCard";
-
-import styles from "./ListingDetailsPage.module.css";
 import HeadSubTitle from "../../../components/HeadSubTitle/HeadSubTitle";
 import BookingCalendar from "../../../components/BookingCalendar/BookingCalendar";
 
-const ListingDetailsPage = () => {
+import styles from "./ListingDetailsPage.module.css";
+
+const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNavigateToAfterAuth, addBooking}) => {
     const navigator = useNavigate();
     const {id} = useParams();
     const [listing, setListing] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [showMoreDescriptionListing, setShowMoreDescriptionListing] = useState(false);
     const [showMoreDescriptionHost, setShowMoreDescriptionHost] = useState(false);
+    const [errorMessages, setErrorMessages] = useState([]);
+    const [bookingDates, setBookingDates] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection'
+        }
+    ]);
+    const [canBook, setCanBook] = useState(true);
 
     useEffect(() => {
         axios.get(`/api/listings/${id}`)
@@ -31,11 +43,39 @@ const ListingDetailsPage = () => {
                 document.title = res.data.title;
             })
             .catch(error => {
-                console.log("Error fetching listing data:", error);
+                // console.log("Error fetching listing data:", error);
                 // Redirect to 404 page if listing is not found
                 navigator("/404");
             });
     }, [id]);
+
+    const handleBooking = () => {
+        if (canBook) {
+            // Check if user is logged in
+            if (!isAuthenticated) {
+                console.log("You need to be logged in to book this listing!")
+                // Set the navigateToAfterLogin state to the current page
+                setNavigateToAfterAuth(`/listing/${id}`);
+                // Redirect to login page if user is not logged in
+                return navigator("/login");
+            }
+            // Check if the user is the host of the listing
+            if (user.id === listing.host) {
+                console.log("You are the host of this listing!")
+                // Show error message
+                return;
+            }
+            const startDate = bookingDates[0].startDate;
+            const endDate = bookingDates[0].endDate;
+            const listingId = listing.id;
+
+            addBooking({listingId, startDate, endDate});
+        } else {
+            console.log("There are still errors you need to fix!")
+            console.log(errorMessages);
+            // Show error message
+        }
+    }
 
     if (!listing) return (
         <>
@@ -46,8 +86,6 @@ const ListingDetailsPage = () => {
             </div>
         </>
     );
-
-    // console.log("Listing data:", listing)
 
     return (
         <>
@@ -117,7 +155,7 @@ const ListingDetailsPage = () => {
                         </div>
 
                         <div className={styles.hostInfo}>
-                            <p className={styles.descriptionContainer}><b>About me: </b>
+                            <p className={styles.descriptionContainer}><b>About the host: </b>
                                 <pre style={{display: showMoreDescriptionHost ? 'block' : '-webkit-box'}} className={styles.description}>
                                     {listing.host_about_me}
                                 </pre>
@@ -154,19 +192,26 @@ const ListingDetailsPage = () => {
 
                 {/* Book now and Calendar with availability */}
                 <div className={styles.section}>
-                    <BookingCalendar/>
+                    <div className={styles.bookingContainer}>
+                        <BookingCalendar
+                            availabilities={listing.availabilities}
+                            dayPrice={listing.price}
+                            setCanBook={setCanBook}
+                            errorMessages={errorMessages}
+                            setErrorMessages={setErrorMessages}
+                            bookingDates={bookingDates}
+                            setBookingDates={setBookingDates}
+                        />
+
+                        <div>
+                            <button className={styles.button} onClick={handleBooking}>Book now</button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Reviews */}
                 {/*<div className={styles.section}>*/}
                 {/*    <h1>Reviews</h1>*/}
-                {/*</div>*/}
-
-                {/*<hr/>*/}
-
-                {/* Similar listings */}
-                {/*<div className={styles.section}>*/}
-                {/*    <h1>Similar listings</h1>*/}
                 {/*</div>*/}
             </div>
 
@@ -175,4 +220,10 @@ const ListingDetailsPage = () => {
     );
 }
 
-export default ListingDetailsPage;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    navigateToAfterLogin: state.common.navigateToAfterLogin,
+});
+
+export default connect(mapStateToProps, {addBooking, setNavigateToAfterAuth})(ListingDetailsPage);

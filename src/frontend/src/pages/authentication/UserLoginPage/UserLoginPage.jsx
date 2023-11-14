@@ -8,8 +8,9 @@ import {login} from "../../../actions/auth";
 import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../URL_PATHS";
 
 import "../Authentication.css";
+import {setNavigateToAfterAuth} from "../../../actions/common";
 
-const UserLoginPage = ({isAuthenticated, login}) => {
+const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigateToAfterAuth}) => {
     useEffect(() => {
         document.title = "Login";
     }, []);
@@ -36,6 +37,16 @@ const UserLoginPage = ({isAuthenticated, login}) => {
 
     // Redirect if logged in
     if (isAuthenticated) {
+        // Check if the user is redirected from another page
+        if (navigateToAfterLogin) {
+            // Save the navigateToAfterLogin state to variable
+            const navigateTo = navigateToAfterLogin;
+            // Reset the navigateToAfterLogin state
+            setNavigateToAfterAuth(null);
+            // Navigate to the page the user was redirected from
+            return <Navigate to={navigateToAfterLogin}/>;
+        }
+        
         return (
             <Navigate to={ACCOUNT_URL}/>
         )
@@ -83,7 +94,8 @@ const UserLoginPage = ({isAuthenticated, login}) => {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    navigateToAfterLogin: state.common.navigateToAfterLogin,
 });
 
-export default connect(mapStateToProps, {login})(UserLoginPage);
+export default connect(mapStateToProps, {login, setNavigateToAfterAuth})(UserLoginPage);

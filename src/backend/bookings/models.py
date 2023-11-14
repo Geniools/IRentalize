@@ -1,13 +1,17 @@
 from django.db import models
 
+from backend.bookings.constants import RESERVATION_STATUS
+
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
-    listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE)
-    guest = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE, related_name='reservations')
+    guest = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='reservations')
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    status = models.SmallIntegerField(choices=RESERVATION_STATUS, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    # Timestamps
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
@@ -23,7 +27,7 @@ class Reservation(models.Model):
 
 class Availability(models.Model):
     id = models.AutoField(primary_key=True)
-    listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE)
+    listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE, related_name='availabilities')
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     

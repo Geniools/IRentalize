@@ -143,3 +143,7 @@ export const loadUserListings = () => async dispatch => {
         });
     }
 }
+
+export const addBooking = ({listingId, startDate, endDate}) => async dispatch => {
+    console.log(listingId, startDate, endDate);
+}

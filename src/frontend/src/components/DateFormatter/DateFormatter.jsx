@@ -15,7 +15,7 @@ const DateFormatter = ({date, showTime = true}) => {
     return (
         <>
             {
-                new Date(date).toLocaleString('en-US', dateOptions)
+                new Date(date).toLocaleString('nl-NL', dateOptions)
             }
         </>
     )
