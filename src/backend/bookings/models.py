@@ -38,4 +38,4 @@ class Availability(models.Model):
         ordering = ['start_date']
     
     def __str__(self):
-        return f'{self.listing} - {self.start_date} - {self.end_date}'
+        return f'{self.listing} - {self.start_date.date()} - {self.end_date.date()}'

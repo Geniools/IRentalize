@@ -12,6 +12,8 @@ from rest_framework.views import APIView
 from backend.api.permissions import IsListingOwner, IsListingImageOwner
 from backend.api.serializers import *
 from backend.api.utils import is_valid_captcha
+from backend.bookings.models import Reservation
+from backend.bookings.serializers import ReservationSerializer
 from backend.listings.filters import ListingSearchFilter
 from backend.listings.models import Category, Listing, ListingImage
 from backend.listings.serializers import CategorySerializer, ListingSerializer, ListingImageSerializer
@@ -95,6 +97,35 @@ class UserProfileImageUpdateAPI(generics.UpdateAPIView, generics.DestroyAPIView)
         profile.profile_picture.delete()
         # Return a response
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# View to handle Reservation requests
+class ReservationAPIView(generics.CreateAPIView, generics.ListAPIView, generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        # Get the user
+        user = self.request.user
+        # Get the user's reservations
+        return Reservation.objects.filter(guest=user)
+    
+    def create(self, request, *args, **kwargs):
+        # Make a "copy" of the request data so that we can modify it (QueryDict is immutable)
+        copy_data = request.data
+        # Add the user (guest) to the created reservation
+        copy_data['guest'] = request.user.id
+        # Create the serializer
+        serializer = ReservationSerializer(data=copy_data)
+        # Validate the data
+        if serializer.is_valid():
+            # Save the reservation
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Contact Us Form

@@ -1,4 +1,6 @@
 import {
+    ADD_BOOKING_FAIL,
+    ADD_BOOKING_SUCCESS,
     ADD_POST_FAIL,
     ADD_POST_SUCCESS,
     GET_CATEGORIES_FAIL,
@@ -145,5 +147,18 @@ export const loadUserListings = () => async dispatch => {
 }
 
 export const addBooking = ({listingId, startDate, endDate}) => async dispatch => {
-    console.log(listingId, startDate, endDate);
+    const body = JSON.stringify({listing: listingId, start_date: startDate, end_date: endDate});
+
+    try {
+        const res = await axiosInstanceJSONAPI.post('/api/listing-reservation/', body);
+
+        dispatch({
+            type: ADD_BOOKING_SUCCESS,
+            payload: res.data,
+        });
+    } catch (err) {
+        dispatch({
+            type: ADD_BOOKING_FAIL,
+        });
+    }
 }

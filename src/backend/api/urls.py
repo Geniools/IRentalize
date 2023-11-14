@@ -13,9 +13,9 @@ router.register(r'listing-images', views.UserListingImageViewSet)
 # User
 router.register(r'user-listings', views.UserListingViewSet)
 
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('', include(router.urls)),
     path('user-profile-image/', views.UserProfileImageUpdateAPI.as_view(), name='user-profile-image'),
+    path('listing-reservation/', views.ReservationAPIView.as_view(), name='listing-reservation'),
     path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
 ]

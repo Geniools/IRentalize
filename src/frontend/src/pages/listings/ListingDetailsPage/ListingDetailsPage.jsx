@@ -70,6 +70,7 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
             const listingId = listing.id;
 
             addBooking({listingId, startDate, endDate});
+            // window.location.reload(false);
         } else {
             console.log("There are still errors you need to fix!")
             console.log(errorMessages);
@@ -191,10 +192,11 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
                 <hr/>
 
                 {/* Book now and Calendar with availability */}
-                <div className={styles.section}>
+                <div id="booking-section" className={styles.section}>
                     <div className={styles.bookingContainer}>
                         <BookingCalendar
                             availabilities={listing.availabilities}
+                            unavailableDates={listing.unavailable_dates}
                             dayPrice={listing.price}
                             setCanBook={setCanBook}
                             errorMessages={errorMessages}

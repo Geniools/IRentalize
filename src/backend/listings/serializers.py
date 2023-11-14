@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from rest_framework import serializers
 
 from backend.api.serializers import AddressSerializer
@@ -51,6 +53,7 @@ class ListingSerializer(serializers.ModelSerializer):
     zip_code = serializers.CharField(write_only=True, validators=[is_valid_dutch_zip_code])
     # Available dates
     availabilities = AvailabilitySerializer(many=True, read_only=True)
+    unavailable_dates = serializers.SerializerMethodField()
     
     class Meta:
         model = Listing
@@ -66,7 +69,7 @@ class ListingSerializer(serializers.ModelSerializer):
             # Timestamps
             'created_at', 'updated_at',
             # Available dates
-            'availabilities',
+            'availabilities', 'unavailable_dates',
             # Other
             'views',
         ]
@@ -118,3 +121,19 @@ class ListingSerializer(serializers.ModelSerializer):
             ListingImage.objects.create(listing=listing, image=image)
         
         return listing
+    
+    def get_unavailable_dates(self, obj):
+        # Retrieve all the reservations attributed to the listing
+        reservations = obj.reservations.all()
+        # Make a list of all the unavailable dates
+        unavailable_dates = []
+        for reservation in reservations:
+            # Retrieve the start and end date of the reservation
+            start_date = reservation.start_date
+            end_date = reservation.end_date
+            # Make a list of all the dates between the start and end date
+            date_list = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+            # Add all the dates to the list of unavailable dates
+            unavailable_dates.extend(date_list)
+        # Return the list of unavailable dates
+        return unavailable_dates

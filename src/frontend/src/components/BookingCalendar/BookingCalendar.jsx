@@ -21,13 +21,25 @@ const getDatesBetween = (startDate, endDate) => {
     return dates;
 }
 
-const BookingCalendar = ({availabilities, dayPrice, setCanBook, errorMessages, setErrorMessages, bookingDates, setBookingDates}) => {
+const BookingCalendar = ({availabilities, unavailableDates, dayPrice, setCanBook, errorMessages, setErrorMessages, bookingDates, setBookingDates}) => {
     const [availableDates, setAvailableDates] = useState([]);
     useEffect(() => {
+        // Convert the unavailableDates array to Date objects
+        unavailableDates = unavailableDates.map(date => new Date(date));
         // Loop through the availabilities and add all the dates to the availableDates array
         availabilities.map(availability => {
             const dates = getDatesBetween(availability.start_date, availability.end_date);
-            setAvailableDates(prevState => prevState.concat(dates));
+            dates.map(date => {
+                // Check if the date is not in the unavailableDates array
+                if (!unavailableDates.some(unavailableDate =>
+                    unavailableDate.getFullYear() === date.getFullYear() &&
+                    unavailableDate.getMonth() === date.getMonth() &&
+                    unavailableDate.getDate() === date.getDate()
+                )) {
+                    setAvailableDates(prevState => prevState.concat(date));
+                }
+            })
+            // setAvailableDates(prevState => prevState.concat(dates));
         });
     }, []);
 
