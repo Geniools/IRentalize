@@ -224,14 +224,16 @@ const UserPostDetailsPage = () => {
 
             <div className="dashboard-right-panel-content-listings">
                 {
-                    listing.images.map(image => (
-                        <div key={image.id} className="listing-editable-image-container">
-                            <button className="delete" title="Delete the picture" onClick={() => onDeleteImage(image.id)}>
-                                X
-                            </button>
-                            <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
-                        </div>
-                    ))
+                    listing.images && (
+                        listing.images.map(image => (
+                            <div key={image.id} className="listing-editable-image-container">
+                                <button className="delete" title="Delete the picture" onClick={() => onDeleteImage(image.id)}>
+                                    X
+                                </button>
+                                <img title={image.image} src={image.image} alt={`Image ${image.id}`}/>
+                            </div>
+                        ))
+                    ) || <Loader/>
                 }
             </div>
 

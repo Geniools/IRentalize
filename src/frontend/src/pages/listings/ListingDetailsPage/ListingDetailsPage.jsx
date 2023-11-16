@@ -186,15 +186,20 @@ const ListingDetailsPage = ({isAuthenticated, user, setNavigateToAfterAuth, addB
                 <hr/>
 
                 {/* Map */}
-                <div className={styles.section}>
-                    <HeadSubTitle title="Location"/>
-                    <div className={styles.mapAddressInfo}>
-                        <p><b>Zip Code: </b>{listing.address?.zip_code}</p>
-                        <p><b>Street: </b>{listing.address?.street_name} {listing.address?.house_number} {listing.address?.house_addition}</p>
-                    </div>
+                {
+                    // If the listing has no address, don't display the map
+                    listing.address && (
+                        <div className={styles.section}>
+                            <HeadSubTitle title="Location"/>
+                            <div className={styles.mapAddressInfo}>
+                                <p><b>Zip Code: </b>{listing.address?.zip_code}</p>
+                                <p><b>Street: </b>{listing.address?.street_name} {listing.address?.house_number} {listing.address?.house_addition}</p>
+                            </div>
 
-                    <GoogleMapContainer latitude={listing.address?.latitude} longitude={listing.address?.longitude}/>
-                </div>
+                            <GoogleMapContainer latitude={listing.address?.latitude} longitude={listing.address?.longitude}/>
+                        </div>
+                    ) || <Loader/>
+                }
 
                 <hr/>
 
