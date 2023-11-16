@@ -189,11 +189,11 @@ const ListingDetailsPage = ({isAuthenticated, user, setNavigateToAfterAuth, addB
                 <div className={styles.section}>
                     <HeadSubTitle title="Location"/>
                     <div className={styles.mapAddressInfo}>
-                        <p><b>Zip Code: </b>{listing.address.zip_code}</p>
-                        <p><b>Street: </b>{listing.address.street_name} {listing.address.house_number} {listing.address.house_addition}</p>
+                        <p><b>Zip Code: </b>{listing.address?.zip_code}</p>
+                        <p><b>Street: </b>{listing.address?.street_name} {listing.address?.house_number} {listing.address?.house_addition}</p>
                     </div>
 
-                    <GoogleMapContainer latitude={listing.address.latitude} longitude={listing.address.longitude}/>
+                    <GoogleMapContainer latitude={listing.address?.latitude} longitude={listing.address?.longitude}/>
                 </div>
 
                 <hr/>
