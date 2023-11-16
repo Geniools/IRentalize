@@ -33,7 +33,7 @@ const ListingLink = ({listing, url}) => {
         }
         event.preventDefault()
     }
-    
+
     return (
         <Link to={listingUrl} className="listings-item-link-wrapper">
             <div className="listings-item">
@@ -52,7 +52,7 @@ const ListingLink = ({listing, url}) => {
                     <h1>{listing.title}</h1>
                     <pre>{listing.description.slice(0, 100)}...</pre>
                     <p>{listing.price} <b><span>&euro;</span></b></p>
-                    <i><p>{listing.address.zip_code}</p></i>
+                    <i><p>{listing.address?.zip_code}</p></i>
 
                     <div className="listing-ranking">
                         {/*TODO: Implement ranking*/}
