@@ -18,14 +18,14 @@ import BookingCalendar from "../../../components/BookingCalendar/BookingCalendar
 
 import styles from "./ListingDetailsPage.module.css";
 
-const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNavigateToAfterAuth, addBooking}) => {
+const ListingDetailsPage = ({isAuthenticated, user, setNavigateToAfterAuth, addBooking}) => {
     const navigator = useNavigate();
     const {id} = useParams();
     const [listing, setListing] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [showMoreDescriptionListing, setShowMoreDescriptionListing] = useState(false);
     const [showMoreDescriptionHost, setShowMoreDescriptionHost] = useState(false);
-    const [errorMessages, setErrorMessages] = useState([]);
+    const [errorMessages, setErrorMessages] = useState(["Select a date to book this listing!"]);
     const [bookingDates, setBookingDates] = useState([
         {
             startDate: new Date(),
@@ -54,19 +54,20 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
             // Check if user is logged in
             if (!isAuthenticated) {
                 console.log("You need to be logged in to book this listing!")
+                // TODO: Show error message
                 // Set the navigateToAfterLogin state to the current page
                 setNavigateToAfterAuth(`/listing/${id}/`);
                 // Redirect to login page if user is not logged in
                 return navigator("/login");
             }
+
             // Check if the user is the host of the listing
             if (user.id === listing.host) {
                 console.log("You are the host of this listing!")
-                // Show error message
+                // TODO: Show error message
                 return;
             }
 
-            console.log(bookingDates);
             let startDate = bookingDates[0].startDate.getFullYear() + "-";
             startDate += bookingDates[0].startDate.getMonth() + 1 + "-";
             startDate += bookingDates[0].startDate.getDate();
@@ -76,14 +77,11 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
             endDate += bookingDates[0].endDate.getDate();
             const listingId = listing.id;
 
-            console.log("Booking data:", {listingId, startDate, endDate});
-
             addBooking({listingId, startDate, endDate});
-            // window.location.reload(false);
         } else {
             console.log("There are still errors you need to fix!")
             console.log(errorMessages);
-            // Show error message
+            // TODO: Show error message
         }
     }
 
@@ -234,7 +232,6 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
-    navigateToAfterLogin: state.common.navigateToAfterLogin,
 });
 
 export default connect(mapStateToProps, {addBooking, setNavigateToAfterAuth})(ListingDetailsPage);

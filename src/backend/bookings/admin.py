@@ -16,7 +16,7 @@ class ReservationAdmin(admin.ModelAdmin):
             'fields': ('listing', 'guest', 'start_date', 'end_date', 'status',),
         }),
         ('Timestamps', {
-            'fields': ('updated_at', 'created_at',),
+            'fields': ('created_at', 'updated_at',),
         }),
     )
 

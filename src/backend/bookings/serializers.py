@@ -56,5 +56,26 @@ class AvailabilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Availability
         fields = [
-            'start_date', 'end_date',
+            'id', 'listing', 'start_date', 'end_date',
         ]
+    
+    def create(self, validated_data):
+        # Validate the dates
+        start_date = validated_data['start_date']
+        end_date = validated_data['end_date']
+        
+        # Check if the start date is before the end date
+        if start_date > end_date:
+            raise serializers.ValidationError("The start date must be before the end date.")
+        
+        # Check if the start date is in the past
+        if start_date < timezone.now().date():
+            raise serializers.ValidationError("The start date cannot be in the past.")
+        
+        # Check if the start date and the end date are not in conflict with any existing availabilities
+        availabilities = Availability.objects.filter(listing=validated_data['listing'])
+        for availability in availabilities:
+            if start_date <= availability.end_date and end_date >= availability.start_date:
+                raise serializers.ValidationError("The selected dates conflict with an existing availability.")
+        
+        return super().create(validated_data)

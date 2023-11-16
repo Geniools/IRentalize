@@ -162,3 +162,22 @@ export const addBooking = ({listingId, startDate, endDate}) => async dispatch =>
         });
     }
 }
+
+// Not sure if the below should be in REDUX or in the component itself. For now, I'll add it to the component itself, but commented out here.
+
+// export const addAvailability = ({listingId, startDate, endDate}) => async dispatch => {
+//     const body = JSON.stringify({listing: listingId, start_date: startDate, end_date: endDate});
+//
+//     try {
+//         const res = await axiosInstanceJSONAPI.post('/api/listing-availabilities/', body);
+//
+//         dispatch({
+//             type: ADD_BOOKING_SUCCESS,
+//             payload: res.data,
+//         });
+//     } catch (err) {
+//         dispatch({
+//             type: ADD_BOOKING_FAIL,
+//         });
+//     }
+// }

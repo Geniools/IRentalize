@@ -1,28 +1,49 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {connect} from "react-redux";
+import moment from "moment";
 
 import axiosInstanceJSONAPI from "../../../utils/axios/axios_content_type_json";
 
 import ListingForm from "../../../components/ListingForm/ListingForm";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
 import Loader from "../../../components/Loader/Loader";
+import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 
 import {USER_POSTS_URL} from "../../../URL_PATHS";
 
 import "../Userdashboard.css";
 import "./UserPostDetailsPage.css";
 
+
 const UserPostDetailsPage = () => {
     const navigate = useNavigate();
     // Listing's id in the database
     const {id} = useParams();
+    // Listing's details
     const [listing, setListing] = useState(null);
+    // Availabilities of the listing
+    const [availabilities, setAvailabilities] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date()
+        }
+    ]);
+    // Availability to add
+    const [availability, setAvailability] = useState({
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().format('YYYY-MM-DD')
+    });
+    // Image to delete
     const [imageToDelete, setImageToDelete] = useState(null);
+    // Post to delete
     const [postDeleted, setPostDeleted] = useState(false);
+    // Availability to delete
+    const [availabilityToDelete, setAvailabilityToDelete] = useState(null);
 
     useEffect(() => {
         getListing();
+        getAvailabilities();
     }, []);
 
     const getListing = (delay = 0) => {
@@ -39,6 +60,48 @@ const UserPostDetailsPage = () => {
         }, delay);
     }
 
+    const getAvailabilities = () => {
+        // Get the availabilities of the listing
+        axiosInstanceJSONAPI.get(`/api/listing-availabilities/?listing=${id}`)
+            .then(data => {
+                setAvailabilities(data.data);
+            })
+            .catch(err => {
+                console.log("Error getting the availabilities:", err);
+                // TODO: Handle the error
+            })
+    }
+
+    // Adding availability
+    const handleAvailabilityChange = (e) => {
+        // Convert the date to the correct format
+        const newDate = moment(new Date(e.target.value)).format('YYYY-MM-DD');
+
+        setAvailability({
+            ...availability,
+            [e.target.name]: newDate
+        });
+    }
+
+    const handleAddAvailability = async (e) => {
+        e.preventDefault();
+
+        const startDate = availability.startDate;
+        const endDate = availability.endDate;
+
+        const body = JSON.stringify({listing: id, start_date: startDate, end_date: endDate});
+
+        try {
+            await axiosInstanceJSONAPI.post('/api/listing-availabilities/', body);
+            // Get the new availabilities
+            getAvailabilities();
+            return true;
+        } catch (err) {
+            console.log(err)
+            return err;
+        }
+    }
+
     // Deletion functions
     const onDeleteImage = (id) => {
         setImageToDelete(id);
@@ -46,6 +109,10 @@ const UserPostDetailsPage = () => {
 
     const onPostDelete = () => {
         setPostDeleted(true);
+    }
+
+    const onDeleteAvailability = (id) => {
+        setAvailabilityToDelete(id);
     }
 
     // Confirmation functions
@@ -77,6 +144,20 @@ const UserPostDetailsPage = () => {
         setPostDeleted(false);
     }
 
+    const onConfirmDeleteAvailability = () => {
+        // Delete the availability from the database
+        axiosInstanceJSONAPI.delete(`/api/listing-availabilities/${availabilityToDelete}`)
+            .then(data => {
+                getAvailabilities();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        // Close the popup
+        setAvailabilityToDelete(null);
+    }
+
     // Cancellation functions
     const onCancelDeleteImage = () => {
         setImageToDelete(false);
@@ -86,24 +167,60 @@ const UserPostDetailsPage = () => {
         setPostDeleted(false);
     }
 
+    const onCancelDeleteAvailability = () => {
+        setAvailabilityToDelete(null);
+    }
+
     if (!listing) {
         return <Loader/>;
     }
 
     return (
         <>
-            <div className="dashboard-right-panel-header">
-                <h1>EDIT <i>{listing.title}</i></h1>
-            </div>
+            <HeadTitle title={`Edit '${listing.title}'`}/>
 
             <ListingForm listingDetails={listing} update={true} onSubmitExtraFunc={() => getListing(500)}/>
-            <button className={"delete"} onClick={onPostDelete}>Delete</button>
+            <button className={"delete"} title="Delte the listing" onClick={onPostDelete}>Delete</button>
 
             <hr/>
 
-            <div className="dashboard-right-panel-header">
-                <h1>Current pictures</h1>
+            <HeadTitle title={"Add days when the listing is available"}/>
+
+            <div className="dashboard-right-panel-content-listings">
+                {
+                    availabilities.map(((availability, index) => (
+                        <div key={index} className="listing-availability-container">
+                            <input type="date" value={availability.start_date}/>
+                            <input type="date" value={availability.end_date}/>
+
+                            <button
+                                className="listing-availability-container-delete-button delete"
+                                title="Delete the availability"
+                                onClick={() => onDeleteAvailability(availability.id)}
+                            >
+                                X
+                            </button>
+                        </div>
+                    )))
+                }
+
+                <div className="listing-availability-container">
+                    <div>
+                        <b><label htmlFor="startDate">Start date:</label></b>
+                        <input type="date" name="startDate" title="Start Date" value={availability.startDate} onChange={handleAvailabilityChange}/>
+                    </div>
+                    <div>
+                        <b><label htmlFor="endDate">End date:</label></b>
+                        <input type="date" name="endDate" title="End Date" value={availability.endDate} onChange={handleAvailabilityChange}/>
+                    </div>
+
+                    <button onClick={handleAddAvailability} type={"button"} title={"Add a new availability"}>Add availability</button>
+                </div>
             </div>
+
+            <hr/>
+
+            <HeadTitle title={"Current pictures"}/>
 
             <div className="dashboard-right-panel-content-listings">
                 {
@@ -136,6 +253,16 @@ const UserPostDetailsPage = () => {
                         message={"Are you sure you want to delete this post?"}
                         onConfirm={onConfirmDeletePost}
                         onCancel={onCancelDeletePost}
+                    />
+                )
+            }
+            {
+                availabilityToDelete && (
+                    <PopupConfirmation
+                        title={"Delete availability"}
+                        message={"Are you sure you want to delete this availability?"}
+                        onConfirm={onConfirmDeleteAvailability}
+                        onCancel={onCancelDeleteAvailability}
                     />
                 )
             }

@@ -29,6 +29,7 @@
         "@react-google-maps/api": "^2.19.2",
         "axios": "^1.5.1",
         "date-fns": "^2.30.0",
+        "moment": "^2.29.4",
         "prop-types": "^15.8.1",
         "react-date-range": "^1.4.0",
         "react-datepicker": "^4.21.0",

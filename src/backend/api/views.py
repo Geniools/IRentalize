@@ -105,6 +105,7 @@ class UserAvailabilityViewSet(viewsets.ModelViewSet):
     queryset = Availability.objects.all()
     serializer_class = AvailabilitySerializer
     pagination_class = None
+    filterset_fields = ['listing']
     
     def get_queryset(self):
         # First retrieve all the listings attributed to the logged-in user
