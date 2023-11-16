@@ -21,7 +21,16 @@ const getDatesBetween = (startDate, endDate) => {
     return dates;
 }
 
-const BookingCalendar = ({availabilities, unavailableDates, dayPrice, setCanBook, errorMessages, setErrorMessages, bookingDates, setBookingDates}) => {
+const BookingCalendar = ({
+                             availabilities,
+                             unavailableDates,
+                             dayPrice,
+                             setCanBook,
+                             errorMessages,
+                             setErrorMessages,
+                             bookingDates,
+                             setBookingDates
+                         }) => {
     const [availableDates, setAvailableDates] = useState([]);
     useEffect(() => {
         // Convert the unavailableDates array to Date objects
@@ -39,7 +48,6 @@ const BookingCalendar = ({availabilities, unavailableDates, dayPrice, setCanBook
                     setAvailableDates(prevState => prevState.concat(date));
                 }
             })
-            // setAvailableDates(prevState => prevState.concat(dates));
         });
     }, []);
 
@@ -92,7 +100,7 @@ const BookingCalendar = ({availabilities, unavailableDates, dayPrice, setCanBook
                 // className={styles.dateRangeContainer}
                 ranges={bookingDates}
                 onChange={handleSelect}
-                // Set the min date to today
+                // Set the min date to the first available date, but not before today
                 minDate={new Date()}
                 // Set the max date to 1 year from today
                 maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}

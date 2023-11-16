@@ -14,6 +14,7 @@ import {
     PASSWORD_RESET_SUCCESS,
     REFRESH_TOKEN_FAIL,
     REFRESH_TOKEN_SUCCESS,
+    REMEMBER_ME,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     USER_LOADED_FAIL,
@@ -107,7 +108,7 @@ export const loadUser = () => async dispatch => {
     }
 }
 
-export const login = (email, password, rememberMe) => async dispatch => {
+export const login = (email, password, rememberMeBool) => async dispatch => {
     const config = {
         headers: {
             "Content-Type": "application/json"
@@ -119,10 +120,13 @@ export const login = (email, password, rememberMe) => async dispatch => {
     try {
         const res = await axios.post("/auth/jwt/create/", body, config);
 
+        if (rememberMeBool) {
+            dispatch(rememberMe());
+        }
+
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,
-            remember: rememberMe,
         });
 
         dispatch(loadUser());
@@ -131,6 +135,12 @@ export const login = (email, password, rememberMe) => async dispatch => {
             type: LOGIN_FAIL,
         });
     }
+}
+
+export const rememberMe = () => async dispatch => {
+    dispatch({
+        type: REMEMBER_ME,
+    });
 }
 
 export const signup = (first_name, last_name, email, password) => async dispatch => {

@@ -9,11 +9,11 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAu
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from backend.api.permissions import IsListingOwner, IsListingImageOwner
+from backend.api.permissions import IsListingOwner, IsListingImageOwner, IsAvailabilityOwner, IsNotListingReservationOwner
 from backend.api.serializers import *
 from backend.api.utils import is_valid_captcha
-from backend.bookings.models import Reservation
-from backend.bookings.serializers import ReservationSerializer
+from backend.bookings.models import Reservation, Availability
+from backend.bookings.serializers import ReservationSerializer, AvailabilitySerializer
 from backend.listings.filters import ListingSearchFilter
 from backend.listings.models import Category, Listing, ListingImage
 from backend.listings.serializers import CategorySerializer, ListingSerializer, ListingImageSerializer
@@ -99,9 +99,23 @@ class UserProfileImageUpdateAPI(generics.UpdateAPIView, generics.DestroyAPIView)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# API endpoint to create, update and delete the Availability model of a Listing
+class UserAvailabilityViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsAvailabilityOwner]
+    queryset = Availability.objects.all()
+    serializer_class = AvailabilitySerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        # First retrieve all the listings attributed to the logged-in user
+        listings = Listing.objects.filter(host=self.request.user)
+        # Then retrieve all the availabilities attributed to the listings
+        return Availability.objects.filter(listing__in=listings)
+
+
 # View to handle Reservation requests
 class ReservationAPIView(generics.CreateAPIView, generics.ListAPIView, generics.UpdateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsNotListingReservationOwner]
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
     pagination_class = None

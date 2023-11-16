@@ -33,7 +33,7 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
             key: 'selection'
         }
     ]);
-    const [canBook, setCanBook] = useState(true);
+    const [canBook, setCanBook] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/listings/${id}`)
@@ -55,7 +55,7 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
             if (!isAuthenticated) {
                 console.log("You need to be logged in to book this listing!")
                 // Set the navigateToAfterLogin state to the current page
-                setNavigateToAfterAuth(`/listing/${id}`);
+                setNavigateToAfterAuth(`/listing/${id}/`);
                 // Redirect to login page if user is not logged in
                 return navigator("/login");
             }
@@ -65,9 +65,18 @@ const ListingDetailsPage = ({isAuthenticated, user, navigateToAfterLogin, setNav
                 // Show error message
                 return;
             }
-            const startDate = bookingDates[0].startDate;
-            const endDate = bookingDates[0].endDate;
+
+            console.log(bookingDates);
+            let startDate = bookingDates[0].startDate.getFullYear() + "-";
+            startDate += bookingDates[0].startDate.getMonth() + 1 + "-";
+            startDate += bookingDates[0].startDate.getDate();
+
+            let endDate = bookingDates[0].endDate.getFullYear() + "-";
+            endDate += bookingDates[0].endDate.getMonth() + 1 + "-";
+            endDate += bookingDates[0].endDate.getDate();
             const listingId = listing.id;
+
+            console.log("Booking data:", {listingId, startDate, endDate});
 
             addBooking({listingId, startDate, endDate});
             // window.location.reload(false);

@@ -14,6 +14,7 @@ import {
     PASSWORD_RESET_SUCCESS,
     REFRESH_TOKEN_FAIL,
     REFRESH_TOKEN_SUCCESS,
+    REMEMBER_ME,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     UPDATE_USER_FAILURE,
@@ -30,6 +31,7 @@ const initialState = {
     refresh: sessionStorage.getItem("refresh") || localStorage.getItem("refresh"),
     isAuthenticated: null,
     user: null,
+    rememberMe: false,
 }
 
 export default function (state = initialState, action) {
@@ -46,9 +48,14 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
             }
+        case REMEMBER_ME:
+            return {
+                ...state,
+                rememberMe: true,
+            }
         case REFRESH_TOKEN_SUCCESS:
         case LOGIN_SUCCESS:
-            if (remember) {
+            if (state.rememberMe) {
                 localStorage.setItem("access", payload.access);
                 localStorage.setItem("refresh", payload.refresh);
             } else {
