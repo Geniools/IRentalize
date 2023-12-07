@@ -1,19 +1,31 @@
-from django.utils import timezone
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from backend.bookings.models import Reservation, Availability
+from backend.listings.models import Listing
+from backend.users.models import User
 
 
 class ReservationSerializer(serializers.ModelSerializer):
+    listing = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Listing.objects.all())
+    listing_name = serializers.CharField(source='listing.title', read_only=True)
+    listing_id = serializers.IntegerField(source='listing.id', read_only=True)
+    
+    guest = serializers.PrimaryKeyRelatedField(write_only=True, queryset=User.objects.all())
+    guest_name = serializers.CharField(source='guest.username', read_only=True)
+    
     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     status = serializers.IntegerField(read_only=True)
+    
     updated_at = serializers.DateTimeField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
     
     class Meta:
         model = Reservation
         fields = [
-            'listing', 'guest',
+            'id',
+            'guest', 'guest_name',
+            'listing', 'listing_id', 'listing_name',
             'start_date', 'end_date', 'status', 'total_price',
             'updated_at', 'created_at',
         ]
@@ -24,31 +36,11 @@ class ReservationSerializer(serializers.ModelSerializer):
         start_date = validated_data['start_date']
         end_date = validated_data['end_date']
         
-        # Check if the start date is before the end date
-        if start_date > end_date:
-            raise serializers.ValidationError("The start date must be before the end date.")
+        try:
+            Reservation.validate_all(listing, start_date, end_date)
+        except ValidationError as e:
+            raise serializers.ValidationError(e)
         
-        # Check if the start date is in the past
-        if start_date < timezone.now().date():
-            raise serializers.ValidationError("The start date cannot be in the past.")
-        
-        # Check if the start date and the end date do not conflict with any existing reservations
-        reservations = Reservation.objects.filter(listing=listing)
-        for reservation in reservations:
-            if start_date <= reservation.end_date and end_date >= reservation.start_date:
-                raise serializers.ValidationError("The selected dates conflict with an existing reservation.")
-        
-        # Check the listing to be within the available dates
-        availabilities = Availability.objects.filter(listing=listing)
-        for availability in availabilities:
-            if start_date >= availability.start_date and end_date <= availability.end_date:
-                break
-        else:
-            raise serializers.ValidationError("The selected dates are not within the available dates.")
-        
-        # Calculate the total price
-        total_price = listing.price * (end_date - start_date).days
-        validated_data['total_price'] = total_price
         return super().create(validated_data)
 
 
@@ -63,19 +55,11 @@ class AvailabilitySerializer(serializers.ModelSerializer):
         # Validate the dates
         start_date = validated_data['start_date']
         end_date = validated_data['end_date']
+        listing = validated_data['listing']
         
-        # Check if the start date is before the end date
-        if start_date > end_date:
-            raise serializers.ValidationError("The start date must be before the end date.")
-        
-        # Check if the start date is in the past
-        if start_date < timezone.now().date():
-            raise serializers.ValidationError("The start date cannot be in the past.")
-        
-        # Check if the start date and the end date are not in conflict with any existing availabilities
-        availabilities = Availability.objects.filter(listing=validated_data['listing'])
-        for availability in availabilities:
-            if start_date <= availability.end_date and end_date >= availability.start_date:
-                raise serializers.ValidationError("The selected dates conflict with an existing availability.")
+        try:
+            Availability.validate_all(listing, start_date, end_date)
+        except ValidationError as e:
+            raise serializers.ValidationError(e)
         
         return super().create(validated_data)

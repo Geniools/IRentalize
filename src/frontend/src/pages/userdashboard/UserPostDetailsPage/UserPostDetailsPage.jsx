@@ -62,7 +62,7 @@ const UserPostDetailsPage = () => {
 
     const getAvailabilities = () => {
         // Get the availabilities of the listing
-        axiosInstanceJSONAPI.get(`/api/listing-availabilities/?listing=${id}`)
+        axiosInstanceJSONAPI.get(`/api/user-listing-availabilities/?listing=${id}`)
             .then(data => {
                 setAvailabilities(data.data);
             })
@@ -92,7 +92,7 @@ const UserPostDetailsPage = () => {
         const body = JSON.stringify({listing: id, start_date: startDate, end_date: endDate});
 
         try {
-            await axiosInstanceJSONAPI.post('/api/listing-availabilities/', body);
+            await axiosInstanceJSONAPI.post('/api/user-listing-availabilities/', body);
             // Get the new availabilities
             getAvailabilities();
             return true;
@@ -118,7 +118,7 @@ const UserPostDetailsPage = () => {
     // Confirmation functions
     const onConfirmDeleteImage = () => {
         // Delete the image from the database
-        axiosInstanceJSONAPI.delete(`/api/listing-images/${imageToDelete}`)
+        axiosInstanceJSONAPI.delete(`/api/user-listing-images/${imageToDelete}`)
             .then(data => {
                 getListing();
             })
@@ -146,7 +146,7 @@ const UserPostDetailsPage = () => {
 
     const onConfirmDeleteAvailability = () => {
         // Delete the availability from the database
-        axiosInstanceJSONAPI.delete(`/api/listing-availabilities/${availabilityToDelete}`)
+        axiosInstanceJSONAPI.delete(`/api/user-listing-availabilities/${availabilityToDelete}`)
             .then(data => {
                 getAvailabilities();
             })

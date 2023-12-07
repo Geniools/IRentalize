@@ -114,8 +114,23 @@ class UserAvailabilityViewSet(viewsets.ModelViewSet):
         return Availability.objects.filter(listing__in=listings)
 
 
+# API endpoint to update and retrieve the Reservation model of a Listing
+class UserReservationUpdateAPI(generics.UpdateAPIView, generics.ListAPIView):
+    permission_classes = [IsAuthenticated, IsNotListingReservationOwner]
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+    pagination_class = None
+    filterset_fields = ['listing']
+    
+    def get_queryset(self):
+        # First retrieve all the listings attributed to the logged-in user
+        listings = Listing.objects.filter(host=self.request.user)
+        # Then retrieve all the reservations attributed to the listings
+        return Reservation.objects.filter(listing__in=listings)
+
+
 # View to handle Reservation requests
-class ReservationAPIView(generics.CreateAPIView, generics.ListAPIView, generics.UpdateAPIView):
+class ReservationAPIView(generics.CreateAPIView, generics.ListAPIView):
     permission_classes = [IsAuthenticated, IsNotListingReservationOwner]
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer

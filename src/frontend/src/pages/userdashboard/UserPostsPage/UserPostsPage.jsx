@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 
 import {loadUserListings} from "../../../actions/listing";
-import ListingForm from "../../../components/ListingForm/ListingForm";
 
-import "../Userdashboard.css";
+import ListingForm from "../../../components/ListingForm/ListingForm";
 import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 import ListingLink from "../../../components/ListingLink/ListingLink";
+
+import "../Userdashboard.css";
 
 const UserPostsPage = ({listings, loadUserListings}) => {
     useEffect(() => {

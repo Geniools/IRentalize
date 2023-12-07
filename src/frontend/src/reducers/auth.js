@@ -55,6 +55,12 @@ export default function (state = initialState, action) {
             }
         case REFRESH_TOKEN_SUCCESS:
         case LOGIN_SUCCESS:
+            // Reset the access and refresh tokens in the local storage
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
+            sessionStorage.removeItem("access");
+            sessionStorage.removeItem("refresh");
+
             if (state.rememberMe) {
                 localStorage.setItem("access", payload.access);
                 localStorage.setItem("refresh", payload.refresh);

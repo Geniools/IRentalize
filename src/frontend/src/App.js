@@ -51,8 +51,10 @@ import {
     USER_ORDERS_URL,
     USER_POST_DETAILS_URL,
     USER_POSTS_URL,
-    USER_RECENTLY_VIEWED_URL
+    USER_RECENTLY_VIEWED_URL,
+    USER_RESERVATION_URL
 } from "./URL_PATHS";
+import UserReservationPage from "./pages/userdashboard/UserReservationPage/UserReservationPage";
 
 const App = () => {
     return (
@@ -80,6 +82,7 @@ const App = () => {
                             <Route exact path={USER_ORDERS_URL} element={<UserOrdersPage/>}/>
                             <Route exact path={USER_POSTS_URL} element={<UserPostsPage/>}/>
                             <Route exact path={USER_POST_DETAILS_URL} element={<UserPostDetailsPage/>}/>
+                            <Route exact path={USER_RESERVATION_URL} element={<UserReservationPage/>}/>
                             <Route exact path={USER_RECENTLY_VIEWED_URL} element={<UserRecentlyViewedPage/>}/>
                             <Route exact path={USER_CHANGE_PROFILE_PICTURE_URL} element={<UserChangeProfilePicture/>}/>
                         </Route>

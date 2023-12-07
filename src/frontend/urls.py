@@ -22,6 +22,8 @@ urlpatterns = [
     path('account/user-orders/<int:id>/', views.index, name='user-order-details'),
     path('account/user-posts/', views.index, name='user-posts'),
     path('account/user-posts/<int:id>/', views.index, name='user-posts-details'),
+    path('account/user-reservations/', views.index, name='user-reservations'),
+    # path('account/user-reservations/<int:id>/', views.index, name='user-reservations-details'),
     path('account/user-recently-viewed/', views.index, name='user-recently-viewed'),
     path('account/change-profile-picture/', views.index, name='change-profile-picture'),
     # Authentication
