@@ -147,7 +147,7 @@ tr {
 /* The content of a page is wrapped in this class to keep the padding and footer in the right position */
 .page-container {
 	min-height : calc(100vh - var(--header-height));
-	padding    : 0 var(--padding) var(--footer-height) var(--padding);
+	padding    : 0 var(--padding) calc(var(--footer-height) + var(--padding)) var(--padding);
 	position   : relative;
 	width      : 100%;
 }

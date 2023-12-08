@@ -1,7 +1,7 @@
 .listings-item-link-wrapper {
 	display   : flex;
-	/*max-width : calc(30% - var(--padding));*/
 	flex      : 1;
+	max-width : 34%;
 	min-width : 30rem;
 	z-index   : 1;
 }

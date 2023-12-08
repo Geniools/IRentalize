@@ -2,12 +2,24 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import axiosInstanceJSONAPI from "../../../utils/axios/axios_content_type_json";
 
+import {Link} from "react-router-dom";
 import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 import DateFormatter from "../../../components/DateFormatter/DateFormatter";
-import {Link} from "react-router-dom";
+import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
 
 import "../Userdashboard.css";
 import styles from "./UserReservationPage.module.css";
+
+const RESERVATION_STATUSES = {
+    0: "Pending",
+    1: "Confirmed",
+    2: "Cancelled",
+    3: "Completed",
+    4: "No Show",
+    5: "Payment Pending",
+    6: "Refunded",
+    7: "On Hold",
+}
 
 const UserReservationPage = () => {
     useEffect(() => {
@@ -17,7 +29,7 @@ const UserReservationPage = () => {
     useEffect(() => {
         axiosInstanceJSONAPI.get("/api/user-listing-reservations/")
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 setReservations(response.data);
             })
             .catch(error => {
@@ -38,9 +50,43 @@ const UserReservationPage = () => {
             total_price: "",
         }
     ]);
+    const [reservationStatusChanged, setReservationStatusChanged] = useState(false);
+    const [reservationStatusValue, setReservationStatusValue] = useState(0);
+    const [reservationIdToChange, setReservationIdToChange] = useState(null);
 
-    const changeReservationStatus = (event) => {
-        console.log(event.target.value);
+    const onReservationStatusChange = (event) => {
+        setReservationStatusChanged(true);
+        setReservationIdToChange(event.target.name);
+        setReservationStatusValue(event.target.value);
+    }
+
+    const onConfirmReservationStatusChange = (reservationId, statusValue) => {
+        // Update the reservation status in the database
+        axiosInstanceJSONAPI.put(`/api/user-listing-reservation-status/${reservationId}/`, {
+            status: statusValue,
+        })
+            .then(response => {
+                // TODO: Handle response
+                console.log(response.data);
+            })
+            .catch(error => {
+                // TODO: Handle error
+                console.log(error);
+            });
+
+        // Update the reservation status in the state
+        const newReservations = reservations.map(reservation =>
+            reservation.id === parseInt(reservationId)
+                ? {...reservation, status: statusValue}
+                : reservation
+        )
+        setReservations(newReservations);
+        // Close the popup
+        setReservationStatusChanged(false);
+    }
+
+    const onCancelReservationStatusChange = (event) => {
+        setReservationStatusChanged(false);
     }
 
     return (
@@ -68,14 +114,17 @@ const UserReservationPage = () => {
                             <td><DateFormatter date={reservation.end_date} showTime={false}/></td>
                             <td>{reservation.total_price}</td>
                             <td>
-                                <select className={styles.select} value={reservation.status} name={reservation.id} onChange={changeReservationStatus}>
-                                    <option value="0">Pending</option>
-                                    {/* Confirmed: 1 */}
-                                    <option value="1">Accept</option>
-                                    {/* Cancelled: 2 */}
-                                    <option value="2">Cancel</option>
-                                    {/* Completed: 3 */}
-                                    <option value="3">Complete</option>
+                                <select
+                                    className={styles.select}
+                                    value={reservation.status}
+                                    name={reservation.id}
+                                    onChange={onReservationStatusChange}>
+                                    {/* TODO: Figure out what of the below can be manipulated and how */}
+                                    {
+                                        Object.entries(RESERVATION_STATUSES).map(([key, value]) => (
+                                            <option key={key} value={key}>{value}</option>
+                                        ))
+                                    }
                                 </select>
                             </td>
                         </tr>
@@ -83,6 +132,17 @@ const UserReservationPage = () => {
                 }
                 </tbody>
             </table>
+
+            {
+                reservationStatusChanged && (
+                    <PopupConfirmation
+                        title={"Change Reservation Status"}
+                        message={`Are you sure you want to change this reservation's status to ${RESERVATION_STATUSES[reservationStatusValue]}?`}
+                        onConfirm={() => onConfirmReservationStatusChange(reservationIdToChange, reservationStatusValue)}
+                        onCancel={onCancelReservationStatusChange}
+                    />
+                )
+            }
         </>
     )
 }

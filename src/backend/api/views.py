@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from rest_framework import generics
 from rest_framework import mixins
@@ -9,11 +10,11 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAu
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from backend.api.permissions import IsListingOwner, IsListingImageOwner, IsAvailabilityOwner, IsNotListingReservationOwner
+from backend.api.permissions import IsListingOwner, IsListingImageOwner, IsAvailabilityOwner, IsNotListingReservationOwner, IsListingReservationOwner
 from backend.api.serializers import *
 from backend.api.utils import is_valid_captcha
 from backend.bookings.models import Reservation, Availability
-from backend.bookings.serializers import ReservationSerializer, AvailabilitySerializer
+from backend.bookings.serializers import ReservationSerializer, AvailabilitySerializer, ReservationStatusSerializer
 from backend.listings.filters import ListingSearchFilter
 from backend.listings.models import Category, Listing, ListingImage
 from backend.listings.serializers import CategorySerializer, ListingSerializer, ListingImageSerializer
@@ -115,7 +116,7 @@ class UserAvailabilityViewSet(viewsets.ModelViewSet):
 
 
 # API endpoint to update and retrieve the Reservation model of a Listing
-class UserReservationUpdateAPI(generics.UpdateAPIView, generics.ListAPIView):
+class UserReservationUpdateAPI(generics.ListAPIView):
     permission_classes = [IsAuthenticated, IsNotListingReservationOwner]
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
@@ -129,8 +130,35 @@ class UserReservationUpdateAPI(generics.UpdateAPIView, generics.ListAPIView):
         return Reservation.objects.filter(listing__in=listings)
 
 
+# API endpoint to update the status of a Reservation
+class UserReservationStatusUpdateAPI(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated, IsListingReservationOwner]
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationStatusSerializer
+    pagination_class = None
+    
+    def update(self, request, *args, **kwargs):
+        # Get the reservation
+        reservation = self.get_object()
+        try:
+            # Get the status
+            reservation_status = request.data['status']
+            # Update the status
+            reservation.status = reservation_status
+            # Validate the status
+            reservation.clean_fields()
+            reservation.save()
+        except ValueError:
+            return Response({'message': 'Invalid status'}, status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError as e:
+            return Response({'message': e}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Return a response
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 # View to handle Reservation requests
-class ReservationAPIView(generics.CreateAPIView, generics.ListAPIView):
+class ReservationCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated, IsNotListingReservationOwner]
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer

@@ -6,6 +6,14 @@ from backend.listings.models import Listing
 from backend.users.models import User
 
 
+class ReservationStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = [
+            'id', 'status',
+        ]
+
+
 class ReservationSerializer(serializers.ModelSerializer):
     listing = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Listing.objects.all())
     listing_name = serializers.CharField(source='listing.title', read_only=True)

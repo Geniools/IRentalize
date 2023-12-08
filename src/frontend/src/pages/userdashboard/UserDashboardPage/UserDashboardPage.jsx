@@ -61,9 +61,9 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
 
                         <ul className="dashboard-nav-bar">
                             <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_DETAILS_URL}>My Details</NavLink></li>
-                            <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_ORDERS_URL}>My Orders</NavLink></li>
                             <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_POSTS_URL}>My Posts</NavLink></li>
                             <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_RESERVATION_URL}>My Reservations</NavLink></li>
+                            <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_ORDERS_URL}>My Orders</NavLink></li>
                             <li><NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={USER_RECENTLY_VIEWED_URL}>Recently Viewed</NavLink></li>
                         </ul>
                     </div>

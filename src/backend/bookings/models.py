@@ -7,11 +7,16 @@ from backend.bookings.utils import validate_booking_dates
 
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
+    # Entities involved
     listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE, related_name='reservations')
     guest = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='reservations')
+    # Reservation time period
     start_date = models.DateField()
     end_date = models.DateField()
+    # Reservation status
     status = models.SmallIntegerField(choices=RESERVATION_STATUS, default=0)
+    is_paid = models.BooleanField(default=False, help_text='Whether the reservation has been paid for')
+    # Reservation price
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text='Discount in percentage')
     # Timestamps
@@ -43,7 +48,16 @@ class Reservation(models.Model):
         return super().save(force_insert, force_update, using, update_fields)
     
     def clean(self):
-        Reservation.validate_all(self.listing, self.start_date, self.end_date)
+        # If the reservation is being created
+        if self.pk is None:
+            Reservation.validate_all(self.listing, self.start_date, self.end_date)
+        else:
+            # Get the saved reservation
+            saved_reservation = Reservation.objects.get(pk=self.pk)
+            # Check if the start date and/or end date have been changed
+            if self.start_date != saved_reservation.start_date or self.end_date != saved_reservation.end_date:
+                Reservation.validate_all(self.listing, self.start_date, self.end_date)
+        
         return super().clean()
     
     @staticmethod
@@ -84,7 +98,16 @@ class Availability(models.Model):
         return f'{self.listing} - {self.start_date} - {self.end_date}'
     
     def clean(self):
-        Availability.validate_all(self.listing, self.start_date, self.end_date)
+        # If the availability is being created
+        if self.pk is None:
+            Availability.validate_all(self.listing, self.start_date, self.end_date)
+        else:
+            # Get the saved availability
+            saved_availability = Availability.objects.get(pk=self.pk)
+            # Check if the start date and/or end date have been changed
+            if self.start_date != saved_availability.start_date or self.end_date != saved_availability.end_date:
+                Availability.validate_all(self.listing, self.start_date, self.end_date)
+        
         return super().clean()
     
     @staticmethod

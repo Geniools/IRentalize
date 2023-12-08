@@ -103,7 +103,7 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                     <textarea onChange={onChange} id="about_me" name="about_me" placeholder="What would you like others to know about you?" value={about_me}/>
 
                     <HeadSubTitle title="Default Address"/>
-        
+
                     <div className="dashboard-right-panel-content-line">
                         <div>
                             <label htmlFor="street_name">Street name:</label>
@@ -154,8 +154,8 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                 <HeadTitle title="Security Information" capitalize={true}/>
 
                 <div className="dashboard-right-panel-content-readinfo">
-                    <p><i>Date joined:</i> <b><DateFormatter date={user.last_login}/></b></p>
-                    <p><i>Last login:</i> <b><DateFormatter date={user.date_joined}/></b></p>
+                    <p><i>Last login:</i> <b><DateFormatter date={user.last_login}/></b></p>
+                    <p><i>Date joined:</i> <b><DateFormatter date={user.date_joined}/></b></p>
                 </div>
 
                 <hr/>
