@@ -7,19 +7,9 @@ import HeadTitle from "../../../components/HeadTitle/HeadTitle";
 import DateFormatter from "../../../components/DateFormatter/DateFormatter";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
 
+import {RESERVATION_STATUSES} from "../constants";
 import "../Userdashboard.css";
 import styles from "./UserReservationPage.module.css";
-
-const RESERVATION_STATUSES = {
-    0: "Pending",
-    1: "Confirmed",
-    2: "Cancelled",
-    3: "Completed",
-    4: "No Show",
-    5: "Payment Pending",
-    6: "Refunded",
-    7: "On Hold",
-}
 
 const UserReservationPage = () => {
     useEffect(() => {
@@ -47,6 +37,7 @@ const UserReservationPage = () => {
             listing_name: "",
             listing_id: "",
             status: "",
+            is_paid: "",
             total_price: "",
         }
     ]);
@@ -102,13 +93,21 @@ const UserReservationPage = () => {
                     <th>End Date</th>
                     <th>Total Price</th>
                     <th>Status</th>
+                    <th>Paid</th>
                 </tr>
                 </thead>
                 <tbody>
                 {
                     reservations?.map(reservation => (
                         <tr>
-                            <td><Link className={styles.link} to={`/account/user-posts/${reservation.listing_id}/`}>{reservation.listing_name}</Link></td>
+                            <td>
+                                <Link
+                                    className={styles.link}
+                                    // target="_blank"
+                                    to={`/account/user-posts/${reservation.listing_id}/`}>
+                                    {reservation.listing_name}
+                                </Link>
+                            </td>
                             <td>{reservation.guest_name}</td>
                             <td><DateFormatter date={reservation.start_date} showTime={false}/></td>
                             <td><DateFormatter date={reservation.end_date} showTime={false}/></td>
@@ -127,6 +126,7 @@ const UserReservationPage = () => {
                                     }
                                 </select>
                             </td>
+                            <td>{reservation.is_paid ? "Yes" : "No"}</td>
                         </tr>
                     ))
                 }

@@ -24,6 +24,7 @@ class ReservationSerializer(serializers.ModelSerializer):
     
     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     status = serializers.IntegerField(read_only=True)
+    is_paid = serializers.BooleanField(read_only=True)
     
     updated_at = serializers.DateTimeField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
@@ -34,7 +35,7 @@ class ReservationSerializer(serializers.ModelSerializer):
             'id',
             'guest', 'guest_name',
             'listing', 'listing_id', 'listing_name',
-            'start_date', 'end_date', 'status', 'total_price',
+            'start_date', 'end_date', 'status', 'is_paid', 'total_price',
             'updated_at', 'created_at',
         ]
     

@@ -38,6 +38,8 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_class = ListingSearchFilter
 
 
+# API ENDPOINTS FOR THE LOGGED-IN USER in the DASHBOARD =======================================
+
 # User listings (api endpoint to be used only when interacting with the listings attributed to the logged-in user)
 class UserListingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsListingOwner]
@@ -156,6 +158,22 @@ class UserReservationStatusUpdateAPI(generics.UpdateAPIView):
         # Return a response
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+# API endpoint to view the orders done by the logged-in user
+class UserOrdersViewAPI(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        # Get the user
+        user = self.request.user
+        # Get the user's reservations
+        return Reservation.objects.filter(guest=user)
+
+
+# API ENDPOINTS FOR ALL USERS in the DASHBOARD (FINISH) ================================================
 
 # View to handle Reservation requests
 class ReservationCreateAPIView(generics.CreateAPIView):
