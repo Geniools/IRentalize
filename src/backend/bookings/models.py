@@ -38,7 +38,7 @@ class Reservation(models.Model):
         start_date = self.start_date
         end_date = self.end_date
         
-        total_days = (end_date - start_date).days
+        total_days = (end_date - start_date).days + 1
         if total_days < 0:
             raise ValueError("End date cannot be earlier than start date")
         

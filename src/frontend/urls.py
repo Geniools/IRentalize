@@ -15,6 +15,8 @@ urlpatterns = [
     # "Main" Pages
     path('about-us/', views.index, name='about_us'),
     path('contact-us/', views.index, name='contact_us'),
+    # Chat
+    path('chat/<str:room_name>/', views.index, name='chat'),
     # Dashboard
     path('account/', views.index, name='account'),
     path('account/user-details/', views.index, name='user-details'),

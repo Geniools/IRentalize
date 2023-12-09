@@ -36,6 +36,7 @@ import {
     ABOUT_US_URL,
     ACCOUNT_URL,
     ACTIVATE_URL,
+    CHAT_URL,
     CONTACT_US_URL,
     EMAIL_RESET_CONFIRM_URL,
     EMAIL_RESET_URL,
@@ -55,6 +56,7 @@ import {
     USER_RESERVATION_URL
 } from "./URL_PATHS";
 import UserReservationPage from "./pages/userdashboard/UserReservationPage/UserReservationPage";
+import ChatPage from "./pages/chat/ChatPage";
 
 const App = () => {
     return (
@@ -75,6 +77,9 @@ const App = () => {
                         {/* "Main" Pages */}
                         <Route exact path={ABOUT_US_URL} element={<AboutUsPage/>}/>
                         <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
+
+                        {/* Chat */}
+                        <Route exact path={CHAT_URL} element={<ChatPage/>}/>
 
                         {/* User Dashboard */}
                         <Route path={ACCOUNT_URL} element={<UserDashboardPage/>}>

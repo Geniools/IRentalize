@@ -35,6 +35,7 @@ CSRF_TRUSTED_ORIGINS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,7 +49,10 @@ INSTALLED_APPS = [
     'backend.payments.apps.PaymentsConfig',
     'backend.reviews.apps.ReviewsConfig',
     'backend.users.apps.UsersConfig',
+    'backend.chat.apps.ChatConfig',
     'frontend.apps.FrontendConfig',
+    # Project apps (outside the scope of the real project)
+    'backend.student_finance.apps.StudentFinanceConfig',
     # Third party apps
     'django_filters',
     'grappelli',
@@ -140,6 +144,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'IRentalize.wsgi.application'
+ASGI_APPLICATION = 'IRentalize.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
