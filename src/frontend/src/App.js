@@ -56,7 +56,7 @@ import {
     USER_RESERVATION_URL
 } from "./URL_PATHS";
 import UserReservationPage from "./pages/userdashboard/UserReservationPage/UserReservationPage";
-import ChatPage from "./pages/chat/ChatPage";
+import ChatPageHost from "./pages/chat/ChatPageHost";
 
 const App = () => {
     return (
@@ -79,7 +79,7 @@ const App = () => {
                         <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
 
                         {/* Chat */}
-                        <Route exact path={CHAT_URL} element={<ChatPage/>}/>
+                        <Route exact path={CHAT_URL} element={<ChatPageHost/>}/>
 
                         {/* User Dashboard */}
                         <Route path={ACCOUNT_URL} element={<UserDashboardPage/>}>

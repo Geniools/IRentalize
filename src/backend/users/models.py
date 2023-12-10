@@ -50,6 +50,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return f"{self.first_name[0]} {self.last_name}"
     
+    def get_username_or_first_name(self):
+        return self.username if self.username else self.first_name
+    
     def has_perm(self, perm, obj=None):
         return super().has_perm(perm, obj)
 

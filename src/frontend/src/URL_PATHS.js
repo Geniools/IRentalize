@@ -10,7 +10,7 @@ export const LISTING_ALL_IMAGES_URL = '/listing/:id/all-images/';
 export const ABOUT_US_URL = '/about-us/';
 export const CONTACT_US_URL = '/contact-us/';
 // Chat
-export const CHAT_URL = '/chat/:roomName/';
+export const CHAT_URL = '/chat/:listingId/';
 // User Dashboard
 export const ACCOUNT_URL = '/account/';
 export const USER_CHANGE_PROFILE_PICTURE_URL = '/account/change-profile-picture/';

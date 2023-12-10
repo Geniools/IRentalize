@@ -24,4 +24,5 @@ urlpatterns = [
     # Other
     path('listing-reservation/', views.ReservationCreateAPIView.as_view(), name='listing-reservation'),
     path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
+    path('chat/', include('backend.chat.urls'), name='chat'),
 ]
