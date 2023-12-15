@@ -1,0 +1,29 @@
+.chatSwitchButtons {
+	align-items     : center;
+	display         : flex;
+	gap             : 1rem;
+	justify-content : start;
+}
+
+.chatSwitchButtonsContainer {
+	align-items : center;
+	display     : flex;
+	gap         : 1rem;
+}
+
+.chatLink {
+	background-color : var(--color-light-grey);
+	border-radius    : var(--border-radius);
+	font-weight      : bold;
+	padding          : 1rem 1.5rem;
+}
+
+.chatLink:hover {
+	background-color : var(--color-green);
+	color            : var(--color-white);
+}
+
+.chatLinkActive {
+	background-color : var(--color-green);
+	color            : var(--color-white);
+}

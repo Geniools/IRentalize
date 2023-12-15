@@ -28,6 +28,9 @@ import UserRecentlyViewedPage from "./pages/userdashboard/UserRecentlyViewedPage
 import UserOrdersPage from "./pages/userdashboard/UserOrdersPage/UserOrdersPage";
 import UserPostDetailsPage from "./pages/userdashboard/UserPostDetailsPage/UserPostDetailsPage";
 import UserChangeProfilePicture from "./pages/userdashboard/UserChangeProfilePicture/UserChangeProfilePicture";
+// Chat
+import UserReservationPage from "./pages/userdashboard/UserReservationPage/UserReservationPage";
+import ChatPage from "./pages/chat/ChatPage";
 // Other pages
 import NotFoundPage from "./pages/main/404NotFoundPage/404NotFoundPage";
 
@@ -36,6 +39,10 @@ import {
     ABOUT_US_URL,
     ACCOUNT_URL,
     ACTIVATE_URL,
+    CHAT_GUEST_ROOM_URL,
+    CHAT_GUEST_URL,
+    CHAT_HOST_ROOM_URL,
+    CHAT_HOST_URL,
     CHAT_URL,
     CONTACT_US_URL,
     EMAIL_RESET_CONFIRM_URL,
@@ -55,8 +62,6 @@ import {
     USER_RECENTLY_VIEWED_URL,
     USER_RESERVATION_URL
 } from "./URL_PATHS";
-import UserReservationPage from "./pages/userdashboard/UserReservationPage/UserReservationPage";
-import ChatPageHost from "./pages/chat/ChatPageHost";
 
 const App = () => {
     return (
@@ -79,7 +84,11 @@ const App = () => {
                         <Route exact path={CONTACT_US_URL} element={<ContactUsPage/>}/>
 
                         {/* Chat */}
-                        <Route exact path={CHAT_URL} element={<ChatPageHost/>}/>
+                        <Route exact path={CHAT_URL} element={<ChatPage/>}/>
+                        <Route exact path={CHAT_HOST_URL} element={<ChatPage chatType={"host"}/>}/>
+                        <Route exact path={CHAT_GUEST_URL} element={<ChatPage chatType={"guest"}/>}/>
+                        <Route exact path={CHAT_HOST_ROOM_URL} element={<ChatPage chatType={"host"}/>}/>
+                        <Route exact path={CHAT_GUEST_ROOM_URL} element={<ChatPage chatType={"guest"}/>}/>
 
                         {/* User Dashboard */}
                         <Route path={ACCOUNT_URL} element={<UserDashboardPage/>}>

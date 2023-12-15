@@ -16,6 +16,7 @@ router.register(r'user-listing-availabilities', views.UserAvailabilityViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('chat/', include('backend.chat.urls'), name='chat'),
     # User
     path('user-profile-image/', views.UserProfileImageUpdateAPI.as_view(), name='user-profile-image'),
     path('user-listing-reservations/', views.UserReservationUpdateAPI.as_view(), name='user-listing-reservations'),
@@ -24,5 +25,4 @@ urlpatterns = [
     # Other
     path('listing-reservation/', views.ReservationCreateAPIView.as_view(), name='listing-reservation'),
     path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
-    path('chat/', include('backend.chat.urls'), name='chat'),
 ]

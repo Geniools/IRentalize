@@ -5,6 +5,13 @@ class ChatRoom(models.Model):
     listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE)
     guest = models.ForeignKey('users.User', on_delete=models.CASCADE)
     
+    def clean(self):
+        # Check the guest to be different from the host of the listing
+        if self.guest == self.listing.host:
+            raise ValueError('The guest must be different from the host of the listing')
+        
+        return super().clean()
+    
     def __str__(self):
         return f'Chat: {self.guest} - {self.listing}'
 

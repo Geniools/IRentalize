@@ -16,7 +16,11 @@ urlpatterns = [
     path('about-us/', views.index, name='about_us'),
     path('contact-us/', views.index, name='contact_us'),
     # Chat
-    path('chat/<str:room_name>/', views.index, name='chat'),
+    path('chat/', views.index, name='chat'),
+    path('chat/host/', views.index, name='chat-host'),
+    path('chat/guest/', views.index, name='chat-guest'),
+    path('chat/host/<str:room_name>/', views.index, name='chat-host-room'),
+    path('chat/guest/<str:room_name>/', views.index, name='chat-guest-room'),
     # Dashboard
     path('account/', views.index, name='account'),
     path('account/user-details/', views.index, name='user-details'),

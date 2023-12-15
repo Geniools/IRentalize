@@ -4,12 +4,11 @@ from rest_framework.viewsets import GenericViewSet
 
 from backend.chat.models import ChatMessage, ChatRoom
 from backend.chat.permissions import IsChatMember
-from backend.chat.serializers import ChatRoomSerializer
+from backend.chat.serializers import ChatRoomSerializer, ChatMessageSerializer
 
 
 # API view to be inherited by the other chat views
 class ChatAPIView(ListModelMixin, GenericViewSet):
-    serializer_class = ChatRoomSerializer
     permission_classes = [IsAuthenticated, IsChatMember]
     pagination_class = None
     
@@ -19,6 +18,8 @@ class ChatAPIView(ListModelMixin, GenericViewSet):
 
 # API view for the host to see their chat rooms with the guest(s)
 class ChatRoomHostListAPIView(ChatAPIView):
+    serializer_class = ChatRoomSerializer
+    
     def get_queryset(self):
         # Return the chat messages in witch the user is the guest or the host
         return ChatRoom.objects.filter(listing__host=self.request.user)
@@ -26,13 +27,19 @@ class ChatRoomHostListAPIView(ChatAPIView):
 
 # API view for the guests to see their chat rooms with the host(s)
 class ChatRoomGuestListAPIView(ChatAPIView):
+    serializer_class = ChatRoomSerializer
+    
     def get_queryset(self):
         # Return the chat messages in witch the user is the guest or the host
         return ChatRoom.objects.filter(guest=self.request.user)
 
 
+# TODO: Filter the chat message by the user requesting the data and the chat room
+
 # API view for the host to see their messages with the guest(s)
 class ChatMessageHostListAPIView(ChatAPIView):
+    serializer_class = ChatMessageSerializer
+    
     def get_queryset(self):
         # Return the chat messages in witch the user is the guest or the host
         return ChatMessage.objects.filter(chat_room__listing__host=self.request.user)
@@ -40,6 +47,8 @@ class ChatMessageHostListAPIView(ChatAPIView):
 
 # API view for the guests to see their messages with the host(s)
 class ChatMessageGuestListAPIView(ChatAPIView):
+    serializer_class = ChatMessageSerializer
+    
     def get_queryset(self):
         # Return the chat messages in witch the user is the guest or the host
         return ChatMessage.objects.filter(chat_room__guest=self.request.user)

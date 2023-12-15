@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {Link, Navigate} from 'react-router-dom';
 
-import Header from "../../../components/Header/Header";
 import {login} from "../../../actions/auth";
+import {setNavigateToAfterAuth} from "../../../actions/common";
+
+import Header from "../../../components/Header/Header";
 
 import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../URL_PATHS";
 
 import "../Authentication.css";
-import {setNavigateToAfterAuth} from "../../../actions/common";
 
 const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigateToAfterAuth}) => {
     useEffect(() => {
@@ -46,7 +47,7 @@ const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigat
             // Navigate to the page the user was redirected from
             return <Navigate to={navigateToAfterLogin}/>;
         }
-        
+
         return (
             <Navigate to={ACCOUNT_URL}/>
         )
