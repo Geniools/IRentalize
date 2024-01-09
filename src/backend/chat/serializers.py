@@ -14,7 +14,20 @@ class ChatRoomSerializer(serializers.ModelSerializer):
 
 class ChatMessageSerializer(serializers.ModelSerializer):
     sender_name = serializers.CharField(source='sender.get_username_or_first_name', read_only=True)
+    sender_type = serializers.SerializerMethodField(read_only=True)
     
     class Meta:
         model = ChatMessage
-        fields = ('id', 'sender_name', 'message', 'timestamp')
+        fields = (
+            'id', 'sender_type',
+            'sender_name', 'message',
+            'timestamp'
+        )
+    
+    def get_sender_type(self, obj):
+        if obj.sender == obj.chat_room.listing.host:
+            return 'host'
+        elif obj.sender == obj.chat_room.guest:
+            return 'guest'
+        else:
+            raise ValueError('The sender must be the guest or the host of the chat room')

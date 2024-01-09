@@ -7,7 +7,7 @@ import Loader from "../../../../components/Loader/Loader";
 
 import styles from "./ChatMessages.module.css";
 
-const ChatMessages = ({socket, chatType}) => {
+const ChatMessages = ({socket, chatType, roomId}) => {
     if (!socket) {
         return (
             <div className={styles.chatBox}></div>
@@ -30,15 +30,13 @@ const ChatMessages = ({socket, chatType}) => {
     }, [messages]);
 
     useEffect(() => {
-        // TODO: Filter the messages based on room ID
-
         let api_url = "";
         switch (chatType) {
             case "host":
-                api_url = '/api/chat/messages/host/';
+                api_url = '/api/chat/messages/host/?room_id=' + roomId;
                 break;
             case "guest":
-                api_url = '/api/chat/messages/guest/';
+                api_url = '/api/chat/messages/guest/?room_id=' + roomId;
                 break;
             default:
                 setMessages([]);
@@ -60,6 +58,7 @@ const ChatMessages = ({socket, chatType}) => {
 
         const messageObject = {
             message: e.target["message"].value,
+            sender_type: chatType,
         };
 
         socket.send(JSON.stringify(messageObject));
@@ -79,9 +78,13 @@ const ChatMessages = ({socket, chatType}) => {
         <>
             <ul ref={chatBoxRef} className={styles.chatBox}>
                 {
-                    // TODO: Style the message to be right/left aligned based on the sender
                     messages?.map((entry) => (
-                        <li key={entry.id} className={styles.message}>
+                        <li
+                            key={entry.id}
+                            className={`
+                                ${styles.message} 
+                                ${entry.sender_type === chatType ? styles.message_right : styles.message_left}
+                            `}>
                             <h3>{entry.sender_name}</h3>
                             <p>{entry.message}</p>
                             <p><DateFormatter date={entry.timestamp}/></p>

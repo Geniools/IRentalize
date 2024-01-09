@@ -16,7 +16,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         else:
             self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
             # Create a room group name
-            self.room_group_name = slugify(f"chat_{self.room_id}_{self.user.first_name}")
+            self.room_group_name = slugify(f"chat_{self.room_id}_room")
             self.chat_room = await self.get_chat_room()
             
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
@@ -36,8 +36,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
+        sender_type = text_data_json["sender_type"]
         
-        await self.save_chat_message(message)
+        saved_message = await self.save_chat_message(message)
         
         sender_name = self.user.username if self.user.username else self.user.first_name
         
@@ -45,18 +46,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name, {
                 "type": "chat_message",
                 "message": message,
-                "sender": sender_name
+                "sender": sender_name,
+                "sender_type": sender_type,
+                "timestamp": saved_message.timestamp.isoformat(),
             }
         )
     
     async def chat_message(self, event):
         message = event["message"]
         sender = event["sender"]
+        sender_type = event["sender_type"]
+        timestamp = event["timestamp"]
+        
         await self.send(
             text_data=json.dumps(
                 {
                     "message": message,
                     "sender_name": sender,
+                    "sender_type": sender_type,
+                    "timestamp": timestamp,
                 }
             )
         )
@@ -72,4 +80,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def save_chat_message(self, message):
         chat_message = ChatMessage(chat_room=self.chat_room, sender=self.user, message=message)
         chat_message.full_clean()
-        return chat_message.save()
+        chat_message.save()
+        
+        return chat_message

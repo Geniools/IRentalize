@@ -31,11 +31,11 @@ const initialState = {
     refresh: sessionStorage.getItem("refresh") || localStorage.getItem("refresh"),
     isAuthenticated: null,
     user: null,
-    rememberMe: false,
+    rememberMe: localStorage.getItem("rememberMe"),
 }
 
 export default function (state = initialState, action) {
-    const {type, payload, remember} = action;
+    const {type, payload} = action;
 
     switch (type) {
         case AUTHENTICATED_SUCCESS:
@@ -49,6 +49,9 @@ export default function (state = initialState, action) {
                 isAuthenticated: false,
             }
         case REMEMBER_ME:
+            // Set the remember me flag in the local storage
+            localStorage.setItem("rememberMe", true);
+            // Save the remember me flag in the state
             return {
                 ...state,
                 rememberMe: true,
@@ -60,7 +63,7 @@ export default function (state = initialState, action) {
             localStorage.removeItem("refresh");
             sessionStorage.removeItem("access");
             sessionStorage.removeItem("refresh");
-
+            // Save the access and refresh tokens in the local storage or session storage
             if (state.rememberMe) {
                 localStorage.setItem("access", payload.access);
                 localStorage.setItem("refresh", payload.refresh);
@@ -111,15 +114,19 @@ export default function (state = initialState, action) {
         case LOGIN_FAIL:
         case SIGNUP_FAIL:
         case LOGOUT:
+            // Reset the access and refresh tokens in the local storage
             localStorage.removeItem("access");
             localStorage.removeItem("refresh");
             sessionStorage.removeItem("access");
             sessionStorage.removeItem("refresh");
+            // Reset the remember me flag in the local storage
+            localStorage.removeItem("rememberMe");
             return {
                 ...state,
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
+                rememberMe: false,
                 user: null,
             }
         case USER_LOADED_FAIL:

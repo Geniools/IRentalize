@@ -75,7 +75,7 @@ const ChatPage = ({isAuthenticated, setNavigateToAfterAuth, chatType}) => {
 
                 <div className={styles.chatContainer}>
                     <ChatRoomList chatType={chatType}/>
-                    <ChatMessages socket={socket} chatType={chatType}/>
+                    <ChatMessages socket={socket} chatType={chatType} roomId={roomId}/>
                 </div>
             </div>
 

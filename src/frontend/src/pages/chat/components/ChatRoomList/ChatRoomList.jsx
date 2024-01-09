@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import {NavLink} from "react-router-dom";
+
+import axiosInstanceJSONAPI from "../../../../utils/axios/axios_content_type_json";
 
 import styles from "./ChatRoomList.module.css";
-import axiosInstanceJSONAPI from "../../../../utils/axios/axios_content_type_json";
-import {NavLink} from "react-router-dom";
 
 const ChatRoomList = ({chatType}) => {
     const [rooms, setRooms] = useState([]);

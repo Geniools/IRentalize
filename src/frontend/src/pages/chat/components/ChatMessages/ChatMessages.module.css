@@ -37,3 +37,15 @@
 	box-shadow       : 0 0 10px rgba(0, 0, 0, 0.2);
 	padding          : 1rem;
 }
+
+.message_right {
+	background-color : var(--color-green);
+	color            : var(--color-white);
+	margin-left      : 30%;
+}
+
+.message_left {
+	background-color : var(--color-light-grey);
+	color            : var(--color-black);
+	margin-right     : 30%;
+}

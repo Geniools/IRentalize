@@ -1,3 +1,4 @@
+from rest_framework.exceptions import ParseError
 from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
@@ -34,15 +35,20 @@ class ChatRoomGuestListAPIView(ChatAPIView):
         return ChatRoom.objects.filter(guest=self.request.user)
 
 
-# TODO: Filter the chat message by the user requesting the data and the chat room
-
 # API view for the host to see their messages with the guest(s)
 class ChatMessageHostListAPIView(ChatAPIView):
     serializer_class = ChatMessageSerializer
     
     def get_queryset(self):
+        # Get the room id from the request
+        room_id = self.request.query_params.get('room_id')
+        # If the room id is not provided, return an error response
+        if not room_id:
+            raise ParseError(detail='You must provide a room id as a query parameter', code='error')
+            # raise ValueError('You must provide a room id as a query parameter')
+        
         # Return the chat messages in witch the user is the guest or the host
-        return ChatMessage.objects.filter(chat_room__listing__host=self.request.user)
+        return ChatMessage.objects.filter(chat_room__listing__host=self.request.user, chat_room_id=room_id)
 
 
 # API view for the guests to see their messages with the host(s)
@@ -50,5 +56,11 @@ class ChatMessageGuestListAPIView(ChatAPIView):
     serializer_class = ChatMessageSerializer
     
     def get_queryset(self):
+        # Get the room id from the request
+        room_id = self.request.query_params.get('room_id')
+        # If the room id is not provided, return an error
+        if not room_id:
+            raise ParseError(detail='You must provide a room id as a query parameter', code='error')
+        
         # Return the chat messages in witch the user is the guest or the host
-        return ChatMessage.objects.filter(chat_room__guest=self.request.user)
+        return ChatMessage.objects.filter(chat_room__guest=self.request.user, chat_room_id=room_id)
