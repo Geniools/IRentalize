@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 
 import {updateUserInfo} from "../../../actions/user";
 
-import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../URL_PATHS";
+import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../utils/constants/URL_PATHS";
 
-import Loader from "../../../components/Loader/Loader";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
-import HeadSubTitle from "../../../components/HeadSubTitle/HeadSubTitle";
+import Loader from "../../../components/ui/Loader/Loader";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
+import HeadSubTitle from "../../../components/ui/HeadSubTitle/HeadSubTitle";
 import DateFormatter from "../../../components/DateFormatter/DateFormatter";
 import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer";
 

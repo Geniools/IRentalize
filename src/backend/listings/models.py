@@ -82,6 +82,7 @@ class Listing(models.Model):
         super().save(*args, **kwargs)
 
 
+# TODO: Delete the listing images when the listing is deleted
 class ListingImage(models.Model):
     id = models.AutoField(primary_key=True)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')

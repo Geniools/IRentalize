@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import Header from "../../../components/Header/Header";
 import {logout, signup} from "../../../actions/auth";
 
-import {ACCOUNT_URL, LOGIN_URL} from "../../../URL_PATHS";
+import {ACCOUNT_URL, LOGIN_URL} from "../../../utils/constants/URL_PATHS";
 
 import "../Authentication.css";
 

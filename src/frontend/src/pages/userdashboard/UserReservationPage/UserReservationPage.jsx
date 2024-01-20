@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import axiosInstanceJSONAPI from "../../../utils/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_json";
 
 import {Link} from "react-router-dom";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 import DateFormatter from "../../../components/DateFormatter/DateFormatter";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
 
-import {RESERVATION_STATUSES} from "../constants";
+import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES";
 import "../Userdashboard.css";
 import styles from "./UserReservationPage.module.css";
 

@@ -3,14 +3,14 @@ import {useNavigate, useParams} from "react-router-dom";
 import {connect} from "react-redux";
 import moment from "moment";
 
-import axiosInstanceJSONAPI from "../../../utils/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_json";
 
 import ListingForm from "../../../components/ListingForm/ListingForm";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
-import Loader from "../../../components/Loader/Loader";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import Loader from "../../../components/ui/Loader/Loader";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 
-import {USER_POSTS_URL} from "../../../URL_PATHS";
+import {USER_POSTS_URL} from "../../../utils/constants/URL_PATHS";
 
 import "../Userdashboard.css";
 import "./UserPostDetailsPage.css";

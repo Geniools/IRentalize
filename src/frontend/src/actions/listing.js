@@ -11,8 +11,8 @@ import {
     UPDATE_POST_FAIL,
     UPDATE_POST_SUCCESS
 } from "./types";
-import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
-import axiosInstanceFormDataAPI from "../utils/axios/axios_content_type_formdata";
+import axiosInstanceJSONAPI from "../services/axios/axios_content_type_json";
+import axiosInstanceFormDataAPI from "../services/axios/axios_content_type_formdata";
 import axios from "axios";
 
 export const addListing = ({formData, formImages}) => async dispatch => {

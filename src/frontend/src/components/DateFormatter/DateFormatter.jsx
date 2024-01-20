@@ -1,10 +1,10 @@
 import React, {useMemo} from "react";
 
 const DateFormatter = ({date, showTime = true}) => {
-    // Format the date - Example: "Aug 30, 2023, 02:11 PM"
-    // const dateOptions = {year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'}
+    // Format the date - Example: "02:11 30 Aug 2023"
+    // const dateOptions = {hour: 'numeric', minute: 'numeric', day: 'numeric', month: 'short', year: 'numeric'};
     const dateOptions = useMemo(() => {
-        return {year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'}
+        return {hour: 'numeric', minute: 'numeric', day: 'numeric', month: 'short', year: 'numeric'}
     }, []);
 
     if (!showTime) {
@@ -15,7 +15,7 @@ const DateFormatter = ({date, showTime = true}) => {
     return (
         <>
             {
-                new Date(date).toLocaleString('nl-NL', dateOptions)
+                new Date(date).toLocaleString('en-GB', dateOptions)
             }
         </>
     )

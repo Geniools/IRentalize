@@ -26,3 +26,6 @@ urlpatterns = [
     path('listing-reservation/', views.ReservationCreateAPIView.as_view(), name='listing-reservation'),
     path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
 ]
+
+# TODO: Add subdomain for "student_fiance" - "student.domain.com"
+# TODO: Refactor the backend for the api to be more modular

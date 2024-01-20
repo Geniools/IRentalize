@@ -7,7 +7,7 @@ import {logout} from "../../actions/auth";
 import {loadListings} from "../../actions/listing";
 
 import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
-import {ACCOUNT_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL} from "../../URL_PATHS";
+import {ACCOUNT_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL} from "../../utils/constants/URL_PATHS";
 
 import "./Header.css";
 

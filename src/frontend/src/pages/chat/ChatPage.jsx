@@ -6,7 +6,7 @@ import {setNavigateToAfterAuth} from "../../actions/common";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import HeadTitle from "../../components/HeadTitle/HeadTitle";
+import HeadTitle from "../../components/ui/HeadTitle/HeadTitle";
 import ChatRoomList from "./components/ChatRoomList/ChatRoomList";
 import ChatMessages from "./components/ChatMessages/ChatMessages";
 import ChatSwitchButtons from "./components/ChatSwitchButtons/ChatSwitchButtons";

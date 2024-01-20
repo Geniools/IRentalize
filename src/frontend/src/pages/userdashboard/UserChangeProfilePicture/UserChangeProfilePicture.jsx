@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import {deleteUserProfilePicture, updateUserProfilePicture} from "../../../actions/user";
 
 import ImageUploadPreview from "../../../components/ImageUploadPreview/ImageUploadPreview";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
-import Loader from "../../../components/Loader/Loader";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
+import Loader from "../../../components/ui/Loader/Loader";
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
 
 const UserChangeProfilePicture = ({user, updateUserProfilePicture, deleteUserProfilePicture}) => {

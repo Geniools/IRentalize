@@ -7,7 +7,7 @@ import {setNavigateToAfterAuth} from "../../../actions/common";
 
 import Header from "../../../components/Header/Header";
 
-import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../URL_PATHS";
+import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../utils/constants/URL_PATHS";
 
 import "../Authentication.css";
 

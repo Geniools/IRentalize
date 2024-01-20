@@ -5,7 +5,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import {DateRange} from "react-date-range";
 // =============================================================================
 import styles from "./BookingCalendar.module.css";
-import HeadSubTitle from "../HeadSubTitle/HeadSubTitle";
+import HeadSubTitle from "../ui/HeadSubTitle/HeadSubTitle";
 
 const getDatesBetween = (startDate, endDate) => {
     // Get the dates between the start and end dates

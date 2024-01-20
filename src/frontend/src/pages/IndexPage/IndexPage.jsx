@@ -5,7 +5,7 @@ import {loadListings} from "../../actions/listing";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../../components/ui/Loader/Loader";
 import ListingLink from "../../components/ListingLink/ListingLink";
 
 import "./IndexPage.css";

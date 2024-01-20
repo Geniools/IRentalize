@@ -1,7 +1,7 @@
 import React from "react";
 import {GoogleMap, Marker, useLoadScript} from "@react-google-maps/api";
 
-import Loader from "../Loader/Loader";
+import Loader from "../ui/Loader/Loader";
 
 import styles from "./GoogleMapContainer.module.css";
 

@@ -7,13 +7,13 @@ import {setNavigateToAfterAuth} from "../../../actions/common";
 
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
-import Loader from "../../../components/Loader/Loader";
+import Loader from "../../../components/ui/Loader/Loader";
 import ModalImage from "../../../components/ModalImage/ModalImage";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer";
 import DateFormatter from "../../../components/DateFormatter/DateFormatter";
 import ProfileHostCard from "../../../components/ProfileHostCard/ProfileHostCard";
-import HeadSubTitle from "../../../components/HeadSubTitle/HeadSubTitle";
+import HeadSubTitle from "../../../components/ui/HeadSubTitle/HeadSubTitle";
 import BookingCalendar from "../../../components/BookingCalendar/BookingCalendar";
 
 import styles from "./ListingDetailsPage.module.css";

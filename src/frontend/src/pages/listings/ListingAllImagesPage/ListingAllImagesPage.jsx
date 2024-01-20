@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Header from "../../../components/Header/Header";
 import ModalImage from "../../../components/ModalImage/ModalImage";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 
 import styles from "../ListingDetailsPage/ListingDetailsPage.module.css";
 import Footer from "../../../components/Footer/Footer";

@@ -232,7 +232,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Define the session cookie age in seconds
 SESSION_COOKIE_AGE = 60 * 60 * 24  # 1 day
 
-# Model used to represent a User)
+# Model used to represent a User
 AUTH_USER_MODEL = 'users.User'
 
 # Google reCAPTCHA v2 settings

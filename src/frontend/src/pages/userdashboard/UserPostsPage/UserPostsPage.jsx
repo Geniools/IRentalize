@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {loadUserListings} from "../../../actions/listing";
 
 import ListingForm from "../../../components/ListingForm/ListingForm";
-import HeadTitle from "../../../components/HeadTitle/HeadTitle";
+import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 import ListingLink from "../../../components/ListingLink/ListingLink";
 
 import "../Userdashboard.css";

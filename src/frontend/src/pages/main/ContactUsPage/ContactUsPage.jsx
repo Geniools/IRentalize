@@ -111,7 +111,7 @@ const ContactUsPage = ({sendContactUsForm}) => {
                             required={true}
                             onChange={onChange}
                         />
-                        <label htmlFor={"termsAndConditions"}>I agree with all <a className={"green-text"} href="">Terms and Conditions*</a></label>
+                        <label htmlFor={"termsAndConditions"}>I agree with <a className={"green-text"} href="">Terms and Conditions*</a></label>
                     </div>
 
                     <ReCAPTCHA

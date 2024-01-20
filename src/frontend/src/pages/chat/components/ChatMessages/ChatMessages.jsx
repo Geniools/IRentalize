@@ -1,14 +1,14 @@
 import React, {createRef, useEffect, useState} from "react";
 
-import axiosInstanceJSONAPI from "../../../../utils/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json";
 
 import DateFormatter from "../../../../components/DateFormatter/DateFormatter";
-import Loader from "../../../../components/Loader/Loader";
+import Loader from "../../../../components/ui/Loader/Loader";
 
 import styles from "./ChatMessages.module.css";
 
 const ChatMessages = ({socket, chatType, roomId}) => {
-    if (!socket) {
+    if (!socket || !roomId) {
         return (
             <div className={styles.chatBox}></div>
         )
@@ -87,7 +87,7 @@ const ChatMessages = ({socket, chatType, roomId}) => {
                             `}>
                             <h3>{entry.sender_name}</h3>
                             <p>{entry.message}</p>
-                            <p><DateFormatter date={entry.timestamp}/></p>
+                            <i><p><DateFormatter date={entry.timestamp}/></p></i>
                         </li>
                     ))
                 }

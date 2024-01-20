@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../services/axios/axios_content_type_json";
 import {
     ACTIVATION_FAIL,
     ACTIVATION_SUCCESS,

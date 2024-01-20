@@ -3,7 +3,7 @@ import {Navigate, useParams} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {verify} from "../../../actions/auth";
-import {LOGIN_URL} from "../../../URL_PATHS";
+import {LOGIN_URL} from "../../../utils/constants/URL_PATHS";
 
 import "../Authentication.css";
 

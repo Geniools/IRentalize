@@ -1,5 +1,5 @@
-import axiosInstanceJSONAPI from "../utils/axios/axios_content_type_json";
-import axiosInstanceFormDataAPI from "../utils/axios/axios_content_type_formdata";
+import axiosInstanceJSONAPI from "../services/axios/axios_content_type_json";
+import axiosInstanceFormDataAPI from "../services/axios/axios_content_type_formdata";
 
 import {
     DELETE_USER_PROFILE_IMAGE_FAILURE,

@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import {addListing, loadCategories, loadUserListings, updateListing} from "../../actions/listing";
 
-import HeadSubTitle from "../HeadSubTitle/HeadSubTitle";
+import HeadSubTitle from "../ui/HeadSubTitle/HeadSubTitle";
 import GoogleMapContainer from "../GoogleMapContainer/GoogleMapContainer";
 
 const ListingForm = (

@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Link, Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
 
-import Loader from "../../../components/Loader/Loader";
+import Loader from "../../../components/ui/Loader/Loader";
 import Header from "../../../components/Header/Header";
 import UserDetailsPage from "./../UserDetailsPage/UserDetailsPage";
 import UserOrdersPage from "./../UserOrdersPage/UserOrdersPage";
@@ -21,7 +21,7 @@ import {
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL,
     USER_RESERVATION_URL
-} from "../../../URL_PATHS";
+} from "../../../utils/constants/URL_PATHS";
 
 import "../Userdashboard.css";
 

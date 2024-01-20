@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 
-import Loader from "../Loader/Loader";
+import Loader from "../ui/Loader/Loader";
 
 import "./ListingLink.css";
 

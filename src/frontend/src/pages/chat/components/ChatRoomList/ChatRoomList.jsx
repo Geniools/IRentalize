@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
 
-import axiosInstanceJSONAPI from "../../../../utils/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json";
 
 import styles from "./ChatRoomList.module.css";
 
@@ -30,6 +30,8 @@ const ChatRoomList = ({chatType}) => {
                 console.log(error);
             });
     }, [chatType])
+
+    console.log(rooms);
 
     return (
         <>
