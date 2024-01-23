@@ -1,3 +1,9 @@
+"""
+If unsure about some settings, refer to the Django documentation:
+https://docs.djangoproject.com/en/5.0/ref/settings/
+# Check the Django deployment checklist:
+https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+"""
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,6 +14,11 @@ DB_HOST = 'example.com'
 DB_PORT = 3306
 DB_USER = 'your-username'
 DB_PASS = 'your-password'
+
+# Security settings for IRentalize project.
+# The settings below should be set to True in production. This enforces the use of HTTPS for cookies and sessions.
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 
 # Email settings for IRentalize project.
 EMAIL_HOST = "smtp.gmail.com"  # Gmail SMTP server
@@ -25,9 +36,12 @@ SECRET_KEY = 'secret-key-here'
 # Change the allowed hosts to the domain name of your website
 ALLOWED_HOSTS = ['example.com', 'www.example.com']
 
-# When DEBUG is False, in case of a code error, the ADMINS will be notified on their email address.
-ADMINS = []
+# Set DEBUG to False in production
 DEBUG = True
+
+# When DEBUG is False, in case of a code error, the ADMINS and MANAGERS will be notified on their email address.
+ADMINS = []
+MANAGERS = []
 
 # The root directory of the static files
 STATIC_ROOT = ""

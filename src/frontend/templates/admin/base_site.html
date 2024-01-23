@@ -1,0 +1,10 @@
+{# This is the base_site.html file that I use to override the default Django admin template. #}
+{# I use it to add a favicon to the admin site. #}
+
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block extrahead %}
+	<link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}"/>
+{% endblock %}

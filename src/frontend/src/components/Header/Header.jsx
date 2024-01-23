@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
-import {Link, NavLink, useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -7,6 +7,9 @@ import {logout} from "../../actions/auth";
 import {loadListings} from "../../actions/listing";
 
 import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
+import MainDomainNavLink from "../MainDomainNavLink/MainDomainNavLink";
+import MainDomainLink from "../MainDomainLink/MainDomainLink";
+
 import {ACCOUNT_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL} from "../../utils/constants/URL_PATHS";
 
 import "./Header.css";
@@ -87,17 +90,17 @@ const Header = ({
         if (showLogout) {
             return (
                 <Fragment>
-                    <Link className={"header-green-link"} to="" onClick={logout}>
+                    <MainDomainLink className={"header-green-link"} to="" onClick={logout}>
                         LOG OUT
-                    </Link>
+                    </MainDomainLink>
                 </Fragment>
             )
         } else {
             const output = user.username ? user.username : user.first_name;
             return (
-                <Link className={"header-green-link"} to={ACCOUNT_URL}>
+                <MainDomainLink className={"header-green-link"} to={ACCOUNT_URL}>
                     {output}
-                </Link>
+                </MainDomainLink>
             )
         }
     }
@@ -112,9 +115,9 @@ const Header = ({
         <header>
             {showIcon && (
                 <div className={"header-panel"}>
-                    <Link className="icon" to="/" onClick={loadListings}>
+                    <MainDomainLink className="icon" to="/" onClick={loadListings}>
                         <img src="/static/assets/favicon.png" alt="IRentalize"/>
-                    </Link>
+                    </MainDomainLink>
                 </div>
             )}
 
@@ -122,19 +125,31 @@ const Header = ({
                 <nav className={"header-panel"}>
                     <ul>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "housing/"}
-                                     onClick={() => setFilters("housing")}>Housing</NavLink>
+                            <MainDomainNavLink
+                                className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "housing/"}
+                                onClick={() => setFilters("housing")}>
+                                Housing
+                            </MainDomainNavLink>
                         </li>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "furniture/"}
-                                     onClick={() => setFilters("furniture")}>Furniture</NavLink>
+                            <MainDomainNavLink
+                                className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "furniture/"}
+                                onClick={() => setFilters("furniture")}>
+                                Furniture
+                            </MainDomainNavLink>
                         </li>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "accessories/"}
-                                     onClick={() => setFilters("accessories")}>Accessories</NavLink>
+                            <MainDomainNavLink
+                                className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "accessories/"}
+                                onClick={() => setFilters("accessories")}>
+                                Accessories
+                            </MainDomainNavLink>
                         </li>
                         <li>
-                            <NavLink className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>Contact Us</NavLink>
+                            <MainDomainNavLink
+                                className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>
+                                Contact Us
+                            </MainDomainNavLink>
                         </li>
                     </ul>
                 </nav>

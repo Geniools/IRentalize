@@ -1,8 +1,6 @@
 import requests
 from django.conf import settings
 
-from backend.listings.utils import is_valid_image
-
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -25,8 +23,3 @@ def is_valid_captcha(request, captcha):
     )
     
     return captcha_response.json()['success']
-
-
-def is_valid_image_list(images):
-    for image in images:
-        is_valid_image(image)

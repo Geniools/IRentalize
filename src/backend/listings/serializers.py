@@ -2,12 +2,24 @@ from datetime import timedelta
 
 from rest_framework import serializers
 
-from backend.api.serializers import AddressSerializer
-from backend.api.utils import is_valid_image_list
 from backend.bookings.serializers import AvailabilitySerializer
 # Import all the models that will be used in the serializers
 from backend.listings.models import Listing, Category, ListingImage, Address
 from backend.listings.utils import is_valid_dutch_zip_code
+from backend.listings.utils import is_valid_image_list
+
+
+# Address serializer
+class AddressSerializer(serializers.ModelSerializer):
+    latitude = serializers.FloatField(read_only=True)
+    longitude = serializers.FloatField(read_only=True)
+    
+    class Meta:
+        model = Address
+        fields = [
+            'street_name', 'house_number', 'house_addition', 'zip_code',
+            'latitude', 'longitude',
+        ]
 
 
 class ListingImageSerializer(serializers.ModelSerializer):

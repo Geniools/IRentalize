@@ -5,10 +5,14 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('backend.auth.urls')),
+    # Grappelli admin interface
     path('grappelli/', include('grappelli.urls')),
-    path('', include('frontend.urls')),
+    # Authentication endpoints (custom)
+    path('auth/', include('backend.auth.urls')),
+    # All the API endpoints are handled by the backend.api app
     path('api/', include('backend.api.urls')),
+    # All the frontend is handled by the frontend app
+    path('', include('frontend.urls')),
 ]
 
 handler404 = 'frontend.views.handler404'

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 
-from backend.api.serializers import AddressSerializer
+from backend.listings.serializers import AddressSerializer
 from backend.users.models import UserProfile
 
 # Will retrieve the User model defined in AUTH_USER_MODEL in settings.py

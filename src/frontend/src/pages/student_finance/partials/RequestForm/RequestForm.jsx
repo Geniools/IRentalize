@@ -8,11 +8,13 @@ import Loader from "../../../../components/ui/Loader/Loader";
 import ModalDisplay from "../../../../components/ui/ModalDisplay/ModalDisplay";
 
 import styles from "./RequestForm.module.css";
+import getMainDomain from "../../../../utils/helpers/getMainDomain";
 
 const RequestForm = () => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const mainDomain = getMainDomain();
 
     const [cookie] = useCookies(['csrftoken']);
     const [formData, setFormData] = useState({
@@ -44,7 +46,8 @@ const RequestForm = () => {
         event.preventDefault();
         setLoading(true);
 
-        axios.post("/api/requests/", formData, {
+        const url = mainDomain.full_url + "/api/student-finance/requests/";
+        axios.post(url, formData, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': cookie.csrftoken,
@@ -66,6 +69,14 @@ const RequestForm = () => {
             })
             .catch((error_message) => {
                 setSuccess(false);
+
+                // If the response is undefined, then there was a network error
+                if (error_message.response === undefined) {
+                    setError({
+                        non_field_errors: ["Something went wrong. Please try again later."]
+                    });
+                    return;
+                }
                 const error_data = error_message.response.data;
 
                 let nonFieldErrors = [];
@@ -214,7 +225,7 @@ const RequestForm = () => {
             <div className={styles.inputContainer}>
                 <ReCAPTCHA
                     ref={recaptchaRef}
-                    sitekey={"6Ldq3FApAAAAAAJ8EtwZ4RMahakLedU3bNvp0f-b"}
+                    sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
                     onChange={handleCaptcha}
                     theme={'light'}
                 />

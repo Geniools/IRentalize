@@ -3,7 +3,9 @@ import {BrowserRouter as Router} from "react-router-dom";
 import {Provider} from "react-redux";
 
 import store from "./services/store/store";
+
 import Layout from "./hocs/Layout";
+
 import {getApp} from "./utils/helpers/getApp";
 
 const App = () => {

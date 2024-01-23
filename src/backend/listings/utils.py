@@ -39,20 +39,20 @@ def is_valid_dutch_zip_code(zip_code):
 
 
 # TODO: This function does not work yet and doesnt seem to have any advantages over the get_location_location_coordinates function
-def is_valid_address(street, house_number, house_addition, zip_code, region='NL'):
-    """
-    Checks if the given address is a valid address using google's Address Validation API
-    """
-    
-    # Create an instance of the Google Maps API client
-    gmaps = googlemaps.Client(key=settings.GOOGLE_MAPS_API_KEY)
-    
-    address_validation_result = gmaps.addressvalidation(
-        [f'{street} {house_number}{f" {house_addition}" if house_addition else ""}'],
-        regionCode=region,
-    )
-    
-    print(address_validation_result)
+# def is_valid_address(street, house_number, house_addition, zip_code, region='NL'):
+#     """
+#     Checks if the given address is a valid address using google's Address Validation API
+#     """
+#
+#     # Create an instance of the Google Maps API client
+#     gmaps = googlemaps.Client(key=settings.GOOGLE_MAPS_API_KEY)
+#
+#     address_validation_result = gmaps.addressvalidation(
+#         [f'{street} {house_number}{f" {house_addition}" if house_addition else ""}'],
+#         regionCode=region,
+#     )
+#
+#     print(address_validation_result)
 
 
 def is_valid_image(image):
@@ -69,3 +69,8 @@ def is_valid_image(image):
     valid_extensions = ['.jpg', '.jpeg', '.png']
     if not ext.lower() in valid_extensions:
         raise ValidationError('Unsupported file extension.')
+
+
+def is_valid_image_list(images):
+    for image in images:
+        is_valid_image(image)

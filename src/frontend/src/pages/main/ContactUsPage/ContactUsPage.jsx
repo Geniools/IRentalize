@@ -115,7 +115,7 @@ const ContactUsPage = ({sendContactUsForm}) => {
                     </div>
 
                     <ReCAPTCHA
-                        sitekey={"6Lf4XvgnAAAAALBJKdqmMoBvbywdVks4v7SvwG2j"}
+                        sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
                         ref={recaptchaRef}
                         onChange={handleCaptcha}
                     />

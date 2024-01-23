@@ -1,31 +1,21 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from backend.api import views
-
 # Create a router and register all the viewsets
 router = routers.DefaultRouter()
 
-# Listings
-router.register(r'categories', views.CategoryViewSet)
-router.register(r'listings', views.ListingViewSet)
-# User
-router.register(r'user-listings', views.UserListingViewSet)
-router.register(r'user-listing-images', views.UserListingImageViewSet)
-router.register(r'user-listing-availabilities', views.UserAvailabilityViewSet)
-
 urlpatterns = [
     path('', include(router.urls)),
-    path('chat/', include('backend.chat.urls'), name='chat'),
+    # Main
+    path('', include('backend.main.urls'), name='main'),
     # User
-    path('user-profile-image/', views.UserProfileImageUpdateAPI.as_view(), name='user-profile-image'),
-    path('user-listing-reservations/', views.UserReservationUpdateAPI.as_view(), name='user-listing-reservations'),
-    path('user-listing-reservation-status/<int:pk>/', views.UserReservationStatusUpdateAPI.as_view(), name='user-listing-reservation-status'),
-    path('user-listing-orders/', views.UserOrdersViewAPI.as_view(), name='user-listing-orders'),
-    # Other
-    path('listing-reservation/', views.ReservationCreateAPIView.as_view(), name='listing-reservation'),
-    path('contact-us/', views.ContactUsView.as_view(), name='contact-us'),
+    path('', include('backend.users.urls'), name='users'),
+    # Listings
+    path('', include('backend.listings.urls'), name='listings'),
+    # Bookings
+    path('', include('backend.bookings.urls'), name='bookings'),
+    # Chat
+    path('chat/', include('backend.chat.urls'), name='chat'),
+    # Student Finance API (sub-app)
+    path('student-finance/', include('backend.student_finance.urls'), name='student-finance'),
 ]
-
-# TODO: Add subdomain for "student_fiance" - "student.domain.com"
-# TODO: Refactor the backend for the api to be more modular

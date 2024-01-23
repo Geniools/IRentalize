@@ -3,11 +3,12 @@
 ## Description
 
 IRentalize is a web application that allows users to rent out their items to other users.
-The application is closely realted to the popular website Airbnb, but instead of renting out *only* houses, users can
+The application is closely related to the popular website Airbnb, but instead of renting out *only* houses, users can
 rent out different other items.
 
 ## ERD - Entity Relationship Diagram
 
+***Note:*** *The ERD is not final and will be updated in the future.*
 ![ERD](docs/assets/IRentalize_ERD.png)
 
 ## Installation
@@ -18,7 +19,6 @@ rent out different other items.
 - [MySQL](https://www.mysql.com/)
 - [Python](https://www.python.org/) - version 3.8 or higher
 - [pip](https://pip.pypa.io/en/stable/) - should be pre-installed with Python
-- *[docker](https://www.docker.com/)* - **optional** - if you want to run the application in a docker container
 
 ### Setup
 
@@ -30,67 +30,62 @@ rent out different other items.
 
 ### Configuration
 
-1. Create a `local_settings.py` file in the `src/IRentalize` directory and add the following text:
+- Clone the repository
+- Install the dependencies
 
-```
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Database settings for IRentalize project.
-DB_NAME = '' # The name of the database
-DB_HOST = '' # The host of the database (localhost or IP address)
-DB_PORT = 3306 # The port of the database (default is 3306)
-DB_USER = '' # The username of the database (must have access to the database)
-DB_PASS = '' # The password of the database user
-
-# Django settings for IRentalize project.
-SECRET_KEY = 'a-secure-key'
-
-# When DEBUG is False, in case of a code error, the ADMINS will be notified on their email address.
-ADMINS = []
-DEBUG = True
-
-# STATIC_ROOT = "D:\\Programming\\Python\\IRentalize\\src\\static"
-STATIC_ROOT = ""
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# A list of directories where Django looks for static files
-STATICFILES_DIRS = [BASE_DIR / 'static']
+```bash
+pip install -r requirements.txt
 ```
 
-The above variables must be modified according to your own setup.
-For more infomration about the Django settings, please visit
-the [official documentation](https://docs.djangoproject.com/en/4.2/ref/settings/).
+- Create a `local_settings.py` file in the `IRentalize_student` folder. Use the `example_local_settings.py` file as a
+  template.
 
-2. Run the following commands to create the database and the tables (inside the `src` directory):
+- Run the migrations
 
-```
-python manage.py makemigrations
+```bash
 python manage.py migrate
 ```
 
-3. Create a superuser account:
+- Create a superuser account:
 
 ```
 python manage.py createsuperuser
 ```
 
-4. Run the following command to start the development server:
+- (In Production) Collect the static files **make sure to have changed the correct directory in django settings**
 
-```
-python manage.py runserver
+```bash
+python manage.py collectstatic
 ```
 
-5. Run the following command to start the frontend development server:
+- Create an ``.env`` file in the ``src/frontend`` folder and add the following text:
+
+```dotenv
+REACT_APP_GOOGLE_MAPS_API_KEY=your-api-key
+REACT_APP_GOOGLE_ADDRESS_API_KEY=your-api-key
+GOOGLE_RECAPTCHA_KEY=your-api-key
+```
+
+- Run the following command to start the frontend development server:
 
 ```
 cd src/frontend 
 npm run dev
 ```
 
-*Note:* For production, run `npm run build` instead of `npm run dev`!
+*Note:* For production, run `npm run build` instead!
 
-6. Open your browser and go to `http://localhost:8000/`
-7. To access the admin panel, go to `http://localhost:8000/admin/`
-8. To access the API, go to `http://localhost:8000/api/`
+- Run the server
+
+```bash
+python manage.py runserver
+```
+
+## Usage
+
+- The admin panel can be accessed at `http://localhost:8000/admin/` (or whatever port you are running the server on)
+- The frontend can be accessed at `http://localhost:8000/` (or whatever port you are running the frontend development
+  server on)
+- The API can be accessed at `http://localhost:8000/api/` (or whatever port you are running the server on)
+- The submodule "student-finance" can be accessed at `http://student.localhost:8000/` (or whatever port you are running
+  the server on)
