@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
-import {Link, useLocation} from "react-router-dom";
+import React, {Fragment} from 'react';
+import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -7,10 +7,14 @@ import {logout} from "../../actions/auth";
 import {loadListings} from "../../actions/listing";
 
 import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
-import MainDomainNavLink from "../MainDomainNavLink/MainDomainNavLink";
 import MainDomainLink from "../MainDomainLink/MainDomainLink";
+import HeaderCheckbox from "../HeaderCheckbox/HeaderCheckbox";
+import NavBar from "../NavBar/NavBar";
 
-import {ACCOUNT_URL, CONTACT_US_URL, HOME_URL, LOGIN_URL} from "../../utils/constants/URL_PATHS";
+import useMediaQueryEvent from "./hooks/useMediaQueryEvent";
+import useSearchEvent from "./hooks/useSearchEvent";
+
+import {ACCOUNT_URL, LOGIN_URL} from "../../utils/constants/URL_PATHS";
 
 import "./Header.css";
 
@@ -26,64 +30,27 @@ const Header = ({
                     showLogout = false
                 }) => {
 
-    const location = useLocation();
-    const searchFormRef = useRef();
-    const searchFormButtonRef = useRef();
+    // Search form visibility
+    const {
+        searchFormRef,
+        searchFormButtonRef,
+        showSearchForm,
+        setShowSearchForm
+    } = useSearchEvent();
 
-    const [filters, setFilters] = useState({});
-    const [showSearchForm, setShowSearchForm] = useState(false);
-
-    useEffect(() => {
-        // Load listings based on the current path
-        if (location.pathname === "/") {
-            handleLoadListings("");
-        } else if (location.pathname === "/housing/") {
-            handleLoadListings("housing")
-        } else if (location.pathname === "/furniture/") {
-            handleLoadListings("furniture")
-        } else if (location.pathname === "/accessories/") {
-            handleLoadListings("accessories")
-        }
-    }, [filters]);
-
-    useEffect(() => {
-        // Function to handle outside clicks
-        const handleOutsideClick = event => {
-            if (
-                // Check if the click was outside the search form
-                searchFormRef.current && !searchFormRef.current.contains(event.target) &&
-                // Also check if it was not the button that toggles the search form
-                searchFormButtonRef.current && !searchFormButtonRef.current.contains(event.target)
-            ) {
-                // Hide search form on outside click
-                setShowSearchForm(false);
-            }
-        }
-
-        // Add click event listener to the document
-        document.addEventListener('click', handleOutsideClick);
-
-        // Cleanup - remove event listener when the component is unmounted
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        }
-    }, []);
-
+    // Nav bar visibility
+    const {
+        isNavVisible,
+        setIsNavVisible,
+        isSmallScreen
+    } = useMediaQueryEvent();
 
     const toggleSearchForm = () => {
         setShowSearchForm(!showSearchForm);
     }
 
-    const handleLoadListings = categoryName => {
-        if (categoryName === "") {
-            loadListings({});
-        } else {
-            const filters = {
-                category_name: categoryName
-            }
-
-            loadListings({filters: filters});
-        }
+    const toggleNav = () => {
+        setIsNavVisible(!isNavVisible);
     }
 
     const authLink = () => {
@@ -121,38 +88,10 @@ const Header = ({
                 </div>
             )}
 
-            {showLinks && (
-                <nav className={"header-panel"}>
-                    <ul>
-                        <li>
-                            <MainDomainNavLink
-                                className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "housing/"}
-                                onClick={() => setFilters("housing")}>
-                                Housing
-                            </MainDomainNavLink>
-                        </li>
-                        <li>
-                            <MainDomainNavLink
-                                className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "furniture/"}
-                                onClick={() => setFilters("furniture")}>
-                                Furniture
-                            </MainDomainNavLink>
-                        </li>
-                        <li>
-                            <MainDomainNavLink
-                                className={({isActive}) => isActive ? 'active-link' : ''} to={HOME_URL + "accessories/"}
-                                onClick={() => setFilters("accessories")}>
-                                Accessories
-                            </MainDomainNavLink>
-                        </li>
-                        <li>
-                            <MainDomainNavLink
-                                className={({isActive}) => isActive ? 'active-link' : ''} to={CONTACT_US_URL}>
-                                Contact Us
-                            </MainDomainNavLink>
-                        </li>
-                    </ul>
-                </nav>
+            {showLinks && (!isSmallScreen || isNavVisible) && (
+                <div className={"header-panel"}>
+                    <NavBar/>
+                </div>
             )}
 
             <div className={"header-panel"}>
@@ -166,18 +105,19 @@ const Header = ({
                     <option value="english">English</option>
                     <option value="dutch">Nederlands</option>
                 </select>
-
-                {showAuth && (
-                    isAuthenticated ? authLink() : guestLink
-                )}
             </div>
 
-            {
-                showSearchForm &&
+            {showAuth && (
+                isAuthenticated ? authLink() : guestLink
+            )}
+
+            {showSearchForm && (
                 <div className={`search-form-container ${showSearchForm ? 'active' : ''}`} ref={searchFormRef}>
                     <ListingSearchForm/>
                 </div>
-            }
+            )}
+
+            <HeaderCheckbox onChange={toggleNav}/>
         </header>
     );
 }

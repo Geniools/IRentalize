@@ -2,12 +2,14 @@ header {
 	align-items     : center;
 	border-radius   : var(--border-radius);
 	display         : flex;
+	flex-wrap       : wrap;
 	height          : var(--header-height);
 	justify-content : space-between;
 	padding         : 0 var(--padding);
 	position        : relative;
 	width           : 100%;
 }
+
 
 .header-panel {
 	align-items : center;
@@ -30,7 +32,10 @@ header {
 }
 
 .header-panel ul li a {
+	align-items : center;
+	display     : flex;
 	font-weight : bold;
+	height      : 100%;
 }
 
 .header-panel ul li a:hover {
@@ -77,4 +82,18 @@ header select {
 .search-form-container.active {
 	opacity    : 100;
 	visibility : visible;
+}
+
+@media (max-width : 1400px) {
+	.header-panel, .header-panel ul {
+		flex-direction : column;
+	}
+	
+	.header-panel ul {
+		gap : 1rem;
+	}
+	
+	.header-panel ul li a {
+		height : 3rem;
+	}
 }

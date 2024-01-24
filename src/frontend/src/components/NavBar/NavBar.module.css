@@ -1,0 +1,9 @@
+.nav {
+	padding : 0 var(--padding);
+}
+
+
+@media (max-width : 1400px) {
+	.nav {
+	}
+}
