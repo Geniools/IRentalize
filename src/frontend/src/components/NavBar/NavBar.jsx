@@ -14,7 +14,7 @@ const NavBar = () => {
                     <MainDomainNavLink
                         className={({isActive}) => isActive ? 'active-link' : ''}
                         to={HOME_URL + "housing/"}
-                        onClick={() => setFilters("housing")}>
+                    >
                         Housing
                     </MainDomainNavLink>
                 </li>
@@ -22,7 +22,7 @@ const NavBar = () => {
                     <MainDomainNavLink
                         className={({isActive}) => isActive ? 'active-link' : ''}
                         to={HOME_URL + "furniture/"}
-                        onClick={() => setFilters("furniture")}>
+                    >
                         Furniture
                     </MainDomainNavLink>
                 </li>
@@ -30,7 +30,7 @@ const NavBar = () => {
                     <MainDomainNavLink
                         className={({isActive}) => isActive ? 'active-link' : ''}
                         to={HOME_URL + "accessories/"}
-                        onClick={() => setFilters("accessories")}>
+                    >
                         Accessories
                     </MainDomainNavLink>
                 </li>

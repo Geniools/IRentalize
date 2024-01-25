@@ -39,7 +39,6 @@ const Header = ({
 
     // Authentication / Logout button
     const loggingButton = useLoggingButton(showLogout);
-    console.log({loggingButton});
 
     const toggleSearchForm = () => {
         setShowSearchForm(!showSearchForm);
@@ -63,29 +62,34 @@ const Header = ({
             >
                 <div className="header-links">
                     {showLinks && (
-                        <div className={"header-panel"}>
+                        <div className={"header-panel flex-horizontally-center"}>
                             <NavBar/>
                         </div>
                     )}
 
-                    <div className={"header-panel header-panel-search"}>
-                        {showSearch && (
-                            <button ref={searchFormButtonRef} className={"header-green-link"} onClick={toggleSearchForm}>
-                                &#128269;
-                            </button>
-                        )}
+                    <div className={"header-panel-bundle"}>
+                        <div className={"header-panel header-panel-search"}>
+                            {showSearch && (
+                                <button ref={searchFormButtonRef} className={"header-green-link"} onClick={toggleSearchForm}>
+                                    &#128269;
+                                </button>
+                            )}
 
-                        <select>
-                            <option value="EN">EN</option>
-                            {/*<option value="NL">NL</option>*/}
-                        </select>
-                    </div>
+                            <select>
+                                <option value="EN">EN</option>
+                                {/*<option value="NL">NL</option>*/}
+                            </select>
+                        </div>
 
-                    <div className="header-panel">
                         {showAuth && (
-                            <MainDomainLink className={"header-green-link header-green-link-button"} to={loggingButton.to} onClick={loggingButton.onClick}>
-                                {loggingButton.text}
-                            </MainDomainLink>
+                            <div className="header-panel flex-right-content">
+                                <MainDomainLink
+                                    className={"header-green-link header-green-link-button"}
+                                    to={loggingButton.to}
+                                    onClick={loggingButton.onClick}>
+                                    {loggingButton.text}
+                                </MainDomainLink>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -103,10 +107,15 @@ const Header = ({
 }
 
 Header.propTypes = {
+    // Display the icon in the header
     showIcon: PropTypes.bool,
+    // Display the links in the header
     showLinks: PropTypes.bool,
+    // Display the search form in the header
     showSearch: PropTypes.bool,
+    // Display the authentication button in the header
     showAuth: PropTypes.bool,
+    // Display the logout button in the header (instead of the button to get a user to the ACCOUNT page)
     showLogout: PropTypes.bool
 };
 

@@ -16,7 +16,6 @@ header {
 	gap             : 3rem;
 	height          : 100%;
 	justify-content : flex-end;
-	padding         : var(--padding);
 	width           : 100%;
 	z-index         : 1;
 }
@@ -28,11 +27,13 @@ header select {
 	border-radius    : var(--border-radius);
 	font-size        : 1rem;
 	font-weight      : bold;
+	min-width        : 7rem;
 }
 
 .header-panel {
 	align-items : center;
 	display     : flex;
+	flex-grow   : 1;
 	height      : 100%;
 }
 
@@ -41,6 +42,12 @@ header select {
 	display     : flex;
 	gap         : 2rem;
 	height      : 100%;
+}
+
+.header-panel-bundle {
+	display               : grid;
+	gap                   : 2rem;
+	grid-template-columns : auto auto;
 }
 
 .header-green-link {
@@ -96,13 +103,23 @@ header select {
 		flex-direction : column;
 		height         : auto;
 		left           : 0;
+		padding        : var(--padding);
 		position       : absolute;
 		top            : 100%;
+		
 	}
 	
 	.header-panel {
 		justify-content : center;
 		width           : 80%;
+	}
+	
+	.header-panel-bundle {
+		align-items    : center;
+		display        : flex;
+		flex-direction : column;
+		gap            : 2rem;
+		width          : 100%;
 	}
 	
 	.header-green-link-button {
@@ -112,7 +129,7 @@ header select {
 }
 
 @media (max-width : 600px) {
-	.header-panel, .header-green-link-button {
+	.header-panel, .header-green-link-button, .header-panel-bundle {
 		width : 100%;
 	}
 }
