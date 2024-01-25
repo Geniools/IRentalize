@@ -9,7 +9,7 @@ import styles from "./NavBar.module.css";
 const NavBar = () => {
     return (
         <nav className={styles.nav}>
-            <ul>
+            <ul className={styles.ul}>
                 <li>
                     <MainDomainNavLink
                         className={({isActive}) => isActive ? 'active-link' : ''}

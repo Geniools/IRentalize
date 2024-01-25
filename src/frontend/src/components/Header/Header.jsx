@@ -1,28 +1,20 @@
-import React, {Fragment} from 'react';
-import {Link} from "react-router-dom";
-import {connect} from "react-redux";
+import React from 'react';
+import {CSSTransition} from "react-transition-group";
 import PropTypes from "prop-types";
-
-import {logout} from "../../actions/auth";
-import {loadListings} from "../../actions/listing";
 
 import ListingSearchForm from "../ListingSearchForm/ListingSearchForm";
 import MainDomainLink from "../MainDomainLink/MainDomainLink";
 import HeaderCheckbox from "../HeaderCheckbox/HeaderCheckbox";
+import IRentalizeIcon from "../IRentalizeIcon/IRentalizeIcon";
 import NavBar from "../NavBar/NavBar";
 
 import useMediaQueryEvent from "./hooks/useMediaQueryEvent";
 import useSearchEvent from "./hooks/useSearchEvent";
-
-import {ACCOUNT_URL, LOGIN_URL} from "../../utils/constants/URL_PATHS";
+import useLoggingButton from "./hooks/useLoggingButton";
 
 import "./Header.css";
 
 const Header = ({
-                    logout,
-                    loadListings,
-                    user,
-                    isAuthenticated,
                     showIcon = true,
                     showLinks = true,
                     showSearch = true,
@@ -45,6 +37,10 @@ const Header = ({
         isSmallScreen
     } = useMediaQueryEvent();
 
+    // Authentication / Logout button
+    const loggingButton = useLoggingButton(showLogout);
+    console.log({loggingButton});
+
     const toggleSearchForm = () => {
         setShowSearchForm(!showSearchForm);
     }
@@ -53,63 +49,47 @@ const Header = ({
         setIsNavVisible(!isNavVisible);
     }
 
-    const authLink = () => {
-        if (showLogout) {
-            return (
-                <Fragment>
-                    <MainDomainLink className={"header-green-link"} to="" onClick={logout}>
-                        LOG OUT
-                    </MainDomainLink>
-                </Fragment>
-            )
-        } else {
-            const output = user.username ? user.username : user.first_name;
-            return (
-                <MainDomainLink className={"header-green-link"} to={ACCOUNT_URL}>
-                    {output}
-                </MainDomainLink>
-            )
-        }
-    }
-
-    const guestLink = (
-        <Link className={"header-green-link"} to={LOGIN_URL}>
-            LOG IN
-        </Link>
-    )
-
     return (
         <header>
             {showIcon && (
-                <div className={"header-panel"}>
-                    <MainDomainLink className="icon" to="/" onClick={loadListings}>
-                        <img src="/static/assets/favicon.png" alt="IRentalize"/>
-                    </MainDomainLink>
+                <IRentalizeIcon/>
+            )}
+
+            <CSSTransition
+                in={!isSmallScreen || isNavVisible}
+                timeout={350}
+                classNames={"NavAnimation"}
+                unmountOnExit
+            >
+                <div className="header-links">
+                    {showLinks && (
+                        <div className={"header-panel"}>
+                            <NavBar/>
+                        </div>
+                    )}
+
+                    <div className={"header-panel header-panel-search"}>
+                        {showSearch && (
+                            <button ref={searchFormButtonRef} className={"header-green-link"} onClick={toggleSearchForm}>
+                                &#128269;
+                            </button>
+                        )}
+
+                        <select>
+                            <option value="EN">EN</option>
+                            {/*<option value="NL">NL</option>*/}
+                        </select>
+                    </div>
+
+                    <div className="header-panel">
+                        {showAuth && (
+                            <MainDomainLink className={"header-green-link header-green-link-button"} to={loggingButton.to} onClick={loggingButton.onClick}>
+                                {loggingButton.text}
+                            </MainDomainLink>
+                        )}
+                    </div>
                 </div>
-            )}
-
-            {showLinks && (!isSmallScreen || isNavVisible) && (
-                <div className={"header-panel"}>
-                    <NavBar/>
-                </div>
-            )}
-
-            <div className={"header-panel"}>
-                {showSearch && (
-                    <button ref={searchFormButtonRef} className={"header-green-link"} onClick={toggleSearchForm}>
-                        &#128269;
-                    </button>
-                )}
-
-                <select>
-                    <option value="english">English</option>
-                    <option value="dutch">Nederlands</option>
-                </select>
-            </div>
-
-            {showAuth && (
-                isAuthenticated ? authLink() : guestLink
-            )}
+            </CSSTransition>
 
             {showSearchForm && (
                 <div className={`search-form-container ${showSearchForm ? 'active' : ''}`} ref={searchFormRef}>
@@ -123,10 +103,6 @@ const Header = ({
 }
 
 Header.propTypes = {
-    logout: PropTypes.func.isRequired,
-    loadListings: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-    user: PropTypes.object,
     showIcon: PropTypes.bool,
     showLinks: PropTypes.bool,
     showSearch: PropTypes.bool,
@@ -134,9 +110,4 @@ Header.propTypes = {
     showLogout: PropTypes.bool
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user ? state.auth.user : {},
-});
-
-export default connect(mapStateToProps, {logout, loadListings})(Header);
+export default Header;

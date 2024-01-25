@@ -7,10 +7,12 @@ import Footer from "../../components/Footer/Footer";
 const IndexPage = () => {
     return (
         <>
+            <Header/>
+
             <div className='page-container'>
-                <Header/>
                 <RequestForm/>
             </div>
+            
             <Footer/>
         </>
     )
