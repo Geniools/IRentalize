@@ -52,7 +52,7 @@ class Listing(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     # Address
-    address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name='listing', null=True, blank=True)
+    address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='listing', null=True, blank=True)
     # Keep track of the number of times a listing has been viewed
     views = models.IntegerField(default=0, help_text='This is the number of times this listing has been viewed.')
     # Timestamps

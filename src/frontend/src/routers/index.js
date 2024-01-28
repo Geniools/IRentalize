@@ -31,7 +31,7 @@ import {
 } from "../utils/constants/URL_PATHS";
 
 // Main pages
-import IndexPage from "../pages/IndexPage/IndexPage";
+import IndexPage from "../pages/main/IndexPage/IndexPage";
 import AboutUsPage from "../pages/main/AboutUsPage/AboutUsPage";
 import ContactUsPage from "../pages/main/ContactUsPage/ContactUsPage";
 // Listing pages
@@ -117,7 +117,7 @@ export const StudentFinanceRouter = () => {
     return (
         <Routes>
             <Route path={HOME_URL} element={<IndexPageStudentFinance/>}/>
-            
+
             {/* Other */}
             <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

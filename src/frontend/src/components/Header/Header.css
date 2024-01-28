@@ -106,7 +106,7 @@ header select {
 		padding        : var(--padding);
 		position       : absolute;
 		top            : 100%;
-		
+		z-index        : 10;
 	}
 	
 	.header-panel {

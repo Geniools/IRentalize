@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import {checkAuthenticated, loadUser} from "../actions/auth";
 import {connect} from "react-redux";
+
+import {checkAuthenticated, loadUser} from "../actions/auth";
 
 const Layout = ({checkAuthenticated, load_user, children}) => {
     useEffect(async () => {

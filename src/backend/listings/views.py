@@ -3,6 +3,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 
+from backend.api.pagination import CustomPageNumberPagination
 from backend.api.permissions import IsListingOwner, IsListingImageOwner
 from backend.listings.filters import ListingSearchFilter
 from backend.listings.models import Category, Listing, ListingImage
@@ -20,9 +21,11 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
 # API to retrieve all the Listings
 class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Listing.objects.filter(visible=True)
+    # Retrieve the listings that are visible to the public, from the oldest to the newest
+    queryset = Listing.objects.filter(visible=True).order_by('created_at')
     serializer_class = ListingSerializer
     filterset_class = ListingSearchFilter
+    pagination_class = CustomPageNumberPagination
 
 
 # User listings (api endpoint to be used only when interacting with the listings attributed to the logged-in user)
@@ -32,6 +35,7 @@ class UserListingViewSet(viewsets.ModelViewSet):
     serializer_class = ListingSerializer
     parser_classes = [MultiPartParser, FormParser]
     filterset_class = ListingSearchFilter
+    # TODO: Add pagination
     pagination_class = None
     
     def create(self, request, *args, **kwargs):
