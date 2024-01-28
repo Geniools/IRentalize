@@ -1,0 +1,19 @@
+.hostContainer {
+	display : flex;
+	gap     : var(--padding);
+}
+
+.hostInfo {
+	line-height : 1.5rem;
+}
+
+.descriptionContainer {
+	position : relative;
+}
+
+@media (max-width : 950px) {
+	.hostContainer {
+		align-items    : center;
+		flex-direction : column;
+	}
+}

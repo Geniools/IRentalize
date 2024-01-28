@@ -6,8 +6,10 @@ import Header from "../../../components/Header/Header";
 import ModalImage from "../../../components/ModalImage/ModalImage";
 import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 
-import styles from "../ListingDetailsPage/ListingDetailsPage.module.css";
 import Footer from "../../../components/Footer/Footer";
+
+import styles from "../ListingDetailsPage/partials/ImageGalery/ImageGallery.module.css";
+import sectionStyles from "../ListingDetailsPage/ListingDetailsPage.module.css";
 
 export default function ListingAllImagesPage() {
     const navigator = useNavigate();
@@ -36,13 +38,13 @@ export default function ListingAllImagesPage() {
             <Header/>
 
             <div className="page-container">
-                <div className={styles.section}>
+                <div className={sectionStyles.section}>
                     <HeadTitle title={`More Images for '${listingTitle}'`} capitalize={true}/>
                 </div>
 
                 <hr/>
 
-                <div className={styles.section}>
+                <div className={sectionStyles.section}>
                     <div className={styles.imageGallery}>
                         {listingImages?.map(image => (
                             <div className={styles.imageContainer} onClick={() => setSelectedImage(image.image)}>

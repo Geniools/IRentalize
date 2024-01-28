@@ -1,0 +1,9 @@
+.bookingContainer {
+	display   : flex;
+	flex-flow : row wrap;
+	position  : relative;
+}
+
+.bookingContainer button {
+	opacity : 1;
+}
