@@ -3,10 +3,10 @@ import {useNavigate} from "react-router-dom";
 
 import ModalImage from "../../../../../components/ModalImage/ModalImage";
 
-import styles from "./ImageGallery.module.css";
-import generalStyles from "../ListingDetailsGeneral.module.css";
+import styles from "./ImageGallerySection.module.css";
+import FadingButton from "../../../../../components/FadingButton/FadingButton";
 
-const ImageGallery = ({images, listingId}) => {
+const ImageGallerySection = ({images, listingId}) => {
     const navigator = useNavigate();
     const [selectedImage, setSelectedImage] = useState(null);
     const [pictureThreshold, setPictureThreshold] = useState(8);
@@ -18,7 +18,7 @@ const ImageGallery = ({images, listingId}) => {
     // }
 
     return (
-        <>
+        <div className={styles.container}>
             <div className={styles.imageGallery}>
                 {
                     images?.slice(0, 8).map(image => (
@@ -29,23 +29,23 @@ const ImageGallery = ({images, listingId}) => {
                 }
             </div>
 
-            {
-                // If there are more than 8 images, display a button to view all images
-                images?.length > pictureThreshold &&
-                <button
-                    className={generalStyles.button}
-                    onClick={() => navigator(`/listing/${listingId}/all-images/`)}
-                >
-                    View more
-                </button>
-            }
+            <div className={"flex-container flex-right-content"}>
+                {
+                    // If there are more than 8 images, display a button to view all images
+                    images?.length > pictureThreshold && (
+                        <FadingButton onClick={() => navigator(`/listing/${listingId}/all-images/`)}>
+                            View more
+                        </FadingButton>
+                    )
+                }
+            </div>
 
             {
                 // If an image is selected, display it in a modal
                 selectedImage && <ModalImage selectedImage={selectedImage} setSelectedImage={setSelectedImage}/>
             }
-        </>
+        </div>
     )
 }
 
-export default ImageGallery;
+export default ImageGallerySection;

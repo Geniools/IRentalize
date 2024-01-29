@@ -2,21 +2,23 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
+import {setNavigateToAfterAuth} from "../../../../../actions/common";
+import useAddBooking from "./hooks/useAddBooking";
+
 import BookingCalendar from "../../../../../components/BookingCalendar/BookingCalendar";
 
 import styles from "./BookingSection.module.css";
-import generalStyles from "../ListingDetailsGeneral.module.css";
-import {setNavigateToAfterAuth} from "../../../../../actions/common";
-import {addBooking} from "../../../../../actions/listing";
 
 const BookingSection = ({availabilities, unavailableDates, price, host, listingId}) => {
     const navigator = useNavigate();
+    // Get the user and isAuthenticated state from the store
     const {user, isAuthenticated} = useSelector((state) => ({
         isAuthenticated: state.auth.isAuthenticated,
         user: state.auth.user ? state.auth.user : {},
     }))
     const dispatch = useDispatch();
 
+    // Error messages
     const [canBook, setCanBook] = useState(false);
     const [errorMessages, setErrorMessages] = useState(["Select a date to book this listing!"]);
     const [bookingDates, setBookingDates] = useState([
@@ -34,7 +36,7 @@ const BookingSection = ({availabilities, unavailableDates, price, host, listingI
                 console.log("You need to be logged in to book this listing!")
                 // TODO: Show error message
                 // Set the navigateToAfterLogin state to the current page
-                dispatch(setNavigateToAfterAuth(`/listing/${id}/`))
+                dispatch(setNavigateToAfterAuth(`/listing/${listingId}/`))
                     .then(r => {
                         // Redirect to login page if user is not logged in
                         return navigator("/login");
@@ -47,6 +49,7 @@ const BookingSection = ({availabilities, unavailableDates, price, host, listingI
                 return;
             }
 
+            // Format the dates
             let startDate = bookingDates[0].startDate.getFullYear() + "-";
             startDate += bookingDates[0].startDate.getMonth() + 1 + "-";
             startDate += bookingDates[0].startDate.getDate();
@@ -55,7 +58,21 @@ const BookingSection = ({availabilities, unavailableDates, price, host, listingI
             endDate += bookingDates[0].endDate.getMonth() + 1 + "-";
             endDate += bookingDates[0].endDate.getDate();
 
-            dispatch(addBooking({listingId, startDate, endDate}));
+            console.log("1")
+
+            // TODO: Fix this
+            const {
+                data: booking,
+                isLoading,
+                isError,
+                error
+            } = useAddBooking({listingId, startDate, endDate});
+
+            console.log("2")
+            // Check if there is an error
+            if (isError) {
+                setErrorMessages([error]);
+            }
         }
     }
 
@@ -72,8 +89,16 @@ const BookingSection = ({availabilities, unavailableDates, price, host, listingI
                 setBookingDates={setBookingDates}
             />
 
-            <div>
-                <button className={generalStyles.button} onClick={handleBooking}>Book now</button>
+            <div className={styles.errorContainer}>
+                {
+                    errorMessages.map((errorMessage, index) => (
+                        <p key={index} className={"error-text"}>{errorMessage}</p>
+                    ))
+                }
+            </div>
+
+            <div className={"flex-container flex-right-content"}>
+                <button onClick={handleBooking}>Book now</button>
             </div>
         </div>
     )

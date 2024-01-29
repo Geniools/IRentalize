@@ -9,9 +9,9 @@ import Loader from "../../../components/ui/Loader/Loader";
 import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 import HeadSubTitle from "../../../components/ui/HeadSubTitle/HeadSubTitle";
 
-import ImageGallery from "./partials/ImageGalery/ImageGallery";
-import Description from "./partials/Description/Description";
-import HostInfo from "./partials/HostInfo/HostInfo";
+import ImageGallerySection from "./partials/ImageGalerySection/ImageGallerySection";
+import DescriptionSection from "./partials/Description/DescriptionSection";
+import HostInfoSection from "./partials/HostInfoSection/HostInfoSection";
 import MapSection from "./partials/MapSection/MapSection";
 import BookingSection from "./partials/BookingSection/BookingSection";
 
@@ -54,21 +54,28 @@ const ListingDetailsPage = () => {
 
                 {/* Image gallery */}
                 <div className={styles.section}>
-                    <ImageGallery images={listing.images} listingId={listing.id}/>
+                    <ImageGallerySection
+                        images={listing.images}
+                        listingId={listing.id}
+                    />
                 </div>
 
                 <hr/>
 
                 {/* Description */}
                 <div className={styles.section}>
-                    <Description description={listing.description} createdAt={listing.created_at} updatedAt={listing.updated_at}/>
+                    <DescriptionSection
+                        description={listing.description}
+                        createdAt={listing.created_at}
+                        updatedAt={listing.updated_at}
+                    />
                 </div>
 
                 <hr/>
 
                 {/* Host */}
                 <div className={styles.section}>
-                    <HostInfo
+                    <HostInfoSection
                         hostFirstName={listing.host_first_name}
                         hostUsername={listing.host_username}
                         hostProfilePicture={listing.host_profile_picture}
@@ -81,19 +88,14 @@ const ListingDetailsPage = () => {
                 <hr/>
 
                 {/* Map */}
-                {
-                    // If the listing has no address, don't display the map
-                    listing.address && (
-                        <div className={styles.section}>
-                            <MapSection address={listing.address}/>
-                        </div>
-                    ) || <Loader/>
-                }
+                <div className={styles.section}>
+                    <MapSection address={listing.address}/>
+                </div>
 
                 <hr/>
 
                 {/* Book now and Calendar with availability */}
-                <div id="booking-section" className={styles.section}>
+                <div className={styles.section} id="booking-section">
                     <BookingSection
                         availabilities={listing.availabilities}
                         unavailableDates={listing.unavailable_dates}

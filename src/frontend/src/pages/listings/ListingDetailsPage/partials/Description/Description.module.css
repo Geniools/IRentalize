@@ -1,9 +1,0 @@
-.info {
-	display        : flex;
-	flex-direction : column;
-	gap            : var(--padding);
-}
-
-.infoDates {
-	line-height : 1.5rem;
-}

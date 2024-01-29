@@ -1,6 +1,7 @@
 .hamburger {
-	cursor  : pointer;
-	display : none;
+	cursor                      : pointer;
+	display                     : none;
+	-webkit-tap-highlight-color : transparent;
 }
 
 .hamburger input {

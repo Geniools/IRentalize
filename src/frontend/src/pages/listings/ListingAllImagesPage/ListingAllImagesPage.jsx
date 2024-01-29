@@ -8,7 +8,7 @@ import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
 
 import Footer from "../../../components/Footer/Footer";
 
-import styles from "../ListingDetailsPage/partials/ImageGalery/ImageGallery.module.css";
+import styles from "../ListingDetailsPage/partials/ImageGalerySection/ImageGallerySection.module.css";
 import sectionStyles from "../ListingDetailsPage/ListingDetailsPage.module.css";
 
 export default function ListingAllImagesPage() {

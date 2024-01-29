@@ -54,9 +54,10 @@ textarea {
 }
 
 input, textarea, select, option {
-	border        : 1px solid var(--color-black);
-	border-radius : var(--border-radius);
-	padding       : calc(var(--padding) / 2);
+	border                      : 1px solid var(--color-black);
+	border-radius               : var(--border-radius);
+	padding                     : calc(var(--padding) / 2);
+	-webkit-tap-highlight-color : transparent;
 }
 
 li {
@@ -93,19 +94,19 @@ tr {
 	border-bottom : 1px solid var(--color-black);
 }
 
-.green-text {
+.green-text, .succes-text {
 	color : var(--color-green);
 }
 
-.red-text {
+.red-text, .error-text {
 	color : var(--color-red);
 }
 
-.delete {
+.delete-background, .error-background {
 	background-color : var(--color-red);
 }
 
-.warning {
+.yellow-text, .warning-text {
 	background-color : var(--color-yellow);
 }
 

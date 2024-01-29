@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 // Needed for the DateRange component
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -8,19 +8,9 @@ import HeadSubTitle from "../ui/HeadSubTitle/HeadSubTitle";
 
 import styles from "./BookingCalendar.module.css";
 
-const getDatesBetween = (startDate, endDate) => {
-    // Get the dates between the start and end dates
-    const dates = [];
-    const currentDate = new Date(startDate);
-    const stopDate = new Date(endDate);
+import useAvailableDates from "./hooks/useAvailableDates";
+import {getDatesBetween} from "../../utils/helpers/booking";
 
-    while (currentDate <= stopDate) {
-        dates.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return dates;
-}
 
 const BookingCalendar = ({
                              availabilities,
@@ -32,29 +22,15 @@ const BookingCalendar = ({
                              bookingDates,
                              setBookingDates
                          }) => {
-    const [availableDates, setAvailableDates] = useState([]);
-    useEffect(() => {
-        // Convert the unavailableDates array to Date objects
-        unavailableDates = unavailableDates.map(date => new Date(date));
-        // Loop through the availabilities and add all the dates to the availableDates array
-        availabilities.map(availability => {
-            const dates = getDatesBetween(availability.start_date, availability.end_date);
-            dates.map(date => {
-                // Check if the date is not in the unavailableDates array
-                if (!unavailableDates.some(unavailableDate =>
-                    unavailableDate.getFullYear() === date.getFullYear() &&
-                    unavailableDate.getMonth() === date.getMonth() &&
-                    unavailableDate.getDate() === date.getDate()
-                )) {
-                    setAvailableDates(prevState => prevState.concat(date));
-                }
-            })
-        });
-    }, []);
+    const {
+        availableDates
+    } = useAvailableDates({
+        unavailableDates: unavailableDates,
+        availabilities: availabilities
+    });
 
     const isDayDisabled = (day) => {
         // Disable the days that are not available
-        // return !availableDates.some(date => date.getTime() === day.getTime());
         return !availableDates.some(date =>
             date.getFullYear() === day.getFullYear() &&
             date.getMonth() === day.getMonth() &&
@@ -74,9 +50,8 @@ const BookingCalendar = ({
         dates.map(date => {
             if (isDayDisabled(date)) {
                 setErrorMessages(prevState => prevState.concat(`The date ${date.toLocaleDateString('nl-NL')} is not available!`));
-                if (!error) {
-                    error = true
-                }
+                // Error(s) found
+                error = true
             }
         });
         // If there is at least one error message, return
@@ -101,26 +76,17 @@ const BookingCalendar = ({
                 // className={styles.dateRangeContainer}
                 ranges={bookingDates}
                 onChange={handleSelect}
-                // Set the min date to the first available date, but not before today
                 minDate={new Date()}
                 // Set the max date to 1 year from today
                 maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
                 disabledDay={isDayDisabled}
-                editableDateInputs={true}
+                editableDateInputs={false}
                 moveRangeOnFirstSelection={false}
                 retainEndDateOnFirstSelection={false}
                 showDateDisplay={true}
                 weekStartsOn={1}
             />
 
-            <div className={styles.errorContainer}>
-                {
-                    errorMessages.map((errorMessage, index) => (
-                        <p key={index} className={styles.errorText}>{errorMessage}</p>
-                    ))
-                }
-            </div>
-            {/* TODO: Add mobile optimization */}
             <div className={styles.priceContainer}>
                 <HeadSubTitle title={`€${dayPrice} a day`}/>
                 <p><b>Total: </b>{calculatePrice()} &euro;</p>

@@ -1,9 +1,19 @@
 .bookingContainer {
-	display   : flex;
-	flex-flow : row wrap;
-	position  : relative;
+	align-items    : center;
+	display        : flex;
+	flex-direction : column;
+	gap            : 2rem;
 }
 
 .bookingContainer button {
 	opacity : 1;
+}
+
+.errorContainer {
+	-webkit-box-orient : vertical;
+	display            : -webkit-box;
+	-webkit-line-clamp : 10; /* number of lines to show */
+	line-clamp         : 10;
+	line-height        : 1.5rem;
+	overflow           : hidden;
 }
