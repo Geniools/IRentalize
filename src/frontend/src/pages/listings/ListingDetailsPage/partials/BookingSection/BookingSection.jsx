@@ -1,15 +1,29 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
+import {ACCOUNT_URL} from "../../../../../utils/constants/URL_PATHS";
 
 import {setNavigateToAfterAuth} from "../../../../../actions/common";
+import {calculateBookingPrice, getDatesBetween} from "../../../../../utils/helpers/booking";
+
+import useBookingDates from "../../../../../components/BookingCalendar/hooks/useBookingDates";
+import useAvailableDates from "../../../../../components/BookingCalendar/hooks/useAvailableDates";
 import useAddBooking from "./hooks/useAddBooking";
 
-import BookingCalendar from "../../../../../components/BookingCalendar/BookingCalendar";
+import HeadSubTitle from "../../../../../components/ui/HeadSubTitle/HeadSubTitle";
+import Calendar from "../../../../../components/BookingCalendar/Calendar";
+import Loader from "../../../../../components/ui/Loader/Loader";
 
 import styles from "./BookingSection.module.css";
 
-const BookingSection = ({availabilities, unavailableDates, price, host, listingId}) => {
+const BookingSection = ({
+                            availabilities,
+                            unavailableDates,
+                            price,
+                            host,
+                            listingId
+                        }) => {
     const navigator = useNavigate();
     // Get the user and isAuthenticated state from the store
     const {user, isAuthenticated} = useSelector((state) => ({
@@ -19,86 +33,131 @@ const BookingSection = ({availabilities, unavailableDates, price, host, listingI
     const dispatch = useDispatch();
 
     // Error messages
-    const [canBook, setCanBook] = useState(false);
-    const [errorMessages, setErrorMessages] = useState(["Select a date to book this listing!"]);
-    const [bookingDates, setBookingDates] = useState([
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection'
+    const [errorMessages, setErrorMessages] = useState("");
+    // Booked dates
+    const [bookedDates, setBookedDates] = useState([]);
+
+    // Dates
+    const {
+        firstDate,
+        lastDate,
+        isDayDisabled,
+    } = useAvailableDates({
+        unavailableDates: unavailableDates,
+        availabilities: availabilities,
+        bookedDates: bookedDates,
+    });
+
+    const {
+        startDate,
+        endDate,
+        handleStartDateChange,
+        handleEndDateChange,
+        error: bookingError,
+    } = useBookingDates({
+        availabilities: availabilities,
+        isDayDisabled: isDayDisabled,
+    });
+
+    // Booking process
+    const {
+        addBookingHandler: createBooking,
+        isPending,
+        isError: isCreatingBookingError,
+        isSuccess,
+        error: creatingBookingError,
+    } = useAddBooking({
+        listingId,
+        startDate,
+        endDate
+    });
+
+    useEffect(() => {
+        // Update the booked dates if the booking was successful
+        if (isSuccess) {
+            // Get all the dates between the start and end date
+            const successBookedDates = getDatesBetween(startDate, endDate);
+            // Update the booked dates
+            setBookedDates([...bookedDates, ...successBookedDates]);
+            // Reset the error messages
+            setErrorMessages("");
+            // Reset the start and end date
+            handleStartDateChange(null);
+            handleEndDateChange(null);
         }
-    ]);
+    }, [isSuccess]);
 
     const handleBooking = () => {
-        if (canBook) {
-            // Check if user is logged in
-            if (!isAuthenticated) {
-                console.log("You need to be logged in to book this listing!")
-                // TODO: Show error message
-                // Set the navigateToAfterLogin state to the current page
-                dispatch(setNavigateToAfterAuth(`/listing/${listingId}/`))
-                    .then(r => {
-                        // Redirect to login page if user is not logged in
-                        return navigator("/login");
-                    });
-            }
-
-            // Check if the user is the host of the listing
-            if (user.id === host) {
-                setErrorMessages(["You are the host of this listing!"]);
-                return;
-            }
-
-            // Format the dates
-            let startDate = bookingDates[0].startDate.getFullYear() + "-";
-            startDate += bookingDates[0].startDate.getMonth() + 1 + "-";
-            startDate += bookingDates[0].startDate.getDate();
-
-            let endDate = bookingDates[0].endDate.getFullYear() + "-";
-            endDate += bookingDates[0].endDate.getMonth() + 1 + "-";
-            endDate += bookingDates[0].endDate.getDate();
-
-            console.log("1")
-
-            // TODO: Fix this
-            const {
-                data: booking,
-                isLoading,
-                isError,
-                error
-            } = useAddBooking({listingId, startDate, endDate});
-
-            console.log("2")
-            // Check if there is an error
-            if (isError) {
-                setErrorMessages([error]);
-            }
+        // Check if user is logged in
+        if (!isAuthenticated) {
+            // Set the navigateToAfterLogin state to the current page
+            dispatch(setNavigateToAfterAuth(`/listing/${listingId}/#booking-section`))
+                .then(r => {
+                    // Redirect to login page if user is not logged in
+                    return navigator("/login");
+                });
         }
+        // Check if the user is the host of the listing
+        if (user.id === host) {
+            setErrorMessages("You are the host of this listing!");
+            return;
+        }
+        // Check if the user has selected two dates
+        if (startDate === null || endDate === null) {
+            setErrorMessages('Please select two dates first!');
+            return;
+        }
+        // Try making the booking
+        createBooking();
     }
 
     return (
-        <div className={styles.bookingContainer}>
-            <BookingCalendar
-                availabilities={availabilities}
-                unavailableDates={unavailableDates}
-                dayPrice={price}
-                setCanBook={setCanBook}
-                errorMessages={errorMessages}
-                setErrorMessages={setErrorMessages}
-                bookingDates={bookingDates}
-                setBookingDates={setBookingDates}
-            />
+        <div className={styles.bookingContainer} id="booking-section">
+            <HeadSubTitle title={"Book this listing"}/>
 
-            <div className={styles.errorContainer}>
-                {
-                    errorMessages.map((errorMessage, index) => (
-                        <p key={index} className={"error-text"}>{errorMessage}</p>
-                    ))
-                }
+            {
+                isPending ? (
+                    <Loader/>
+                ) : (
+                    <Calendar
+                        startDate={startDate}
+                        endDate={endDate}
+                        handleStartDateChange={handleStartDateChange}
+                        handleEndDateChange={handleEndDateChange}
+                        firstDate={firstDate}
+                        lastDate={lastDate}
+                        isDayDisabled={isDayDisabled}
+                    />
+                )
+            }
+
+            <div className={styles.resultMessageContainer}>
+                <p>Price per day: <b>{price}€</b></p>
+                <p>Total price: <b><i>{calculateBookingPrice({startDate, endDate, dayPrice: price})}€</i></b></p>
+            </div>
+
+            <div className={`${styles.resultMessageContainer}`}>
+                {isCreatingBookingError && (
+                    Object.entries(creatingBookingError?.response.data).map(([key, value]) => {
+                        return (
+                            <p className={"error-text"}>{key}: {Array.isArray(value) ? value.map(message => message) : value}</p>
+                        );
+                    })
+                )}
+                {errorMessages && <p className={"error-text"}>{errorMessages}</p>}
+                {bookingError && <p className={"error-text"}>{bookingError}</p>}
+            </div>
+
+            <div className={styles.resultMessageContainer}>
+                {isSuccess && (
+                    <p className={"success-text"}>
+                        Your booking was successful! You can check its status in the <b><i><Link to={ACCOUNT_URL}>dashboard</Link></i></b>!
+                    </p>
+                )}
             </div>
 
             <div className={"flex-container flex-right-content"}>
-                <button onClick={handleBooking}>Book now</button>
+                <button onClick={handleBooking} disabled={isPending}>Book now</button>
             </div>
         </div>
     )

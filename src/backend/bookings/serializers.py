@@ -48,7 +48,7 @@ class ReservationSerializer(serializers.ModelSerializer):
         try:
             Reservation.validate_all(listing, start_date, end_date)
         except ValidationError as e:
-            raise serializers.ValidationError(e)
+            raise serializers.ValidationError({"error": e})
         
         return super().create(validated_data)
 
@@ -69,6 +69,6 @@ class AvailabilitySerializer(serializers.ModelSerializer):
         try:
             Availability.validate_all(listing, start_date, end_date)
         except ValidationError as e:
-            raise serializers.ValidationError(e)
+            raise serializers.ValidationError({"error": e})
         
         return super().create(validated_data)

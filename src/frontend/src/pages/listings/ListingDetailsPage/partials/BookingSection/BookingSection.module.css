@@ -9,11 +9,10 @@
 	opacity : 1;
 }
 
-.errorContainer {
-	-webkit-box-orient : vertical;
-	display            : -webkit-box;
-	-webkit-line-clamp : 10; /* number of lines to show */
-	line-clamp         : 10;
-	line-height        : 1.5rem;
-	overflow           : hidden;
+.resultMessageContainer {
+	align-items    : center;
+	display        : flex;
+	flex-direction : column;
+	line-height    : 1.5rem;
+	text-align     : center;
 }

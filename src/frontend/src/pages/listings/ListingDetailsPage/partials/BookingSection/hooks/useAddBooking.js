@@ -1,34 +1,38 @@
+import {useMutation} from "@tanstack/react-query";
+
 import axiosInstanceJSONAPI from "../../../../../../services/axios/axios_content_type_json";
-import {useQuery} from "@tanstack/react-query";
 
-const addBooking = async (listingId, startDate, endDate) => {
+const addBooking = async ({listingId, startDate, endDate}) => {
+    // Convert the startDate and endDate to the format: YYYY-MM-DD
+    startDate = startDate.toISOString().split('T')[0];
+    endDate = endDate.toISOString().split('T')[0];
+    // Send the request to the backend
     const body = JSON.stringify({listing: listingId, start_date: startDate, end_date: endDate});
-
-    try {
-        const response = await axiosInstanceJSONAPI.post('/api/listing-reservation/', body);
-        return response.data;
-    } catch (err) {
-        throw new Error(err);
-    }
+    return await axiosInstanceJSONAPI.post('/api/listing-reservation/', body);
 }
 
 const useAddBooking = ({listingId, startDate, endDate}) => {
     const {
-        data,
-        isLoading,
+        mutate,
+        isPending,
         isError,
+        isSuccess,
         error
-    } = useQuery({
-        queryKey: ['addBooking', listingId, startDate, endDate],
-        queryFn: () => addBooking(listingId, startDate, endDate)
-    });
+    } = useMutation({
+        mutationFn: addBooking,
+    })
+
+    const addBookingHandler = () => {
+        mutate({listingId, startDate, endDate});
+    }
 
     return {
-        data,
-        isLoading,
+        addBookingHandler,
+        isPending,
         isError,
+        isSuccess,
         error
-    }
+    };
 }
 
 export default useAddBooking;

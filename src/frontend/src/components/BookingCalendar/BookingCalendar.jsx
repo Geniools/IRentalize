@@ -1,42 +1,35 @@
+/*
+* This component is currently not used in the application!
+*
+* It is a calendar component that allows the user to select a date range.
+*
+* */
 import React from 'react';
 // Needed for the DateRange component
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import {DateRange} from "react-date-range";
 // =============================================================================
-import HeadSubTitle from "../ui/HeadSubTitle/HeadSubTitle";
-
-import styles from "./BookingCalendar.module.css";
-
 import useAvailableDates from "./hooks/useAvailableDates";
 import {getDatesBetween} from "../../utils/helpers/booking";
 
+import styles from "./BookingCalendar.module.css";
 
 const BookingCalendar = ({
                              availabilities,
                              unavailableDates,
-                             dayPrice,
                              setCanBook,
-                             errorMessages,
                              setErrorMessages,
                              bookingDates,
                              setBookingDates
                          }) => {
     const {
-        availableDates
+        availableDates,
+        isDayDisabled
     } = useAvailableDates({
         unavailableDates: unavailableDates,
         availabilities: availabilities
     });
-
-    const isDayDisabled = (day) => {
-        // Disable the days that are not available
-        return !availableDates.some(date =>
-            date.getFullYear() === day.getFullYear() &&
-            date.getMonth() === day.getMonth() &&
-            date.getDate() === day.getDate()
-        );
-    }
 
     const handleSelect = (ranges) => {
         // Reset the error messages
@@ -63,13 +56,6 @@ const BookingCalendar = ({
         setBookingDates([ranges.selection]);
     };
 
-    const calculatePrice = () => {
-        if (errorMessages.length > 0) return 0;
-        // Calculate the price of the selected date range
-        const dates = getDatesBetween(bookingDates[0].startDate, bookingDates[0].endDate);
-        return dates.length * dayPrice;
-    }
-
     return (
         <div className={styles.dateRangeContainer}>
             <DateRange
@@ -86,11 +72,6 @@ const BookingCalendar = ({
                 showDateDisplay={true}
                 weekStartsOn={1}
             />
-
-            <div className={styles.priceContainer}>
-                <HeadSubTitle title={`€${dayPrice} a day`}/>
-                <p><b>Total: </b>{calculatePrice()} &euro;</p>
-            </div>
         </div>
     );
 };

@@ -95,7 +95,7 @@ const ListingDetailsPage = () => {
                 <hr/>
 
                 {/* Book now and Calendar with availability */}
-                <div className={styles.section} id="booking-section">
+                <div className={styles.section}>
                     <BookingSection
                         availabilities={listing.availabilities}
                         unavailableDates={listing.unavailable_dates}

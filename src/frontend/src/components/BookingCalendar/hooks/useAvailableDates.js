@@ -1,31 +1,46 @@
 import {useEffect, useState} from "react";
-import {getDatesBetween} from "../../../utils/helpers/booking";
 
+import {findFirstAndLastDate, isWithinAvailabilities} from "../../../utils/helpers/booking";
 
-const useAvailableDates = ({unavailableDates, availabilities}) => {
-    const [availableDates, setAvailableDates] = useState([]);
+const useAvailableDates = ({unavailableDates, availabilities, bookedDates}) => {
+    const [unavailableDatesState, setUnavailableDatesState] = useState([]);
+    const [firstDate, setFirstDate] = useState(null);
+    const [lastDate, setLastDate] = useState(null);
+
+    const isDayDisabled = (dayMoment) => {
+        // Check if the day is in the unavailableDatesState
+        if (unavailableDatesState.some(date => dayMoment.isSame(date, 'day'))) {
+            return true;
+        }
+        return !isWithinAvailabilities(dayMoment, availabilities);
+    }
 
     useEffect(() => {
         // Convert the unavailableDates array to Date objects
-        unavailableDates = unavailableDates.map(date => new Date(date));
-        // Loop through the availabilities and add all the dates to the availableDates array
-        availabilities.map(availability => {
-            const dates = getDatesBetween(availability.start_date, availability.end_date);
-            dates.map(date => {
-                // Check if the date is not in the unavailableDates array
-                if (!unavailableDates.some(unavailableDate =>
-                    unavailableDate.getFullYear() === date.getFullYear() &&
-                    unavailableDate.getMonth() === date.getMonth() &&
-                    unavailableDate.getDate() === date.getDate()
-                )) {
-                    setAvailableDates(prevState => prevState.concat(date));
-                }
-            })
+        const unavailableDatesArray = unavailableDates.map(date => new Date(date));
+        setUnavailableDatesState(unavailableDatesArray);
+        // Add the bookedDates to the unavailableDatesState
+        const bookedDatesArray = bookedDates.map(date => new Date(date));
+        setUnavailableDatesState(prevState => [...prevState, ...bookedDatesArray]);
+    }, [unavailableDates, bookedDates]);
+
+    useEffect(() => {
+        // Convert the availabilities array to Date objects
+        const availableDatesArray = [];
+        availabilities.map(date => {
+            availableDatesArray.push(new Date(date.start_date));
+            availableDatesArray.push(new Date(date.end_date));
         });
-    }, [unavailableDates, availabilities]);
+
+        const {firstDate, lastDate} = findFirstAndLastDate(availableDatesArray);
+        setFirstDate(firstDate);
+        setLastDate(lastDate);
+    }, [availabilities]);
 
     return {
-        availableDates
+        firstDate,
+        lastDate,
+        isDayDisabled,
     };
 }
 
