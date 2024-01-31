@@ -16,6 +16,7 @@ import MapSection from "./partials/MapSection/MapSection";
 import BookingSection from "./partials/BookingSection/BookingSection";
 
 import styles from "./ListingDetailsPage.module.css";
+import useCreateChatRoom from "../../../hooks/useCreateChatRoom";
 
 const ListingDetailsPage = () => {
     const navigator = useNavigate();
@@ -26,6 +27,8 @@ const ListingDetailsPage = () => {
         isLoading,
         isError,
     } = useListingData(id);
+
+    const chatRoom = useCreateChatRoom({listingId: id});
 
     if (isError) return (navigator("/404/"))
 
@@ -82,6 +85,7 @@ const ListingDetailsPage = () => {
                         hostAboutMe={listing.host_about_me}
                         hostMemberSince={listing.host_member_since}
                         hostResponseTime={listing.host_response_time}
+                        chatRoom={chatRoom}
                     />
                 </div>
 

@@ -1,11 +1,14 @@
+from django.http import QueryDict
+from rest_framework import status
 from rest_framework.exceptions import ParseError
-from rest_framework.mixins import ListModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from backend.chat.models import ChatMessage, ChatRoom
 from backend.chat.permissions import IsChatMember
-from backend.chat.serializers import ChatRoomSerializer, ChatMessageSerializer
+from backend.chat.serializers import ChatRoomSerializer, ChatMessageSerializer, ChatRoomCreateSerializer
 
 
 # API view to be inherited by the other chat views
@@ -64,3 +67,46 @@ class ChatMessageGuestListAPIView(ChatAPIView):
         
         # Return the chat messages in witch the user is the guest or the host
         return ChatMessage.objects.filter(chat_room__guest=self.request.user, chat_room_id=room_id)
+
+
+# API view to create a new chat room between a guest and a listing (host)
+class ChatRoomCreateAPIView(CreateModelMixin, GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ChatRoomCreateSerializer
+    
+    def create(self, request, *args, **kwargs):
+        # Add the guest to the request data
+        if isinstance(request.data, QueryDict):
+            # If the request data is a QueryDict, make it mutable
+            request.data._mutable = True
+            # Add the guest to the request data
+            request.data.update({'guest': request.user.pk})
+            # Make the request data immutable again
+            request.data._mutable = False
+        
+        # Validate the serializer
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            # If the error is about the uniqueness of the chat room, return a custom error
+            if serializer.errors.get('non_field_errors') == ['The fields listing, guest must make a unique set.']:
+                # Get the ID of the existing chat room
+                chat_room_id = ChatRoom.objects.get(listing=request.data.get('listing'), guest=request.user).pk
+                return Response(
+                    {
+                        'error': 'A chat room with this listing already exists',
+                        'chat_room_id': chat_room_id,
+                    },
+                    status=status.HTTP_409_CONFLICT
+                )
+            
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Save the request and retrieve the chat room id
+        chat_room = serializer.save()
+        return Response(
+            {"chat_room_id": chat_room.pk},
+            status=status.HTTP_201_CREATED
+        )

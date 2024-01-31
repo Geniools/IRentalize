@@ -7,7 +7,11 @@ const addBooking = async ({listingId, startDate, endDate}) => {
     startDate = startDate.toISOString().split('T')[0];
     endDate = endDate.toISOString().split('T')[0];
     // Send the request to the backend
-    const body = JSON.stringify({listing: listingId, start_date: startDate, end_date: endDate});
+    const body = JSON.stringify({
+        listing: listingId,
+        start_date: startDate,
+        end_date: endDate
+    });
     return await axiosInstanceJSONAPI.post('/api/listing-reservation/', body);
 }
 

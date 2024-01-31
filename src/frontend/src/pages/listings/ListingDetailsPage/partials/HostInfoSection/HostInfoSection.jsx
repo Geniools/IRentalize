@@ -1,7 +1,6 @@
 import React from "react";
 
 import ProfileHostCard from "../../../../../components/ProfileHostCard/ProfileHostCard";
-import DateFormatter from "../../../../../components/DateFormatter/DateFormatter";
 import InformationDateContainer from "../../../../../components/InformationDateContainer/InformationDateContainer";
 
 import styles from "./HostInfoSection.module.css";
@@ -10,13 +9,14 @@ const HostInfoSection = (
     {
         hostFirstName, hostUsername,
         hostProfilePicture, hostAboutMe,
-        hostMemberSince, hostResponseTime
+        hostMemberSince, hostResponseTime,
+        chatRoom
     }
 ) => {
     const getDates = () => {
         return (
             <>
-                <p><b>Member since: </b><DateFormatter date={hostMemberSince} showTime={false}/></p>
+                {/*<p><b>Member since: </b><DateFormatter date={hostMemberSince} showTime={false}/></p>*/}
                 {
                     hostResponseTime !== null && (
                         <p><b>Response time: </b>{hostResponseTime}</p>
@@ -38,6 +38,8 @@ const HostInfoSection = (
                     hostFirstName={hostFirstName}
                     hostUsername={hostUsername}
                     hostImage={hostProfilePicture}
+                    hostMemberSince={hostMemberSince}
+                    chatRoom={chatRoom}
                 />
             </div>
 

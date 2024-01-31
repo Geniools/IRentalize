@@ -5,6 +5,12 @@ class ChatRoom(models.Model):
     listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE)
     guest = models.ForeignKey('users.User', on_delete=models.CASCADE)
     
+    class Meta:
+        unique_together = ('listing', 'guest')
+        db_table = 'chat_room'
+        verbose_name = 'Chat Room'
+        verbose_name_plural = 'Chat Rooms'
+    
     def clean(self):
         # Check the guest to be different from the host of the listing
         if self.guest == self.listing.host:
@@ -22,6 +28,12 @@ class ChatMessage(models.Model):
     sender = models.ForeignKey('users.User', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    
+    class Meta:
+        db_table = 'chat_message'
+        verbose_name = 'Chat Message'
+        verbose_name_plural = 'Chat Messages'
+        ordering = ['timestamp']
     
     def clean(self):
         # Check the sender to be the guest or the host of the chat room

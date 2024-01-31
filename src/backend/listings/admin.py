@@ -31,7 +31,7 @@ class ListingAdmin(admin.ModelAdmin):
     list_filter = ('category', 'host')
     search_fields = (
         'title', 'description', 'host__email', 'host__first_name', 'host__last_name', 'host__username', 'price',
-        'address', 'address__street_name', 'address__house_number', 'address__house_addition', 'address__zip_code',
+        'address__street_name', 'address__house_number', 'address__house_addition', 'address__zip_code',
     )
     readonly_fields = ('display_images', 'created_at', 'updated_at', 'views', 'image_number')
     
