@@ -35,6 +35,7 @@ SECRET_KEY = 'secret-key-here'
 
 # Change the allowed hosts to the domain name of your website
 ALLOWED_HOSTS = ['example.com', 'www.example.com']
+CORS_ALLOWED_ORIGINS = ['https://www.example.com', ]
 
 # Set DEBUG to False in production
 DEBUG = True

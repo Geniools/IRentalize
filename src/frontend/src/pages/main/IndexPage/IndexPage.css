@@ -4,3 +4,8 @@
 	gap             : 2rem;
 	justify-content : center;
 }
+
+.listings > p:last-child {
+	text-align : center;
+	width      : 100%;
+}
