@@ -16,7 +16,7 @@ const getMainDomain = () => {
         return returnObject;
     }
 
-    returnObject.main_domain = parts.slice(-2).join('.');
+    returnObject.main_domain = parts.slice(-3).join('.');
     returnObject.full_url = returnObject.protocol + "//" + returnObject.main_domain;
 
     // If the port is 80 or 443, don't include it in the full_url
