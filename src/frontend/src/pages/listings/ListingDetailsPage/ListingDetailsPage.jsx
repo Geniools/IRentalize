@@ -2,6 +2,7 @@ import React from "react";
 import {useNavigate, useParams} from "react-router-dom";
 
 import useListingData from "../../../hooks/useListingData";
+import useCreateChatRoom from "../../../hooks/useCreateChatRoom";
 
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -14,9 +15,9 @@ import DescriptionSection from "./partials/Description/DescriptionSection";
 import HostInfoSection from "./partials/HostInfoSection/HostInfoSection";
 import MapSection from "./partials/MapSection/MapSection";
 import BookingSection from "./partials/BookingSection/BookingSection";
+import BookingDisabledSection from "./partials/BookingDisabledSection/BookingDisabledSection";
 
 import styles from "./ListingDetailsPage.module.css";
-import useCreateChatRoom from "../../../hooks/useCreateChatRoom";
 
 const ListingDetailsPage = () => {
     const navigator = useNavigate();
@@ -100,13 +101,22 @@ const ListingDetailsPage = () => {
 
                 {/* Book now and Calendar with availability */}
                 <div className={styles.section}>
-                    <BookingSection
-                        availabilities={listing.availabilities}
-                        unavailableDates={listing.unavailable_dates}
-                        price={listing.price}
-                        host={listing.host}
-                        listingId={listing.id}
-                    />
+                    {
+                        !listing.enable_booking ? (
+                            <BookingDisabledSection
+                                hostEmail={listing.host_email_address}
+                                chatRoom={chatRoom}
+                            />
+                        ) : (
+                            <BookingSection
+                                availabilities={listing.availabilities}
+                                unavailableDates={listing.unavailable_dates}
+                                price={listing.price}
+                                host={listing.host}
+                                listingId={listing.id}
+                            />
+                        )
+                    }
                 </div>
 
                 {/* Reviews */}

@@ -50,15 +50,25 @@ class Reservation(models.Model):
     def clean(self):
         # If the reservation is being created
         if self.pk is None:
+            # Validate as normal
             Reservation.validate_all(self.listing, self.start_date, self.end_date)
+            self.validate_listing_booking_available()
         else:
+            # If updated, do not validate if the dates or booking option has not changed
             # Get the saved reservation
             saved_reservation = Reservation.objects.get(pk=self.pk)
             # Check if the start date and/or end date have been changed
             if self.start_date != saved_reservation.start_date or self.end_date != saved_reservation.end_date:
                 Reservation.validate_all(self.listing, self.start_date, self.end_date)
+            
+            if self.listing.enable_booking != saved_reservation.listing.enable_booking:
+                self.validate_listing_booking_available()
         
         return super().clean()
+    
+    def validate_listing_booking_available(self):
+        if not self.listing.enable_booking:
+            raise ValidationError("You cannot make a reservation for this listing")
     
     @staticmethod
     def validate_reservation_conflicts(listing, start_date, end_date):

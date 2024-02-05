@@ -26,14 +26,14 @@ class AddressAdmin(admin.ModelAdmin):
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'host', 'image_number', 'price', 'views', 'visible', 'created_at', 'updated_at')
+    list_display = ('id', 'title', 'category', 'host', 'image_number', 'price', 'views', 'visible', 'enable_booking', 'created_at', 'updated_at')
     list_display_links = ('id', 'title')
     list_filter = ('category', 'host')
     search_fields = (
         'title', 'description', 'host__email', 'host__first_name', 'host__last_name', 'host__username', 'price',
         'address__street_name', 'address__house_number', 'address__house_addition', 'address__zip_code',
     )
-    readonly_fields = ('display_images', 'created_at', 'updated_at', 'views', 'image_number')
+    readonly_fields = ('display_images', 'created_at', 'updated_at', 'views', 'image_number', 'host')
     
     fieldsets = (
         ('General Information', {
@@ -50,7 +50,7 @@ class ListingAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
         ('Other', {
-            'fields': ('visible',),
+            'fields': ('visible', 'enable_booking'),
         }),
     )
     

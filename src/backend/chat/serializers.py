@@ -7,6 +7,13 @@ class ChatRoomCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatRoom
         fields = ('listing', 'guest')
+    
+    def validate(self, attrs):
+        # Check the guest to be different from the host of the listing
+        if attrs['guest'] == attrs['listing'].host:
+            raise serializers.ValidationError({'error': 'The guest must be different from the host of the listing'})
+        
+        return attrs
 
 
 class ChatRoomSerializer(serializers.ModelSerializer):

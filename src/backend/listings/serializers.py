@@ -56,6 +56,7 @@ class ListingSerializer(serializers.ModelSerializer):
     host_member_since = serializers.DateTimeField(source='host.date_joined', read_only=True, format="%Y-%m-%d")
     host_response_rate = serializers.DecimalField(source='host.profile.response_rate', read_only=True, max_digits=5, decimal_places=2)
     host_response_time = serializers.CharField(source='host.profile.response_time', read_only=True)
+    host_email_address = serializers.SerializerMethodField()
     # Address details (read-only)
     address = AddressSerializer(read_only=True)
     # Address details (write-only)
@@ -73,7 +74,8 @@ class ListingSerializer(serializers.ModelSerializer):
             # Listing details/info
             'id', 'category', 'category_name', 'title', 'description', 'price', 'images', 'uploaded_images',
             # Host
-            'host', 'host_username', 'host_first_name', 'host_about_me', 'host_profile_picture', 'host_member_since', 'host_response_rate', 'host_response_time',
+            'host', 'host_username', 'host_first_name', 'host_about_me', 'host_profile_picture',
+            'host_member_since', 'host_response_rate', 'host_response_time', 'host_email_address',
             # Address (read-only)
             'address',
             # Address (write-only)
@@ -83,7 +85,7 @@ class ListingSerializer(serializers.ModelSerializer):
             # Available dates
             'availabilities', 'unavailable_dates',
             # Other
-            'views',
+            'views', 'enable_booking'
         ]
     
     def create(self, validated_data):
@@ -149,3 +151,10 @@ class ListingSerializer(serializers.ModelSerializer):
             unavailable_dates.extend(date_list)
         # Return the list of unavailable dates
         return unavailable_dates
+    
+    def get_host_email_address(self, obj):
+        # Return the host's email address only if the host has disabled the booking option for the listing
+        if not obj.enable_booking:
+            return obj.host.email
+        
+        return None

@@ -60,6 +60,10 @@ class Listing(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     # Other
     visible = models.BooleanField(default=True, help_text='If this is checked, the listing will be visible on the website.')
+    enable_booking = models.BooleanField(
+        default=True,
+        help_text='If this is checked, the listing will have the "Booking" option available. (Uncheck this if users should contact you directly for the listing)'
+    )
     
     class Meta:
         db_table = 'listing'
