@@ -11,8 +11,6 @@ const getMainDomain = () => {
         full_url: protocol + "//" + "localhost" + (port ? ":" + port : "")
     }
 
-    console.log(returnObject);
-
     // If the domain is localhost, return localhost
     if (parts.slice(-1)[0] === 'localhost') {
         return returnObject;
@@ -22,8 +20,8 @@ const getMainDomain = () => {
     returnObject.full_url = returnObject.protocol + "//" + returnObject.main_domain;
 
     // If the port is 80 or 443, don't include it in the full_url
-    if (!['80', '443'].includes(window.location.port)) {
-        returnObject.full_url = returnObject.main_domain + ":" + port;
+    if (!['80', '443'].includes(window.location.port) && port) {
+        returnObject.full_url = returnObject.protocol + "//" + returnObject.main_domain + ":" + port;
     }
 
     return returnObject;
