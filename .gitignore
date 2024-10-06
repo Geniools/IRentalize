@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,pycharm+all,pycharm,intellij,windows,linux,visualstudiocode,react,python,pythonvanilla
 
 ### Custom ###
+.env
 
 # Ignore media files (uploaded by users)
 media/

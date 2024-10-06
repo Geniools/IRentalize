@@ -1,35 +1,35 @@
-import React from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import React from "react"
+import {useNavigate, useParams} from "react-router-dom"
 
-import useListingData from "../../../hooks/useListingData";
-import useCreateChatRoom from "../../../hooks/useCreateChatRoom";
+import useListingData from "../../../hooks/useListingData.js"
+import useCreateChatRoom from "../../../hooks/useCreateChatRoom.js"
 
-import Header from "../../../components/Header/Header";
-import Footer from "../../../components/Footer/Footer";
-import Loader from "../../../components/ui/Loader/Loader";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
-import HeadSubTitle from "../../../components/ui/HeadSubTitle/HeadSubTitle";
+import Header from "../../../components/Header.tsx"
+import Footer from "../../../components/Footer/Footer"
+import Loader from "../../../components/Loader/Loader.js"
+import HeadTitle from "../../../components/HeadTitle.tsx"
+import HeadSubTitle from "../../../components/HeadSubTitle.tsx"
 
-import ImageGallerySection from "./partials/ImageGalerySection/ImageGallerySection";
-import DescriptionSection from "./partials/Description/DescriptionSection";
-import HostInfoSection from "./partials/HostInfoSection/HostInfoSection";
-import MapSection from "./partials/MapSection/MapSection";
-import BookingSection from "./partials/BookingSection/BookingSection";
-import BookingDisabledSection from "./partials/BookingDisabledSection/BookingDisabledSection";
+import ImageGallerySection from "./partials/ImageGalerySection/ImageGallerySection"
+import DescriptionSection from "./partials/Description/DescriptionSection"
+import HostInfoSection from "./partials/HostInfoSection/HostInfoSection"
+import MapSection from "./partials/MapSection/MapSection"
+import BookingSection from "./partials/BookingSection/BookingSection"
+import BookingDisabledSection from "./partials/BookingDisabledSection/BookingDisabledSection"
 
-import styles from "./ListingDetailsPage.module.css";
+import styles from "./ListingDetailsPage.module.css"
 
 const ListingDetailsPage = () => {
-    const navigator = useNavigate();
-    const {id} = useParams();
+    const navigator = useNavigate()
+    const {id} = useParams()
 
     const {
         data: listing,
         isLoading,
         isError,
-    } = useListingData(id);
+    } = useListingData(id)
 
-    const chatRoom = useCreateChatRoom({listingId: id});
+    const chatRoom = useCreateChatRoom({listingId: id})
 
     if (isError) return (navigator("/404/"))
 
@@ -41,7 +41,7 @@ const ListingDetailsPage = () => {
             </div>
             <Footer/>
         </>
-    );
+    )
 
     return (
         <>
@@ -127,7 +127,7 @@ const ListingDetailsPage = () => {
 
             <Footer/>
         </>
-    );
+    )
 }
 
-export default ListingDetailsPage;
+export default ListingDetailsPage

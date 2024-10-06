@@ -1,31 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
-import {Navigate} from "react-router-dom";
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux"
+import {Navigate} from "react-router-dom"
 
-import {resetEmail} from "../../../actions/auth";
-import Header from "../../../components/Header/Header";
+import {resetEmail} from "../../../actions/auth"
+import Header from "../../../components/Header.tsx"
 
-import "../Authentication.css";
+import "../Authentication.css"
 
 const ResetEmailPage = ({resetEmail}) => {
     useEffect(() => {
-        document.title = "Change Email";
-    }, []);
+        document.title = "Change Email"
+    }, [])
 
-    const [requestSent, setRequestSent] = useState(false);
+    const [requestSent, setRequestSent] = useState(false)
     const [formData, setFormData] = useState({
-        email: ""
-    });
+        email: "",
+    })
 
-    const {email} = formData;
+    const {email} = formData
 
-    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
+    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value})
 
     const onSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        resetEmail(email);
-        setRequestSent(true);
+        resetEmail(email)
+        setRequestSent(true)
     }
 
     if (requestSent) {
@@ -44,13 +44,14 @@ const ResetEmailPage = ({resetEmail}) => {
                     </div>
 
                     <form onSubmit={onSubmit}>
-                        <input type="email" name="email" value={email} required={true} placeholder="Email" onChange={onChange}/>
+                        <input type="email" name="email" value={email} required={true} placeholder="Email"
+                               onChange={onChange}/>
                         <button type="submit" className="authentication-input">Send Email Change Link</button>
                     </form>
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default connect(null, {resetEmail})(ResetEmailPage);
+export default connect(null, {resetEmail})(ResetEmailPage)

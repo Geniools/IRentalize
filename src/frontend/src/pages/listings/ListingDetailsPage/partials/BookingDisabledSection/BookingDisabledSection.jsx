@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import HeadSubTitle from "../../../../../components/ui/HeadSubTitle/HeadSubTitle";
-import ChatRoomNavigationButton from "../../../../../components/ChatRoomNavigationButton/ChatRoomNavigationButton";
+import HeadSubTitle from "../../../../../components/HeadSubTitle.tsx"
+import ChatRoomNavigationButton from "../../../../../components/ChatRoomNavigationButton/ChatRoomNavigationButton"
 
-import styles from "./BookingDisabledSection.module.css";
+import styles from "./BookingDisabledSection.module.css"
 
 const BookingDisabledSection = ({hostEmail, chatRoom}) => {
     return (
@@ -16,11 +16,12 @@ const BookingDisabledSection = ({hostEmail, chatRoom}) => {
                 </p>
 
                 <p>
-                    You can also send him a message using the <ChatRoomNavigationButton chatRoom={chatRoom}>CHAT</ChatRoomNavigationButton>
+                    You can also send him a message using the <ChatRoomNavigationButton
+                    chatRoom={chatRoom}>CHAT</ChatRoomNavigationButton>
                 </p>
             </div>
         </>
     )
 }
 
-export default BookingDisabledSection;
+export default BookingDisabledSection

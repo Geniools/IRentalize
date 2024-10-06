@@ -1,39 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
-import {Link, Navigate} from 'react-router-dom';
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux"
+import {Link, Navigate} from 'react-router-dom'
 
-import {login} from "../../../actions/auth";
-import {setNavigateToAfterAuth} from "../../../actions/common";
+import {login} from "../../../actions/auth"
+import {setNavigateToAfterAuth} from "../../../actions/common"
 
-import Header from "../../../components/Header/Header";
+import Header from "../../../components/Header.tsx"
 
-import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../utils/constants/URL_PATHS";
+import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../utils/constants/URL_PATHS.ts"
 
-import "../Authentication.css";
+import "../Authentication.css"
 
 const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigateToAfterAuth}) => {
     useEffect(() => {
-        document.title = "Login";
-    }, []);
+        document.title = "Login"
+    }, [])
 
     const [formData, setFormData] = useState({
         email: "",
         password: "",
         rememberMe: false,
-    });
-    const {email, password, rememberMe} = formData;
+    })
+    const {email, password, rememberMe} = formData
     const onChange = event => {
         if (event.target.name === "rememberMe") {
             setFormData({...formData, [event.target.name]: event.target.checked})
-            return;
+            return
         }
         setFormData({...formData, [event.target.name]: event.target.value})
-    };
+    }
 
     // Handle the form submission
     const onSubmit = async (event) => {
-        event.preventDefault();
-        login(email, password, rememberMe);
+        event.preventDefault()
+        login(email, password, rememberMe)
     }
 
     // Redirect if logged in
@@ -41,11 +41,11 @@ const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigat
         // Check if the user is redirected from another page
         if (navigateToAfterLogin) {
             // Save the navigateToAfterLogin state to variable
-            const navigateTo = navigateToAfterLogin;
+            const navigateTo = navigateToAfterLogin
             // Reset the navigateToAfterLogin state
-            setNavigateToAfterAuth(null);
+            setNavigateToAfterAuth(null)
             // Navigate to the page the user was redirected from
-            return <Navigate to={navigateToAfterLogin}/>;
+            return <Navigate to={navigateToAfterLogin}/>
         }
 
         return (
@@ -65,12 +65,15 @@ const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigat
                     </div>
 
                     <form onSubmit={onSubmit}>
-                        <input type="email" name="email" value={email} required={true} placeholder="Email" onChange={onChange}/>
-                        <input type="password" name="password" value={password} required={true} minLength={8} placeholder="Password" onChange={onChange}/>
+                        <input type="email" name="email" value={email} required={true} placeholder="Email"
+                               onChange={onChange}/>
+                        <input type="password" name="password" value={password} required={true} minLength={8}
+                               placeholder="Password" onChange={onChange}/>
 
                         <div className="authentication-field-info">
                             <div>
-                                <input id="rememberMe" type="checkbox" name="rememberMe" checked={rememberMe} required={false} onChange={onChange}/>
+                                <input id="rememberMe" type="checkbox" name="rememberMe" checked={rememberMe}
+                                       required={false} onChange={onChange}/>
                                 <label htmlFor="rememberMe">Remember me</label>
                             </div>
 
@@ -97,6 +100,6 @@ const UserLoginPage = ({isAuthenticated, navigateToAfterLogin, login, setNavigat
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     navigateToAfterLogin: state.common.navigateToAfterLogin,
-});
+})
 
-export default connect(mapStateToProps, {login, setNavigateToAfterAuth})(UserLoginPage);
+export default connect(mapStateToProps, {login, setNavigateToAfterAuth})(UserLoginPage)

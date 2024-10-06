@@ -1,37 +1,37 @@
-import React, {useEffect, useState} from 'react';
-import {NavLink} from "react-router-dom";
+import React, {useEffect, useState} from 'react'
+import {NavLink} from "react-router-dom"
 
-import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json.ts"
 
-import styles from "./ChatRoomList.module.css";
+import styles from "./ChatRoomList.module.css"
 
 const ChatRoomList = ({chatType}) => {
-    const [rooms, setRooms] = useState([]);
+    const [rooms, setRooms] = useState([])
     useEffect(() => {
-        let api_url = "";
+        let api_url = ""
         switch (chatType) {
             case "host":
-                api_url = '/api/chat/rooms/host/';
-                break;
+                api_url = '/api/chat/rooms/host/'
+                break
             case "guest":
-                api_url = '/api/chat/rooms/guest/';
-                break;
+                api_url = '/api/chat/rooms/guest/'
+                break
             default:
-                setRooms([]);
-                return;
+                setRooms([])
+                return
         }
 
         axiosInstanceJSONAPI.get(api_url)
             .then((response) => {
-                setRooms(response.data);
+                setRooms(response.data)
             })
             .catch((error) => {
                 // TODO: Handle error
-                console.log(error);
-            });
+                console.log(error)
+            })
     }, [chatType])
 
-    console.log(rooms);
+    console.log(rooms)
 
     return (
         <>
@@ -56,7 +56,7 @@ const ChatRoomList = ({chatType}) => {
                 </ul>
             </div>
         </>
-    );
+    )
 }
 
-export default ChatRoomList;
+export default ChatRoomList

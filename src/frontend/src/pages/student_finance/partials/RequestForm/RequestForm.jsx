@@ -1,52 +1,52 @@
-import React, {useState} from "react";
-import {useCookies} from "react-cookie";
-import {Link} from "react-router-dom";
-import axios from "axios";
+import React, {useState} from "react"
+import {useCookies} from "react-cookie"
+import {Link} from "react-router-dom"
+import axios from "axios"
 
-import ReCAPTCHA from "react-google-recaptcha";
-import Loader from "../../../../components/ui/Loader/Loader";
-import ModalDisplay from "../../../../components/ui/ModalDisplay/ModalDisplay";
+import ReCAPTCHA from "react-google-recaptcha"
+import Loader from "../../../../components/Loader/Loader.js"
+import ModalDisplay from "../../../../components/ModalDisplay.tsx"
 
-import styles from "./RequestForm.module.css";
-import getMainDomain from "../../../../utils/helpers/getMainDomain";
+import styles from "./RequestForm.module.css"
+import getMainDomain from "../../../../utils/helpers/getMainDomain.js"
 
 const RequestForm = () => {
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const mainDomain = getMainDomain();
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const mainDomain = getMainDomain()
 
-    const [cookie] = useCookies(['csrftoken']);
+    const [cookie] = useCookies(['csrftoken'])
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
         email: "",
         message: "",
         terms_and_conditions: false,
-        g_recaptcha_response: ""
-    });
-    const {first_name, last_name, email, message, terms_and_conditions, g_recaptcha_response} = formData;
+        g_recaptcha_response: "",
+    })
+    const {first_name, last_name, email, message, terms_and_conditions, g_recaptcha_response} = formData
 
     const onChange = event => {
         if (event.target.name === "terms_and_conditions") {
             setFormData({...formData, [event.target.name]: event.target.checked})
-            return;
+            return
         }
         setFormData({...formData, [event.target.name]: event.target.value})
-    };
+    }
 
     // Captcha handling
-    const recaptchaRef = React.createRef();
+    const recaptchaRef = React.createRef()
     const handleCaptcha = (value) => {
         setFormData({...formData, g_recaptcha_response: value})
     }
 
     // Handle the form submission
     const onSubmit = (event) => {
-        event.preventDefault();
-        setLoading(true);
+        event.preventDefault()
+        setLoading(true)
 
-        const url = mainDomain.full_url + "/api/student-finance/requests/";
+        const url = mainDomain.full_url + "/api/student-finance/requests/"
         axios.post(url, formData, {
             headers: {
                 'Content-Type': 'application/json',
@@ -54,8 +54,8 @@ const RequestForm = () => {
             },
         })
             .then((response) => {
-                setSuccess(true);
-                setError(null);
+                setSuccess(true)
+                setError(null)
 
                 // Clear the form
                 setFormData({
@@ -64,38 +64,38 @@ const RequestForm = () => {
                     email: "",
                     message: "",
                     terms_and_conditions: false,
-                    g_recaptcha_response: ""
-                });
+                    g_recaptcha_response: "",
+                })
             })
             .catch((error_message) => {
-                setSuccess(false);
+                setSuccess(false)
 
                 // If the response is undefined, then there was a network error
                 if (error_message.response === undefined) {
                     setError({
-                        non_field_errors: ["Something went wrong. Please try again later."]
-                    });
-                    return;
+                        non_field_errors: ["Something went wrong. Please try again later."],
+                    })
+                    return
                 }
-                const error_data = error_message.response.data;
+                const error_data = error_message.response.data
 
-                let nonFieldErrors = [];
+                let nonFieldErrors = []
                 // Add the error messages which are not related to a specific field
                 for (const [key, value] of Object.entries(error_data)) {
                     if (!formData.hasOwnProperty(key)) {
-                        nonFieldErrors.push(value);
+                        nonFieldErrors.push(value)
                     }
                 }
                 // Add the non-field errors to the error data
-                error_data.non_field_errors = nonFieldErrors;
-                setError(error_data);
+                error_data.non_field_errors = nonFieldErrors
+                setError(error_data)
             })
             .finally(() => {
-                setLoading(false);
-            });
+                setLoading(false)
+            })
 
         // Reset the captcha
-        recaptchaRef.current.reset();
+        recaptchaRef.current.reset()
     }
 
     return (
@@ -240,4 +240,4 @@ const RequestForm = () => {
     )
 }
 
-export default RequestForm;
+export default RequestForm

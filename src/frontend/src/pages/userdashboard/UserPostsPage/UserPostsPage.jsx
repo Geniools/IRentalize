@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux"
 
-import {loadUserListings} from "../../../actions/listing";
+import {loadUserListings} from "../../../actions/listing"
 
-import ListingForm from "../../../components/ListingForm/ListingForm";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
-import ListingLink from "../../../components/ListingLink/ListingLink";
+import ListingForm from "../../../components/ListingForm/ListingForm"
+import HeadTitle from "../../../components/HeadTitle.tsx"
+import ListingLink from "../../../components/ListingLink/ListingLink.js"
 
-import "../Userdashboard.css";
+import "../Userdashboard.css"
 
 const UserPostsPage = ({listings, loadUserListings}) => {
     useEffect(() => {
-        loadUserListings();
-    }, []);
+        loadUserListings()
+    }, [])
 
-    const [formVisibility, setFormVisibility] = useState(null);
+    const [formVisibility, setFormVisibility] = useState(null)
 
     const changeFormVisibility = () => {
-        setFormVisibility(!formVisibility);
+        setFormVisibility(!formVisibility)
     }
 
     return (
@@ -45,6 +45,6 @@ const UserPostsPage = ({listings, loadUserListings}) => {
 
 const mapStateToProps = state => ({
     listings: state.listing.listings,
-});
+})
 
-export default connect(mapStateToProps, {loadUserListings})(UserPostsPage);
+export default connect(mapStateToProps, {loadUserListings})(UserPostsPage)

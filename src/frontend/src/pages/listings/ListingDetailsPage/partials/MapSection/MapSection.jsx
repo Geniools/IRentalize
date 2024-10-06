@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 
-import HeadSubTitle from "../../../../../components/ui/HeadSubTitle/HeadSubTitle";
-import GoogleMapContainer from "../../../../../components/GoogleMapContainer/GoogleMapContainer";
-import Loader from "../../../../../components/ui/Loader/Loader";
+import HeadSubTitle from "../../../../../components/HeadSubTitle.tsx"
+import GoogleMapContainer from "../../../../../components/GoogleMapContainer/GoogleMapContainer"
+import Loader from "../../../../../components/Loader/Loader.js"
 
-import styles from "./MapSection.module.css";
+import styles from "./MapSection.module.css"
 
 const MapSection = ({address}) => {
     // If the listing has no address, don't display the map
@@ -19,7 +19,7 @@ const MapSection = ({address}) => {
     return (
         <>
             <HeadSubTitle title="Location"/>
-            
+
             <div className={styles.mapAddressInfo}>
                 <p><b>Zip Code: </b>{address?.zip_code}</p>
                 <p><b>Street: </b>{address?.street_name} {address?.house_number} {address?.house_addition}</p>
@@ -30,4 +30,4 @@ const MapSection = ({address}) => {
     )
 }
 
-export default MapSection;
+export default MapSection

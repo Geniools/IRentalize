@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 
-import MainDomainNavLink from "../MainDomainNavLink/MainDomainNavLink";
+import MainDomainNavLink from "../MainDomainNavLink/MainDomainNavLink"
 
-import {CONTACT_US_URL, HOME_URL} from "../../utils/constants/URL_PATHS";
+import {CONTACT_US_URL, HOME_URL} from "../../utils/constants/URL_PATHS.ts"
 
-import styles from "./NavBar.module.css";
+import styles from "./NavBar.module.css"
 
 const NavBar = () => {
     return (
@@ -46,4 +46,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar;
+export default NavBar

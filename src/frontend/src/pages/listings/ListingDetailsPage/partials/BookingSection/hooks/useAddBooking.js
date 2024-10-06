@@ -1,18 +1,18 @@
-import {useMutation} from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query"
 
-import axiosInstanceJSONAPI from "../../../../../../services/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../../../../services/axios/axios_content_type_json.ts"
 
 const addBooking = async ({listingId, startDate, endDate}) => {
     // Convert the startDate and endDate to the format: YYYY-MM-DD
-    startDate = startDate.toISOString().split('T')[0];
-    endDate = endDate.toISOString().split('T')[0];
+    startDate = startDate.toISOString().split('T')[0]
+    endDate = endDate.toISOString().split('T')[0]
     // Send the request to the backend
     const body = JSON.stringify({
         listing: listingId,
         start_date: startDate,
-        end_date: endDate
-    });
-    return await axiosInstanceJSONAPI.post('/api/listing-reservation/', body);
+        end_date: endDate,
+    })
+    return await axiosInstanceJSONAPI.post('/api/listing-reservation/', body)
 }
 
 const useAddBooking = ({listingId, startDate, endDate}) => {
@@ -21,13 +21,13 @@ const useAddBooking = ({listingId, startDate, endDate}) => {
         isPending,
         isError,
         isSuccess,
-        error
+        error,
     } = useMutation({
         mutationFn: addBooking,
     })
 
     const addBookingHandler = () => {
-        mutate({listingId, startDate, endDate});
+        mutate({listingId, startDate, endDate})
     }
 
     return {
@@ -35,8 +35,8 @@ const useAddBooking = ({listingId, startDate, endDate}) => {
         isPending,
         isError,
         isSuccess,
-        error
-    };
+        error,
+    }
 }
 
-export default useAddBooking;
+export default useAddBooking

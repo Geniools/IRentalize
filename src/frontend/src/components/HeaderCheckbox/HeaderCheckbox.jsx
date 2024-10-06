@@ -1,10 +1,8 @@
-import React from "react";
-
-import "./HeaderCheckbox.css";
+import "./HeaderCheckbox.css"
 
 const HeaderCheckbox = ({onChange}) => {
     const handleChange = () => {
-        onChange();
+        onChange()
     }
 
     return (
@@ -19,4 +17,4 @@ const HeaderCheckbox = ({onChange}) => {
     )
 }
 
-export default HeaderCheckbox;
+export default HeaderCheckbox

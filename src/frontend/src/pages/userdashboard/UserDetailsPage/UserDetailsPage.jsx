@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux"
 
-import {updateUserInfo} from "../../../actions/user";
+import {updateUserInfo} from "../../../actions/user"
 
-import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../utils/constants/URL_PATHS";
+import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../utils/constants/URL_PATHS.ts"
 
-import Loader from "../../../components/ui/Loader/Loader";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
-import HeadSubTitle from "../../../components/ui/HeadSubTitle/HeadSubTitle";
-import DateFormatter from "../../../components/DateFormatter/DateFormatter";
-import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer";
+import Loader from "../../../components/Loader/Loader.js"
+import HeadTitle from "../../../components/HeadTitle.tsx"
+import HeadSubTitle from "../../../components/HeadSubTitle.tsx"
+import DateFormatter from "../../../components/DateFormatter/DateFormatter"
+import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer"
 
-import "../Userdashboard.css";
-import "./UserDetailsPage.css";
+import "../Userdashboard.css"
+import "./UserDetailsPage.css"
 
 const UserDetailsPage = ({user, updateUserInfo}) => {
     // Display a loader if the user is not loaded yet
     if (!user) {
-        return <Loader/>;
+        return <Loader/>
     }
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
             house_addition: user.profile.default_address?.house_addition,
             zip_code: user.profile.default_address?.zip_code,
         })
-    }, [user]);
+    }, [user])
 
     // Updating the user's details
     const [formData, setFormData] = useState({
@@ -54,13 +54,13 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
         house_number: '',
         house_addition: '',
         zip_code: '',
-    });
+    })
 
     const {
         username, first_name, last_name, email,
         about_me, phone,
-        street_name, house_number, house_addition, zip_code
-    } = formData;
+        street_name, house_number, house_addition, zip_code,
+    } = formData
 
     const onChange = event => {
         setFormData({...formData, [event.target.name]: event.target.value})
@@ -69,8 +69,8 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
 
     // Handle the form submission for the details
     const onSubmitDetails = async (event) => {
-        event.preventDefault();
-        updateUserInfo(formData);
+        event.preventDefault()
+        updateUserInfo(formData)
     }
 
     return (
@@ -82,17 +82,20 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                     <HeadSubTitle title="Profile"/>
 
                     <label htmlFor="username">Username:</label>
-                    <input onChange={onChange} type="text" id="username" name="username" placeholder="Username" value={username}/>
+                    <input onChange={onChange} type="text" id="username" name="username" placeholder="Username"
+                           value={username}/>
 
                     <div className="dashboard-right-panel-content-line">
                         <div>
                             <label htmlFor="first_name">First name:</label>
-                            <input onChange={onChange} type="text" id="first_name" name="first_name" placeholder="Your first name" value={first_name}/>
+                            <input onChange={onChange} type="text" id="first_name" name="first_name"
+                                   placeholder="Your first name" value={first_name}/>
                         </div>
 
                         <div>
                             <label htmlFor="last_name">Last name:</label>
-                            <input onChange={onChange} type="text" id="last_name" name="last_name" placeholder="Your last name" value={last_name}/>
+                            <input onChange={onChange} type="text" id="last_name" name="last_name"
+                                   placeholder="Your last name" value={last_name}/>
                         </div>
                     </div>
 
@@ -100,37 +103,43 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                     <input onChange={onChange} type="tel" id="phone" name="phone" placeholder="Phone" value={phone}/>
 
                     <label htmlFor="about_me">About me:</label>
-                    <textarea onChange={onChange} id="about_me" name="about_me" placeholder="What would you like others to know about you?" value={about_me}/>
+                    <textarea onChange={onChange} id="about_me" name="about_me"
+                              placeholder="What would you like others to know about you?" value={about_me}/>
 
                     <HeadSubTitle title="Default Address"/>
 
                     <div className="dashboard-right-panel-content-line">
                         <div>
                             <label htmlFor="street_name">Street name:</label>
-                            <input onChange={onChange} type="text" id="street_name" name="street_name" placeholder="Street name" value={street_name}/>
+                            <input onChange={onChange} type="text" id="street_name" name="street_name"
+                                   placeholder="Street name" value={street_name}/>
                         </div>
 
                         <div>
                             <label htmlFor="zip_code">Zip code:</label>
-                            <input onChange={onChange} type="text" id="zip_code" name="zip_code" placeholder="Zip code" value={zip_code}/>
+                            <input onChange={onChange} type="text" id="zip_code" name="zip_code" placeholder="Zip code"
+                                   value={zip_code}/>
                         </div>
                     </div>
 
                     <div className="dashboard-right-panel-content-line">
                         <div>
                             <label htmlFor="house_number">House number:</label>
-                            <input onChange={onChange} type="text" id="house_number" name="house_number" placeholder="House number" value={house_number}/>
+                            <input onChange={onChange} type="text" id="house_number" name="house_number"
+                                   placeholder="House number" value={house_number}/>
                         </div>
 
                         <div>
                             <label htmlFor="house_addition">House addition:</label>
-                            <input onChange={onChange} type="text" id="house_addition" name="house_addition" placeholder="House addition" value={house_addition}/>
+                            <input onChange={onChange} type="text" id="house_addition" name="house_addition"
+                                   placeholder="House addition" value={house_addition}/>
                         </div>
                     </div>
 
                     {
                         user.profile.default_address && (
-                            <GoogleMapContainer latitude={user.profile.default_address.latitude} longitude={user.profile.default_address.longitude}/>
+                            <GoogleMapContainer latitude={user.profile.default_address.latitude}
+                                                longitude={user.profile.default_address.longitude}/>
                         )
                     }
 
@@ -163,8 +172,10 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
                 <HeadTitle title="Host Statistics" capitalize={true}/>
 
                 <div className="dashboard-right-panel-content-readinfo">
-                    <p><i>Your response rate:</i> <b>{user.profile?.response_rate ? user.profile?.response_rate : "No information"}</b></p>
-                    <p><i>Your response time:</i> <b>{user.profile?.response_time ? user.profile?.response_time : "No information"}</b></p>
+                    <p><i>Your response rate:</i>
+                        <b>{user.profile?.response_rate ? user.profile?.response_rate : "No information"}</b></p>
+                    <p><i>Your response time:</i>
+                        <b>{user.profile?.response_time ? user.profile?.response_time : "No information"}</b></p>
                 </div>
 
                 <hr/>
@@ -176,6 +187,6 @@ const UserDetailsPage = ({user, updateUserInfo}) => {
 
 const mapStateToProps = state => ({
     user: state.auth.user,
-});
+})
 
-export default connect(mapStateToProps, {updateUserInfo})(UserDetailsPage);
+export default connect(mapStateToProps, {updateUserInfo})(UserDetailsPage)

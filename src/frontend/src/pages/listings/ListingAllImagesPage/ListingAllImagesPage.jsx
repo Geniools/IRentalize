@@ -1,37 +1,37 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
+import React, {useEffect, useState} from "react"
+import {useNavigate, useParams} from "react-router-dom"
+import axios from "axios"
 
-import Header from "../../../components/Header/Header";
-import ModalImage from "../../../components/ModalImage/ModalImage";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
+import Header from "../../../components/Header.tsx"
+import ModalImage from "../../../components/ModalImage/ModalImage"
+import HeadTitle from "../../../components/HeadTitle.tsx"
 
-import Footer from "../../../components/Footer/Footer";
+import Footer from "../../../components/Footer/Footer"
 
-import styles from "../ListingDetailsPage/partials/ImageGalerySection/ImageGallerySection.module.css";
-import sectionStyles from "../ListingDetailsPage/ListingDetailsPage.module.css";
+import styles from "../ListingDetailsPage/partials/ImageGalerySection/ImageGallerySection.module.css"
+import sectionStyles from "../ListingDetailsPage/ListingDetailsPage.module.css"
 
 export default function ListingAllImagesPage() {
-    const navigator = useNavigate();
-    const {id} = useParams();
-    const [listingImages, setListingImages] = useState(null);
+    const navigator = useNavigate()
+    const {id} = useParams()
+    const [listingImages, setListingImages] = useState(null)
     const [listingTitle, setListingTitle] = useState(null)
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null)
 
     // Collect all the images from the listing
     useEffect(() => {
         axios.get(`/api/listings/${id}`)
             .then(res => {
                 // console.log("Listing data:", res);
-                setListingImages(res.data.images);
-                setListingTitle(res.data.title);
+                setListingImages(res.data.images)
+                setListingTitle(res.data.title)
             })
             .catch(error => {
                 // console.log("Error fetching listing data:", error);
                 // Redirect to 404 page if listing is not found
-                navigator("/404");
-            });
-    }, [id]);
+                navigator("/404")
+            })
+    }, [id])
 
     return (
         <>

@@ -1,32 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
-import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_json";
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux"
+import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_json.ts"
 
-import {Link} from "react-router-dom";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
-import DateFormatter from "../../../components/DateFormatter/DateFormatter";
-import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
+import {Link} from "react-router-dom"
+import HeadTitle from "../../../components/HeadTitle.tsx"
+import DateFormatter from "../../../components/DateFormatter/DateFormatter"
+import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation"
 
-import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES";
-import "../Userdashboard.css";
-import styles from "./UserReservationPage.module.css";
+import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES.ts"
+import "../Userdashboard.css"
+import styles from "./UserReservationPage.module.css"
 
 const UserReservationPage = () => {
     useEffect(() => {
-        document.title = "My Reservations";
-    }, []);
+        document.title = "My Reservations"
+    }, [])
     // Retrieve all reservations for the user
     useEffect(() => {
         axiosInstanceJSONAPI.get("/api/user-listing-reservations/")
             .then(response => {
                 // console.log(response.data);
-                setReservations(response.data);
+                setReservations(response.data)
             })
             .catch(error => {
                 // TODO: Handle error
-                console.log(error);
-            });
-    }, []);
+                console.log(error)
+            })
+    }, [])
     const [reservations, setReservations] = useState([
         {
             created_at: "",
@@ -39,16 +39,16 @@ const UserReservationPage = () => {
             status: "",
             is_paid: "",
             total_price: "",
-        }
-    ]);
-    const [reservationStatusChanged, setReservationStatusChanged] = useState(false);
-    const [reservationStatusValue, setReservationStatusValue] = useState(0);
-    const [reservationIdToChange, setReservationIdToChange] = useState(null);
+        },
+    ])
+    const [reservationStatusChanged, setReservationStatusChanged] = useState(false)
+    const [reservationStatusValue, setReservationStatusValue] = useState(0)
+    const [reservationIdToChange, setReservationIdToChange] = useState(null)
 
     const onReservationStatusChange = (event) => {
-        setReservationStatusChanged(true);
-        setReservationIdToChange(event.target.name);
-        setReservationStatusValue(event.target.value);
+        setReservationStatusChanged(true)
+        setReservationIdToChange(event.target.name)
+        setReservationStatusValue(event.target.value)
     }
 
     const onConfirmReservationStatusChange = (reservationId, statusValue) => {
@@ -58,26 +58,26 @@ const UserReservationPage = () => {
         })
             .then(response => {
                 // TODO: Handle response
-                console.log(response.data);
+                console.log(response.data)
             })
             .catch(error => {
                 // TODO: Handle error
-                console.log(error);
-            });
+                console.log(error)
+            })
 
         // Update the reservation status in the state
         const newReservations = reservations.map(reservation =>
             reservation.id === parseInt(reservationId)
                 ? {...reservation, status: statusValue}
-                : reservation
+                : reservation,
         )
-        setReservations(newReservations);
+        setReservations(newReservations)
         // Close the popup
-        setReservationStatusChanged(false);
+        setReservationStatusChanged(false)
     }
 
     const onCancelReservationStatusChange = (event) => {
-        setReservationStatusChanged(false);
+        setReservationStatusChanged(false)
     }
 
     return (
@@ -147,4 +147,4 @@ const UserReservationPage = () => {
     )
 }
 
-export default connect(null, {})(UserReservationPage);
+export default connect(null, {})(UserReservationPage)

@@ -1,38 +1,38 @@
-import React, {useEffect, useState} from "react";
-import {Link, Navigate} from "react-router-dom";
-import {connect} from "react-redux";
+import React, {useEffect, useState} from "react"
+import {Link, Navigate} from "react-router-dom"
+import {connect} from "react-redux"
 
-import Header from "../../../components/Header/Header";
-import {logout, signup} from "../../../actions/auth";
+import Header from "../../../components/Header.tsx"
+import {logout, signup} from "../../../actions/auth"
 
-import {ACCOUNT_URL, LOGIN_URL} from "../../../utils/constants/URL_PATHS";
+import {ACCOUNT_URL, LOGIN_URL} from "../../../utils/constants/URL_PATHS.ts"
 
-import "../Authentication.css";
+import "../Authentication.css"
 
 const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
     useEffect(() => {
-        document.title = "Sign Up";
-    }, []);
+        document.title = "Sign Up"
+    }, [])
 
-    const [accountCreated, setAccountCreated] = useState(false);
+    const [accountCreated, setAccountCreated] = useState(false)
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
-    });
+    })
     const {
         firstName,
         lastName,
         email,
         password,
-    } = formData;
-    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value});
+    } = formData
+    const onChange = event => setFormData({...formData, [event.target.name]: event.target.value})
 
     const onSubmit = (event) => {
-        event.preventDefault();
-        signup(firstName, lastName, email, password);
-        setAccountCreated(true);
+        event.preventDefault()
+        signup(firstName, lastName, email, password)
+        setAccountCreated(true)
     }
 
     if (accountCreated) {
@@ -72,10 +72,14 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
                     </div>
 
                     <form onSubmit={onSubmit}>
-                        <input type="text" name="firstName" value={firstName} required placeholder="First Name" onChange={onChange}/>
-                        <input type="text" name="lastName" value={lastName} required placeholder="Last Name" onChange={onChange}/>
-                        <input type="email" name="email" value={email} required placeholder="Email" onChange={onChange}/>
-                        <input type="password" name="password" value={password} required placeholder="Password" onChange={onChange}/>
+                        <input type="text" name="firstName" value={firstName} required placeholder="First Name"
+                               onChange={onChange}/>
+                        <input type="text" name="lastName" value={lastName} required placeholder="Last Name"
+                               onChange={onChange}/>
+                        <input type="email" name="email" value={email} required placeholder="Email"
+                               onChange={onChange}/>
+                        <input type="password" name="password" value={password} required placeholder="Password"
+                               onChange={onChange}/>
 
                         <button className="authentication-input" type="submit">
                             Register
@@ -95,7 +99,7 @@ const UserRegistrationPage = ({signup, logout, isAuthenticated}) => {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
+    isAuthenticated: state.auth.isAuthenticated,
+})
 
-export default connect(mapStateToProps, {signup, logout})(UserRegistrationPage);
+export default connect(mapStateToProps, {signup, logout})(UserRegistrationPage)

@@ -1,49 +1,49 @@
-import React, {useState} from "react";
-import {connect} from "react-redux";
+import React, {useState} from "react"
+import {connect} from "react-redux"
 
-import {deleteUserProfilePicture, updateUserProfilePicture} from "../../../actions/user";
+import {deleteUserProfilePicture, updateUserProfilePicture} from "../../../actions/user"
 
-import ImageUploadPreview from "../../../components/ImageUploadPreview/ImageUploadPreview";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
-import Loader from "../../../components/ui/Loader/Loader";
-import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation";
+import ImageUploadPreview from "../../../components/ImageUploadPreview/ImageUploadPreview"
+import HeadTitle from "../../../components/HeadTitle.tsx"
+import Loader from "../../../components/Loader/Loader.js"
+import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation"
 
 const UserChangeProfilePicture = ({user, updateUserProfilePicture, deleteUserProfilePicture}) => {
     if (!user) {
-        return <Loader/>;
+        return <Loader/>
     }
 
-    const [imageSrc, setImageSrc] = useState(user.profile.profile_picture);
-    const [imageFile, setImageFile] = useState(null);
+    const [imageSrc, setImageSrc] = useState(user.profile.profile_picture)
+    const [imageFile, setImageFile] = useState(null)
 
-    const [toDelete, setToDelete] = useState(false);
+    const [toDelete, setToDelete] = useState(false)
 
     const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        setImageFile(file);
-        const reader = new FileReader();
+        const file = event.target.files[0]
+        setImageFile(file)
+        const reader = new FileReader()
 
         reader.onloadend = () => {
-            setImageSrc(reader.result);
-        };
+            setImageSrc(reader.result)
+        }
 
         if (file) {
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file)
         }
-    };
+    }
 
     const onUpdateClick = (event) => {
-        event.preventDefault();
-        updateUserProfilePicture(imageFile);
+        event.preventDefault()
+        updateUserProfilePicture(imageFile)
     }
 
     const onDeleteClick = (event) => {
-        event.preventDefault();
-        deleteUserProfilePicture();
+        event.preventDefault()
+        deleteUserProfilePicture()
         // Close the popup
-        setToDelete(false);
+        setToDelete(false)
         // Reset the image
-        setImageSrc(null);
+        setImageSrc(null)
     }
 
     return (
@@ -80,6 +80,6 @@ const UserChangeProfilePicture = ({user, updateUserProfilePicture, deleteUserPro
 
 const mapStateToProps = state => ({
     user: state.auth.user,
-});
+})
 
-export default connect(mapStateToProps, {updateUserProfilePicture, deleteUserProfilePicture})(UserChangeProfilePicture);
+export default connect(mapStateToProps, {updateUserProfilePicture, deleteUserProfilePicture})(UserChangeProfilePicture)

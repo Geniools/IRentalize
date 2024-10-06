@@ -1,11 +1,11 @@
-import React, {createRef, useEffect, useState} from "react";
+import React, {createRef, useEffect, useState} from "react"
 
-import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json.ts"
 
-import DateFormatter from "../../../../components/DateFormatter/DateFormatter";
-import Loader from "../../../../components/ui/Loader/Loader";
+import DateFormatter from "../../../../components/DateFormatter/DateFormatter"
+import Loader from "../../../../components/Loader/Loader.js"
 
-import styles from "./ChatMessages.module.css";
+import styles from "./ChatMessages.module.css"
 
 const ChatMessages = ({socket, chatType, roomId}) => {
     if (!socket || !roomId) {
@@ -14,56 +14,56 @@ const ChatMessages = ({socket, chatType, roomId}) => {
         )
     }
 
-    const [messages, setMessages] = useState([]);
-    const chatBoxRef = createRef();
+    const [messages, setMessages] = useState([])
+    const chatBoxRef = createRef()
 
     useEffect(() => {
         socket.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            setMessages((prevMessages) => [...prevMessages, message]);
-        };
-    }, []);
+            const message = JSON.parse(event.data)
+            setMessages((prevMessages) => [...prevMessages, message])
+        }
+    }, [])
 
     useEffect(() => {
         // Scroll to the bottom of the chat box
-        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-    }, [messages]);
+        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
+    }, [messages])
 
     useEffect(() => {
-        let api_url = "";
+        let api_url = ""
         switch (chatType) {
             case "host":
-                api_url = '/api/chat/messages/host/?room_id=' + roomId;
-                break;
+                api_url = '/api/chat/messages/host/?room_id=' + roomId
+                break
             case "guest":
-                api_url = '/api/chat/messages/guest/?room_id=' + roomId;
-                break;
+                api_url = '/api/chat/messages/guest/?room_id=' + roomId
+                break
             default:
-                setMessages([]);
-                return;
+                setMessages([])
+                return
         }
 
         axiosInstanceJSONAPI.get(api_url)
             .then((response) => {
-                setMessages(response.data);
+                setMessages(response.data)
             })
             .catch((error) => {
                 // TODO: Handle error
-                console.log(error);
-            });
-    }, [chatType]);
+                console.log(error)
+            })
+    }, [chatType])
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         const messageObject = {
             message: e.target["message"].value,
             sender_type: chatType,
-        };
+        }
 
-        socket.send(JSON.stringify(messageObject));
+        socket.send(JSON.stringify(messageObject))
         // Clear the message input
-        e.target["message"].value = "";
+        e.target["message"].value = ""
     }
 
     if (!messages) {
@@ -101,4 +101,4 @@ const ChatMessages = ({socket, chatType, roomId}) => {
     )
 }
 
-export default ChatMessages;
+export default ChatMessages

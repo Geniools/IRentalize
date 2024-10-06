@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"
 
-import Header from "../../../components/Header/Header";
-import Footer from "../../../components/Footer/Footer";
+import Header from "../../../components/Header.tsx"
+import Footer from "../../../components/Footer/Footer"
 
 export default function AboutUsPage() {
 
@@ -11,5 +11,5 @@ export default function AboutUsPage() {
             <h1>About Us Page</h1>
             <Footer/>
         </>
-    );
+    )
 }

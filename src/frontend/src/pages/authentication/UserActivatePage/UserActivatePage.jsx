@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {Navigate, useParams} from "react-router-dom";
-import {connect} from "react-redux";
+import React, {useEffect, useState} from 'react'
+import {Navigate, useParams} from "react-router-dom"
+import {connect} from "react-redux"
 
-import {verify} from "../../../actions/auth";
-import {LOGIN_URL} from "../../../utils/constants/URL_PATHS";
+import {verify} from "../../../actions/auth"
+import {LOGIN_URL} from "../../../utils/constants/URL_PATHS.ts"
 
-import "../Authentication.css";
+import "../Authentication.css"
 
 const UserActivatePage = ({verify, isAuthenticated}) => {
     useEffect(() => {
-        document.title = "Activate Account";
-    }, []);
+        document.title = "Activate Account"
+    }, [])
 
-    const {uid, token} = useParams();
-    const [verified, setVerified] = useState(false);
+    const {uid, token} = useParams()
+    const [verified, setVerified] = useState(false)
 
     const verifyAccount = () => {
-        verify(uid, token);
-        setVerified(true);
+        verify(uid, token)
+        setVerified(true)
     }
 
     if (verified) {
@@ -37,11 +37,11 @@ const UserActivatePage = ({verify, isAuthenticated}) => {
                 </button>
             </div>
         </div>
-    );
+    )
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
+    isAuthenticated: state.auth.isAuthenticated,
+})
 
-export default connect(mapStateToProps, {verify})(UserActivatePage);
+export default connect(mapStateToProps, {verify})(UserActivatePage)

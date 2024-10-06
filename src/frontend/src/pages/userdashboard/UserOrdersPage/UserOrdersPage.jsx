@@ -1,31 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
+import React, {useEffect, useState} from 'react'
+import {connect} from "react-redux"
 
-import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_json";
+import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_json.ts"
 
-import {Link} from "react-router-dom";
-import HeadTitle from "../../../components/ui/HeadTitle/HeadTitle";
-import DateFormatter from "../../../components/DateFormatter/DateFormatter";
+import {Link} from "react-router-dom"
+import HeadTitle from "../../../components/HeadTitle.tsx"
+import DateFormatter from "../../../components/DateFormatter/DateFormatter"
 
-import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES";
-import "../Userdashboard.css";
-import styles from "../UserReservationPage/UserReservationPage.module.css";
+import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES.ts"
+import "../Userdashboard.css"
+import styles from "../UserReservationPage/UserReservationPage.module.css"
 
 const UserOrdersPage = () => {
     useEffect(() => {
-        document.title = "My Orders";
-    }, []);
+        document.title = "My Orders"
+    }, [])
     // Retrieve all reservations for the user
     useEffect(() => {
         axiosInstanceJSONAPI.get("/api/user-listing-orders/")
             .then(response => {
-                setOrders(response.data);
+                setOrders(response.data)
             })
             .catch(error => {
                 // TODO: Handle error
-                console.log(error);
-            });
-    }, []);
+                console.log(error)
+            })
+    }, [])
     const [orders, setOrders] = useState([{
         id: "",
         guest_name: "",
@@ -37,8 +37,8 @@ const UserOrdersPage = () => {
         is_paid: false,
         total_price: "",
         updated_at: "",
-        created_at: ""
-    }]);
+        created_at: "",
+    }])
 
     return (
         <>
@@ -83,4 +83,4 @@ const UserOrdersPage = () => {
     )
 }
 
-export default connect(null, {})(UserOrdersPage);
+export default connect(null, {})(UserOrdersPage)
