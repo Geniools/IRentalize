@@ -6,7 +6,7 @@ import Header from "../../../components/Header.tsx"
 import ModalImage from "../../../components/ModalImage/ModalImage"
 import HeadTitle from "../../../components/HeadTitle.tsx"
 
-import Footer from "../../../components/Footer/Footer"
+import Footer from "../../../components/Footer.tsx"
 
 import styles from "../ListingDetailsPage/partials/ImageGalerySection/ImageGallerySection.module.css"
 import sectionStyles from "../ListingDetailsPage/ListingDetailsPage.module.css"

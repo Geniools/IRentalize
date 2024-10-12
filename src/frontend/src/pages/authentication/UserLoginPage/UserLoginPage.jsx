@@ -7,7 +7,7 @@ import {setNavigateToAfterAuth} from "../../../actions/common"
 
 import Header from "../../../components/Header.tsx"
 
-import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../utils/constants/URL_PATHS.ts"
+import {ACCOUNT_URL, PASSWORD_RESET_URL, SIGNUP_URL} from "../../../lib/constants/url_paths.ts"
 
 import "../Authentication.css"
 

@@ -8,7 +8,7 @@ import Loader from "../../../../components/Loader/Loader.js"
 import ModalDisplay from "../../../../components/ModalDisplay.tsx"
 
 import styles from "./RequestForm.module.css"
-import getMainDomain from "../../../../utils/helpers/getMainDomain.js"
+import getMainDomain from "../../../../lib/helpers/getMainDomain.js"
 
 const RequestForm = () => {
     const [success, setSuccess] = useState(false)

@@ -2,7 +2,7 @@ import React, {createRef, useEffect, useState} from "react"
 
 import axiosInstanceJSONAPI from "../../../../services/axios/axios_content_type_json.ts"
 
-import DateFormatter from "../../../../components/DateFormatter/DateFormatter"
+import DateFormatter from "../../../../components/DateFormatter/DateFormatter.js"
 import Loader from "../../../../components/Loader/Loader.js"
 
 import styles from "./ChatMessages.module.css"

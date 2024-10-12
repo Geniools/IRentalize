@@ -4,10 +4,10 @@ import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_jso
 
 import {Link} from "react-router-dom"
 import HeadTitle from "../../../components/HeadTitle.tsx"
-import DateFormatter from "../../../components/DateFormatter/DateFormatter"
+import DateFormatter from "../../../components/DateFormatter/DateFormatter.js"
 import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfirmation"
 
-import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES.ts"
+import {ReservationStatuses} from "../../../lib/constants/reservation-statuses.ts"
 import "../Userdashboard.css"
 import styles from "./UserReservationPage.module.css"
 
@@ -120,7 +120,7 @@ const UserReservationPage = () => {
                                     onChange={onReservationStatusChange}>
                                     {/* TODO: Figure out what of the below can be manipulated and how */}
                                     {
-                                        Object.entries(RESERVATION_STATUSES).map(([key, value]) => (
+                                        Object.entries(ReservationStatuses).map(([key, value]) => (
                                             <option key={key} value={key}>{value}</option>
                                         ))
                                     }
@@ -137,7 +137,7 @@ const UserReservationPage = () => {
                 reservationStatusChanged && (
                     <PopupConfirmation
                         title={"Change Reservation Status"}
-                        message={`Are you sure you want to change this reservation's status to ${RESERVATION_STATUSES[reservationStatusValue]}?`}
+                        message={`Are you sure you want to change this reservation's status to ${ReservationStatuses[reservationStatusValue]}?`}
                         onConfirm={() => onConfirmReservationStatusChange(reservationIdToChange, reservationStatusValue)}
                         onCancel={onCancelReservationStatusChange}
                     />

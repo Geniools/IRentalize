@@ -1,7 +1,7 @@
 import axios from "axios"
 import {useInfiniteQuery} from "@tanstack/react-query"
 
-import {type Listing, type ListingPage} from "../utils/types/listingTypes";
+import {type Listing, type ListingPage} from "@/lib/types/listingTypes";
 
 const fetchListings = async (pageParam: number): Promise<ListingPage> => {
     const response = await axios.get(`/api/listings/?page=${pageParam}`)

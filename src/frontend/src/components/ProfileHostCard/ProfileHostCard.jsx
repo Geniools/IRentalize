@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
-import DateFormatter from "../DateFormatter/DateFormatter";
-import ChatRoomNavigationButton from "../ChatRoomNavigationButton/ChatRoomNavigationButton";
+import DateFormatter from "../DateFormatter/DateFormatter.js"
+import ChatRoomNavigationButton from "../ChatRoomNavigationButton/ChatRoomNavigationButton"
 
-import styles from "./ProfileHostCard.module.css";
+import styles from "./ProfileHostCard.module.css"
 
 const ProfileHostCard = ({hostUsername, hostFirstName, hostImage, hostMemberSince, chatRoom}) => {
     const host = {
@@ -17,7 +17,8 @@ const ProfileHostCard = ({hostUsername, hostFirstName, hostImage, hostMemberSinc
         <>
             <div className={styles.card}>
                 <ChatRoomNavigationButton chatRoom={chatRoom} className={styles.mail}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" strokeWidth="2"
                          strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -55,4 +56,4 @@ const ProfileHostCard = ({hostUsername, hostFirstName, hostImage, hostMemberSinc
     )
 }
 
-export default ProfileHostCard;
+export default ProfileHostCard

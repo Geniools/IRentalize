@@ -21,7 +21,7 @@ import {
     USER_POSTS_URL,
     USER_RECENTLY_VIEWED_URL,
     USER_RESERVATION_URL,
-} from "../../../utils/constants/URL_PATHS.ts"
+} from "../../../lib/constants/url_paths.ts"
 
 import "../Userdashboard.css"
 

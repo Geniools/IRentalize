@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"
 
-import DateFormatter from "../../../../../components/DateFormatter/DateFormatter";
-import InformationDateContainer from "../../../../../components/./InformationDateContainer/InformationDateContainer";
+import DateFormatter from "../../../../../components/DateFormatter/DateFormatter.js"
+import InformationDateContainer from "../../../../../components/./InformationDateContainer/InformationDateContainer"
 
 const DescriptionSection = ({description, createdAt, updatedAt}) => {
     const getDates = () => {
@@ -21,4 +21,4 @@ const DescriptionSection = ({description, createdAt, updatedAt}) => {
     )
 }
 
-export default DescriptionSection;
+export default DescriptionSection

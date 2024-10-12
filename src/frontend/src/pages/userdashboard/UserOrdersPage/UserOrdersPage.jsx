@@ -5,9 +5,9 @@ import axiosInstanceJSONAPI from "../../../services/axios/axios_content_type_jso
 
 import {Link} from "react-router-dom"
 import HeadTitle from "../../../components/HeadTitle.tsx"
-import DateFormatter from "../../../components/DateFormatter/DateFormatter"
+import DateFormatter from "../../../components/DateFormatter/DateFormatter.js"
 
-import {RESERVATION_STATUSES} from "../../../utils/constants/RESERVATION_STATUSES.ts"
+import {ReservationStatuses} from "../../../lib/constants/reservation-statuses.ts"
 import "../Userdashboard.css"
 import styles from "../UserReservationPage/UserReservationPage.module.css"
 
@@ -72,7 +72,7 @@ const UserOrdersPage = () => {
                             <td><DateFormatter date={order.start_date} showTime={false}/></td>
                             <td><DateFormatter date={order.end_date} showTime={false}/></td>
                             <td>{order.total_price}</td>
-                            <td>{RESERVATION_STATUSES[order.status]}</td>
+                            <td>{ReservationStatuses[order.status]}</td>
                             <td>{order.is_paid ? "Yes" : "No"}</td>
                         </tr>
                     ))

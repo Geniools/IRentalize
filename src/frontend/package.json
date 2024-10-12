@@ -29,6 +29,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.9.0",
+		"@radix-ui/react-dropdown-menu": "^2.1.2",
 		"@radix-ui/react-label": "^2.1.0",
 		"@radix-ui/react-slot": "^1.1.0",
 		"@radix-ui/react-toast": "^1.2.2",
@@ -44,6 +45,7 @@
 		"date-fns": "^2.30.0",
 		"lucide-react": "^0.447.0",
 		"moment": "^2.29.4",
+		"next-themes": "^0.3.0",
 		"prop-types": "^15.8.1",
 		"react-cookie": "^7.2.0",
 		"react-date-range": "^1.4.0",
@@ -58,6 +60,7 @@
 		"redux-devtools-extension": "^2.13.9",
 		"redux-thunk": "^2.4.2",
 		"save-dev": "^0.0.1-security",
+		"sonner": "^1.5.0",
 		"tailwind-merge": "^2.5.3",
 		"tailwindcss-animate": "^1.0.7",
 		"zod": "^3.23.8"

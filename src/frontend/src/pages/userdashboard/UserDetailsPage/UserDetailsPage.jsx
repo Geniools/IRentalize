@@ -3,12 +3,12 @@ import {connect} from "react-redux"
 
 import {updateUserInfo} from "../../../actions/user"
 
-import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../utils/constants/URL_PATHS.ts"
+import {EMAIL_RESET_URL, PASSWORD_RESET_URL} from "../../../lib/constants/url_paths.ts"
 
 import Loader from "../../../components/Loader/Loader.js"
 import HeadTitle from "../../../components/HeadTitle.tsx"
 import HeadSubTitle from "../../../components/HeadSubTitle.tsx"
-import DateFormatter from "../../../components/DateFormatter/DateFormatter"
+import DateFormatter from "../../../components/DateFormatter/DateFormatter.js"
 import GoogleMapContainer from "../../../components/GoogleMapContainer/GoogleMapContainer"
 
 import "../Userdashboard.css"

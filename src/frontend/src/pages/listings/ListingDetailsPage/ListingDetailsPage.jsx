@@ -5,7 +5,7 @@ import useListingData from "../../../hooks/useListingData.js"
 import useCreateChatRoom from "../../../hooks/useCreateChatRoom.js"
 
 import Header from "../../../components/Header.tsx"
-import Footer from "../../../components/Footer/Footer"
+import Footer from "../../../components/Footer.tsx"
 import Loader from "../../../components/Loader/Loader.js"
 import HeadTitle from "../../../components/HeadTitle.tsx"
 import HeadSubTitle from "../../../components/HeadSubTitle.tsx"

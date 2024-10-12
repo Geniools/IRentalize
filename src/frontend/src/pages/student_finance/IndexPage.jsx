@@ -1,6 +1,6 @@
 import Header from "../../components/Header.tsx"
 import RequestForm from "./partials/RequestForm/RequestForm"
-import Footer from "../../components/Footer/Footer"
+import Footer from "../../components/Footer.tsx"
 
 const IndexPage = () => {
     return (

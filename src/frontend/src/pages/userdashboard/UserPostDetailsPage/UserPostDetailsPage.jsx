@@ -10,7 +10,7 @@ import PopupConfirmation from "../../../components/PopupConfirmation/PopupConfir
 import Loader from "../../../components/Loader/Loader.js"
 import HeadTitle from "../../../components/HeadTitle.tsx"
 
-import {USER_POSTS_URL} from "../../../utils/constants/URL_PATHS.ts"
+import {USER_POSTS_URL} from "../../../lib/constants/url_paths.ts"
 
 import "../Userdashboard.css"
 import "./UserPostDetailsPage.css"

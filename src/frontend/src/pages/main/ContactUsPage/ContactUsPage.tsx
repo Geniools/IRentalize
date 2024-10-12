@@ -1,62 +1,44 @@
-import {z} from "zod"
-import {useForm} from "react-hook-form"
-import {zodResolver} from "@hookform/resolvers/zod"
-import {toast} from "@/hooks/use-toast"
-
-import {Input} from "@/components/ui/input"
-import {Button} from "@/components/ui/button"
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
-
-const FormSchema = z.object({
-    username: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-})
+import ContactUsForm from "@/components/forms/ContactUsForm";
 
 const ContactUsPage = () => {
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: {
-            username: "",
-        },
-    })
-
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        })
-    }
-
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-                <FormField
-                    control={form.control}
-                    name="username"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Username</FormLabel>
+        <div className="flex gap-3 px-28">
+            <div className="flex-1 flex flex-col gap-3">
+                <h1 className="font-bold text-5xl mb-5">
+                    Contact Us
+                </h1>
 
-                            <FormControl>
-                                <Input placeholder="Username" {...field} />
-                            </FormControl>
+                <p>
+                    Have a question or need help? Please fill out the form below and we will get back to you
+                    <b> within 24 hours</b>!
+                </p>
 
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
+                <p>
+                    You can also reach us at
+                    <i>
+                        <strong>
+                            <a href="mailto:info@irentalize.nl"> info@irentalize.nl</a>
+                        </strong>
+                    </i>
+                </p>
 
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <Button type="submit">Submit</Button>
-            </form>
-        </Form>
+                <div>
+                    <p>
+                        Or give us a call:
+                    </p>
+                    <p>
+                        <i> <a href="tel:+31684437948">+31 6 84437948</a></i>
+                    </p>
+                    <p>
+                        <i><a href="tel:+31625477551">+31 6 25477551</a></i>
+                    </p>
+                </div>
+            </div>
+
+            <div className="flex-1 px-28">
+                <ContactUsForm/>
+            </div>
+        </div>
     )
 }
 

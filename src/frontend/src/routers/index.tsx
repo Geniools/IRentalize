@@ -1,11 +1,11 @@
 import {createBrowserRouter} from "react-router-dom"
 
 // Import the URL paths
-import * as paths from "../utils/constants/URL_PATHS"
+import * as paths from "@/lib/constants/url_paths"
 
-import IndexPage from "@/pages/main/IndexPage"
-import NotFoundPage from "@/pages/main/404NotFoundPage/404NotFoundPage"
 import MainLayout from "@/layout/MainLayout";
+import NotFoundPage from "@/pages/main/404NotFoundPage/404NotFoundPage"
+import IndexPage from "@/pages/main/IndexPage"
 import ContactUsPage from "@/pages/main/ContactUsPage/ContactUsPage";
 
 

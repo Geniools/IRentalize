@@ -1,7 +1,7 @@
 import {MouseEvent, useState} from "react"
 import {Link} from "react-router-dom"
 
-import {type Listing} from "../../utils/types/listingTypes";
+import {type Listing} from "@/lib/types/listingTypes";
 import Loader from "@/components/Loader/Loader"
 
 import "./ListingLink.css"

@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useNavigate} from "react-router-dom"
 
-import {ACCOUNT_URL} from "../../../../../utils/constants/URL_PATHS.ts"
+import {ACCOUNT_URL} from "../../../../../lib/constants/url_paths.ts"
 
 import {setNavigateToAfterAuth} from "../../../../../actions/common"
-import {calculateBookingPrice, getDatesBetween} from "../../../../../utils/helpers/booking.js"
+import {calculateBookingPrice, getDatesBetween} from "../../../../../lib/helpers/booking.js"
 
 import useBookingDates from "../../../../../components/BookingCalendar/hooks/useBookingDates"
 import useAvailableDates from "../../../../../components/BookingCalendar/hooks/useAvailableDates"

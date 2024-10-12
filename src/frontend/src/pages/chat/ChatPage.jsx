@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import {setNavigateToAfterAuth} from "../../actions/common"
 
 import Header from "../../components/Header.tsx"
-import Footer from "../../components/Footer/Footer"
+import Footer from "../../components/Footer.tsx"
 import HeadTitle from "../../components/HeadTitle.tsx"
 import ChatRoomList from "./partials/ChatRoomList/ChatRoomList"
 import ChatMessages from "./partials/ChatMessages/ChatMessages"
