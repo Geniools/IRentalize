@@ -1,8 +1,7 @@
-import InfiniteScroll from "react-infinite-scroll-component"
-
 import useListingsQuery from "@/hooks/useListingsQuery"
 import Loader from "@/components/Loader/Loader"
-import ListingLink from "@/components/ListingLink/ListingLink"
+import ListingLink from "@/components/ListingLink"
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const IndexPage = () => {

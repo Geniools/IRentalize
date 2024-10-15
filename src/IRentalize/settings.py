@@ -53,8 +53,6 @@ INSTALLED_APPS = [
     'backend.users.apps.UsersConfig',
     'backend.chat.apps.ChatConfig',
     'frontend.apps.FrontendConfig',
-    # Project apps (outside the scope of the real project)
-    'backend.student_finance.apps.StudentFinanceConfig',
     # Third party apps
     'django_filters',
     'grappelli',

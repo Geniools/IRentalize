@@ -16,6 +16,4 @@ urlpatterns = [
     path('', include('backend.bookings.urls'), name='bookings'),
     # Chat
     path('chat/', include('backend.chat.urls'), name='chat'),
-    # Student Finance API (sub-app)
-    path('student-finance/', include('backend.student_finance.urls'), name='student-finance'),
 ]

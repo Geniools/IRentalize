@@ -5,7 +5,7 @@ import {loadUserListings} from "../../../actions/listing"
 
 import ListingForm from "../../../components/ListingForm/ListingForm"
 import HeadTitle from "../../../components/HeadTitle.tsx"
-import ListingLink from "../../../components/ListingLink/ListingLink.js"
+import ListingLink from "../../../components/ListingLink.tsx"
 
 import "../Userdashboard.css"
 

@@ -1,16 +1,12 @@
 import axios from 'axios';
 import {useQuery} from "@tanstack/react-query";
 
-const fetchListing = async (id) => {
-    try {
-        const response = await axios.get(`/api/listings/${id}/`);
-        return response.data;
-    } catch (error) {
-        throw new Error(error);
-    }
+const fetchListing = async (id: number) => {
+    const response = await axios.get(`/api/listings/${id}/`);
+    return response.data;
 }
 
-const useListingData = (id) => {
+const useListingData = (id: number) => {
     const {
         data,
         isLoading,
