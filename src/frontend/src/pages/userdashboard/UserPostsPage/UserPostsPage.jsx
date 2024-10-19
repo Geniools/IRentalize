@@ -5,7 +5,7 @@ import {loadUserListings} from "../../../actions/listing"
 
 import ListingForm from "../../../components/ListingForm/ListingForm"
 import HeadTitle from "../../../components/HeadTitle.tsx"
-import ListingLink from "../../../components/ListingLink.tsx"
+import ListingCard from "../../../components/ListingCard.tsx"
 
 import "../Userdashboard.css"
 
@@ -34,7 +34,7 @@ const UserPostsPage = ({listings, loadUserListings}) => {
                 <div className="dashboard-right-panel-content-listings">
                     {
                         listings?.map((listing) => (
-                            <ListingLink listing={listing} url={"/account/user-posts/"}/>
+                            <ListingCard listing={listing} url={"/account/user-posts/"}/>
                         ))
                     }
                 </div>

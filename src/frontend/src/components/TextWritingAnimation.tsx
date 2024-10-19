@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useTheme} from "@/components/theme-provider";
+import {useTheme} from "@/components/ThemeProvider";
 
 interface TextWritingAnimationProps {
     children: string,

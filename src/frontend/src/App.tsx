@@ -1,7 +1,7 @@
 import {RouterProvider} from "react-router-dom"
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 
-import {ThemeProvider} from "@/components/theme-provider";
+import {ThemeProvider} from "@/components/ThemeProvider";
 
 import {getApp} from "@/lib/helpers/getApp"
 
