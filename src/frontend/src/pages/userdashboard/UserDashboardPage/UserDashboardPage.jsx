@@ -84,7 +84,7 @@ const UserDashboardPage = ({isAuthenticated, user}) => {
                             {/* User's posts */}
                             <Route exact path="/user-posts" element={<UserPostsPage/>}/>
                             <Route exact path="/user-posts/:id" element={<UserPostDetailsPage/>}/>
-                            {/* Reservation done by other users to the user's posts */}
+                            {/* Reservation done by other user to the user's posts */}
                             <Route exact path="/user-reservations" element={<UserReservationPage/>}/>
                             {/*<Route exact path='/user-reservation/:id' element={<UserPostDetailsPage/>}/>*/}
                             <Route exact path="/user-recently-viewed" element={<UserRecentlyViewedPage/>}/>

@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 
-from backend.listings.models import Category
+from backend.listing.models import Category
 
 
 class Command(BaseCommand):
@@ -14,7 +14,7 @@ class Command(BaseCommand):
         'Books',
         'Other'
     ]
-    
+
     def handle(self, *args, **options):
         for category in self.categories:
             try:
@@ -22,5 +22,6 @@ class Command(BaseCommand):
             except Exception as e:
                 self.stdout.write(self.style.ERROR(f'Failed to create default category {category}.'))
                 self.stdout.write(self.style.ERROR(e))
-        
-        self.stdout.write(self.style.SUCCESS(f'Successfully created default categories: \n > {self.categories} <'))
+                return
+
+            self.stdout.write(self.style.SUCCESS(f'Successfully created default categories: \n > {self.categories} <'))

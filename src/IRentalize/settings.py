@@ -2,18 +2,20 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Path to the .env file
 ENV_PATH = BASE_DIR / ".env"
+
 # Load the environmental variables
 load_dotenv(ENV_PATH)
 # Define a split keyword for environmental variables that need to be converted to a list
 _list_split_key = " "
 
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -23,7 +25,7 @@ DEBUG = os.getenv("DEBUG", False)
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(_list_split_key)
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS").split(_list_split_key)
 
-# Admins will be notified on their email address in case of a code error.
+# Application definition
 ADMINS = os.getenv("ADMINS").split(_list_split_key)
 MANAGERS = os.getenv("MANAGERS").split(_list_split_key)
 
@@ -36,7 +38,7 @@ INSTALLED_APPS = [
     # Integration with ViteJS
     'django_vite',
     # Channels -> asynchronous support (Channels)
-    'daphne',
+    # 'daphne',
     # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,25 +47,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Project apps
-    'backend.bookings.apps.BookingsConfig',
-    'backend.listings.apps.ListingsConfig',
+    'backend.booking.apps.BookingsConfig',
+    'backend.listing.apps.ListingsConfig',
+    'backend.address.apps.AddressConfig',
     'backend.main.apps.MainConfig',
-    'backend.payments.apps.PaymentsConfig',
-    'backend.reviews.apps.ReviewsConfig',
-    'backend.users.apps.UsersConfig',
-    'backend.chat.apps.ChatConfig',
+    'backend.payment.apps.PaymentsConfig',
+    'backend.review.apps.ReviewsConfig',
+    'backend.user.apps.UsersConfig',
+    # 'backend.chat.apps.ChatConfig',
     'frontend.apps.FrontendConfig',
     # Third party apps
     'django_filters',
     'grappelli',
     'rest_framework',
     'djoser',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-    # For allowing cross-origin requests (student.irentalize.nl <-> irentalize.nl)
-    'corsheaders',
+    # 'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.token_blacklist',
+    # 'corsheaders',
     # For authentication in Channels
-    'channels_auth_token_middlewares',
+    # 'channels_auth_token_middlewares',
 ]
 
 # DRF (Django REST Framework) settings
@@ -72,7 +74,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES':         {
-        'request': '50/hour',
+        'request': '50/min',
     },
     'DEFAULT_PERMISSION_CLASSES':     [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
@@ -220,7 +222,7 @@ STATICFILES_DIRS = [BASE_DIR / 'frontend/static']
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Model used to represent a User
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Define the session cookie age in seconds
 SESSION_COOKIE_AGE = 60 * 60 * 24  # 1 day

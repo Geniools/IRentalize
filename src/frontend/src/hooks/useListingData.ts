@@ -18,7 +18,8 @@ const useListingData = (id: number) => {
 
     return {
         data,
-        isLoading
+        isLoading,
+        isError,
     };
 };
 
