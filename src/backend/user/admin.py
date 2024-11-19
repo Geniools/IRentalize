@@ -4,11 +4,14 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
+from unfold.forms import UserCreationForm as UnfoldUserCreationForm, UserChangeForm as UnfoldUserChangeForm
 
+from backend.user.admin_utils import UserProfileInLine
 from backend.user.models import User, UserProfile
 
 
-class UserCreationForm(forms.ModelForm):
+class UserCreationForm(UnfoldUserCreationForm):
     """
     A form for creating new user. Includes all the required
     fields, plus a repeated password.
@@ -47,11 +50,11 @@ class UserCreationForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
-            
+
         return user
 
 
-class UserChangeForm(forms.ModelForm):
+class UserChangeForm(UnfoldUserChangeForm):
     class Meta:
         model = User
         fields = [
@@ -60,29 +63,8 @@ class UserChangeForm(forms.ModelForm):
         ]
 
 
-class UserProfileInLine(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    verbose_name_plural = 'Profile'
-    readonly_fields = ['id', ]
-    empty_value_display = '-'
-
-    fieldsets = (
-        ('User Profile', {
-            'fields': (
-                'username', 'phone', 'profile_picture'
-            ),
-        }),
-        ('Default Address', {
-            'fields': (
-                'default_address',
-            ),
-        }),
-    )
-
-
 @admin.register(User)
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(BaseUserAdmin, UnfoldModelAdmin):
     list_display = ['id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser']
     list_display_links = ['id', 'email']
     readonly_fields = ['id', 'last_login', 'date_joined']
@@ -92,6 +74,9 @@ class UserAdmin(BaseUserAdmin):
 
     # The form to add a new user
     add_form = UserCreationForm
+    # The form to change user instances
+    form = UserChangeForm
+    
     # Fieldsets that will be shown when ADDING a new user
     add_fieldsets = (
         (None, {
@@ -99,9 +84,6 @@ class UserAdmin(BaseUserAdmin):
             'fields':  ('email', 'first_name', 'last_name', 'password1', 'password2'),
         }),
     )
-
-    # The form to change user instances
-    form = UserChangeForm
     # Fieldsets that will be shown when VIEWING/CHANGING a user
     fieldsets = (
         ('User', {
@@ -118,7 +100,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 @admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(UnfoldModelAdmin):
     list_display = ['id', 'user', 'username', 'phone']
     list_display_links = ['id', 'user']
     readonly_fields = ['id', 'user']
@@ -138,4 +120,5 @@ class UserProfileAdmin(admin.ModelAdmin):
     )
 
 
+# Unregister the Group model from the admin
 admin.site.unregister(Group)

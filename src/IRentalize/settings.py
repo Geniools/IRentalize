@@ -2,6 +2,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from django.templatetags.static import static
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django_vite',
     # Channels -> asynchronous support (Channels)
     # 'daphne',
+    # UI Admin panel
+    "unfold",
     # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +61,8 @@ INSTALLED_APPS = [
     'frontend.apps.FrontendConfig',
     # Third party apps
     'django_filters',
-    'grappelli',
+    # 'grappelli',
+    'django_cleanup.apps.CleanupSelectedConfig',
     'rest_framework',
     'djoser',
     # 'rest_framework_simplejwt',
@@ -118,6 +122,26 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS':    True,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN':        True,
+}
+
+UNFOLD = {
+    "SITE_ICON":     {
+        "light": lambda request: static("assets/favicon.png"),  # light mode
+        "dark":  lambda request: static("assets/favicon.png"),  # dark mode
+    },
+    "SITE_LOGO":     {
+        "light": lambda request: static("assets/favicon.png"),  # light mode
+        "dark":  lambda request: static("assets/favicon.png"),  # dark mode
+    },
+    "SITE_SYMBOL":   "speed",
+    "SITE_FAVICONS": [
+        {
+            "rel":   "icon",
+            "sizes": "32x32",
+            "type":  "image/svg+xml",
+            "href":  lambda request: static("assets/favicon.ico"),
+        },
+    ],
 }
 
 MIDDLEWARE = [
@@ -217,7 +241,10 @@ MEDIA_ROOT = os.getenv("MEDIA_ROOT")
 MEDIA_URL = 'media/'
 
 # A list of directories where Django looks for static files
-STATICFILES_DIRS = [BASE_DIR / 'frontend/static']
+STATICFILES_DIRS = [
+    BASE_DIR / 'frontend/static',
+    BASE_DIR / 'frontend/static/react-widget/static'
+]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

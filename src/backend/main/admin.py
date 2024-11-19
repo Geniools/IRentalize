@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from backend.main.models import ContactUs
 
@@ -9,7 +10,7 @@ admin.site.index_title = 'Welcome to IRentalize Portal'
 
 
 @admin.register(ContactUs)
-class ContactUsAdmin(admin.ModelAdmin):
+class ContactUsAdmin(UnfoldModelAdmin):
     list_display = ('id', 'email', 'created_at')
     list_filter = ('created_at',)
     search_fields = ('email', 'message')

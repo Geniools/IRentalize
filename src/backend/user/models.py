@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django_cleanup import cleanup
 
 from backend.listing.utils import is_valid_image
 from backend.main.utils import UploadToPathAndRename
@@ -54,6 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return super().has_perm(perm, obj)
 
 
+@cleanup.select
 class UserProfile(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

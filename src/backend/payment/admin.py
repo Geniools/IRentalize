@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from backend.payment.models import Payment
 
 
 @admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
+class PaymentAdmin(UnfoldModelAdmin):
     list_display = ('id', 'user', 'reservation', 'is_paid')
     list_filter = ('is_paid',)
     search_fields = ('user__first_name', 'user__last_name', 'reservation__id')

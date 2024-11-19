@@ -1,10 +1,12 @@
 {# This is the base_site.html file that I use to override the default Django admin template. #}
-{# I use it to add a favicon to the admin site. #}
 
 {% extends "admin/base_site.html" %}
 
 {% load static %}
 
 {% block extrahead %}
-	<link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}"/>
+    <link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}"/>
+
+    {#    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>#}
+    {#    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>#}
 {% endblock %}

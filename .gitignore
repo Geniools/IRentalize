@@ -4,7 +4,7 @@
 ### Custom ###
 .env
 
-# Ignore media files (uploaded by users)
+# Ignore media files (uploaded by user)
 media/
 
 ### Intellij ###

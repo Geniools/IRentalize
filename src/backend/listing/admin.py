@@ -1,11 +1,14 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
+from backend.listing.admin_utils import ListingImageInLine, ListingAnalyticsInLine
+from backend.listing.forms import ListingForm
 from backend.listing.models import Category, Listing, ListingAnalytics, ListingImage
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(UnfoldModelAdmin):
     list_display = ('id', 'name', 'icon')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
@@ -29,7 +32,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Listing)
-class ListingAdmin(admin.ModelAdmin):
+class ListingAdmin(UnfoldModelAdmin):
     list_display = ('id', 'name', 'category', 'host', 'created_at', 'updated_at')
     list_display_links = ('id', 'name')
     list_filter = ('category', 'host', 'address')
@@ -39,6 +42,8 @@ class ListingAdmin(admin.ModelAdmin):
         'address__street_name', 'address__house_number', 'address__house_addition', 'address__zip_code',
     )
     readonly_fields = ('display_images', 'image_number', 'created_at', 'updated_at',)
+    inlines = (ListingImageInLine, ListingAnalyticsInLine,)
+    form = ListingForm
 
     fieldsets = (
         ('General Information', {
@@ -80,7 +85,7 @@ class ListingAdmin(admin.ModelAdmin):
 
 
 @admin.register(ListingAnalytics)
-class ListingAnalyticsAdmin(admin.ModelAdmin):
+class ListingAnalyticsAdmin(UnfoldModelAdmin):
     list_display = ('id', 'listing', 'views', 'is_visible')
     list_editable = ('is_visible',)
     list_display_links = ('id', 'listing')
@@ -88,9 +93,9 @@ class ListingAnalyticsAdmin(admin.ModelAdmin):
     search_fields = (
         'listing__name', 'listing__content', 'listing__summary', 'listing__price_details',
         'listing__contact_details', 'listing__host__email', 'listing__host__first_name', 'listing__host__last_name',
-        'listing__host__username', 'views',
+        'views',
     )
-    readonly_fields = ('listing',)
+    readonly_fields = ('listing', 'views',)
 
     fieldsets = [
         ('Listing', {
@@ -103,13 +108,13 @@ class ListingAnalyticsAdmin(admin.ModelAdmin):
 
 
 @admin.register(ListingImage)
-class ListingImageAdmin(admin.ModelAdmin):
+class ListingImageAdmin(UnfoldModelAdmin):
     list_display = ('id', 'listing',)
     list_display_links = ('id', 'listing',)
     list_filter = ('listing',)
     search_fields = (
-        'listing__title', 'listing__description', 'listing__address', 'listing__host__email',
-        'listing__host__first_name', 'listing__host__last_name', 'listing__host__username'
+        'listing__name', 'listing__address', 'listing__host__email',
+        'listing__host__first_name', 'listing__host__last_name',
     )
     readonly_fields = ('display_image',)
     fieldsets = [
@@ -125,4 +130,4 @@ class ListingImageAdmin(admin.ModelAdmin):
 
     @admin.display(description='Image')
     def display_image(self, obj):
-        return mark_safe(f'<img src="{obj.image.url}" alt="{obj.listing.title}" style="min-width: 245px; max-width: 90%">')
+        return mark_safe(f'<img src="{obj.image.url}" alt="{obj.listing.name}" style="min-width: 245px; max-width: 90%">')

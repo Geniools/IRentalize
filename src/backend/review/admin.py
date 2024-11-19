@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from backend.review.models import Review
 
 
 @admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
+class ReviewAdmin(UnfoldModelAdmin):
     list_display = ('id', 'listing', 'reviewer', 'title', 'rating', 'created_at')
     list_filter = ('listing', 'reviewer', 'rating')
     search_fields = ('title', 'content', 'listing__title', 'reviewer__email')

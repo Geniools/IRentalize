@@ -1,4 +1,5 @@
 from django.db import models
+from django_cleanup import cleanup
 
 from backend.listing.utils import is_valid_image
 from backend.main.utils import UploadToPathAndRename
@@ -26,7 +27,7 @@ class Listing(models.Model):
     address = models.ForeignKey('address.Address', on_delete=models.PROTECT, related_name='listings', null=True, blank=True)
 
     name = models.CharField(max_length=250)
-    
+
     content = models.JSONField(null=True, blank=True)
     summary = models.JSONField(null=True, blank=True)
     price_details = models.JSONField(null=True, blank=True)
@@ -62,11 +63,11 @@ class ListingAnalytics(models.Model):
         return self.listing
 
 
-# TODO: Delete the listing images when the listing is deleted (https://github.com/un1t/django-cleanup)
+@cleanup.select  # https://github.com/un1t/django-cleanup
 class ListingImage(models.Model):
     id = models.AutoField(primary_key=True)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to=UploadToPathAndRename('listing', 'listing.title'), validators=[is_valid_image])
+    image = models.ImageField(upload_to=UploadToPathAndRename('listing', 'listing.name'), validators=[is_valid_image])
 
     class Meta:
         db_table = 'listing_image'

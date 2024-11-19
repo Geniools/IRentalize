@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from backend.booking.models import Reservation, ReservationComment, Availability
 
 
 @admin.register(Reservation)
-class ReservationAdmin(admin.ModelAdmin):
+class ReservationAdmin(UnfoldModelAdmin):
     list_display = ('id', 'listing', 'guest', 'status', 'start_date_time', 'end_date_time')
     list_filter = ('status', 'listing', 'guest')
     search_fields = ('id', 'listing', 'guest', 'status', 'start_date_time', 'end_date_time',)
@@ -46,7 +47,7 @@ class ReservationCommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(Availability)
-class AvailabilityAdmin(admin.ModelAdmin):
+class AvailabilityAdmin(UnfoldModelAdmin):
     list_display = ('id', 'listing', 'start_date_time', 'end_date_time',)
     list_filter = ('listing',)
     search_fields = ('id', 'listing', 'start_date_time', 'end_date_time',)
