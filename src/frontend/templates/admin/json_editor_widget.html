@@ -1,6 +1,59 @@
 <div id="json-editor-{{ widget.name }}-container"></div>
+<input type="hidden" id="json-editor-{{ widget.name }}" name="{{ widget.name }}" value="{{ widget.value|safe }}">
+
 <script>
-    new window.JSONWidget().render(
-        "json-editor-{{ widget.name }}-container",
-    )
+    // Wait for the JSONWidget class to be available
+    function waitForJSONWidget(timeout = 5000) {
+        return new Promise((resolve, reject) => {
+            const start = Date.now()
+            const interval = setInterval(() => {
+                if (window.JSONWidget) {
+                    clearInterval(interval)
+                    resolve()
+                } else if (Date.now() - start > timeout) {
+                    clearInterval(interval)
+                    reject(new Error("JSONWidget class not found"))
+                }
+            }, 100)
+        })
+    }
+
+    async function renderWidget() {
+        try {
+            // Wait for JSONWidget class to be available
+            await waitForJSONWidget()
+
+            // Initialize the widget
+            const updateHiddenInputValue = (value) => {
+                document.getElementById("json-editor-{{ widget.name }}").value = value
+            }
+            const theme = document.documentElement.classList.contains("dark") ? "dark" : "light"
+            // Use ' instead of " to avoid escaping the value
+            const widget = new window.JSONWidget('{{ widget.value|safe }}', theme, updateHiddenInputValue)
+
+            // Render the widget
+            widget.render("json-editor-{{ widget.name }}-container")
+
+            // Observe changes to document class
+            const themeObserver = new MutationObserver(() => {
+                const newTheme = document.documentElement.classList.contains("dark") ? "dark" : "light"
+                widget.setTheme(newTheme)
+            })
+
+            // Start observing the `class` attribute of `documentElement`
+            themeObserver.observe(document.documentElement, {
+                attributes: true, // Observe attribute changes
+                attributeFilter: ['class'], // Only watch the 'class' attribute
+            })
+
+            // Clean up the observer when it's no longer needed
+            window.addEventListener('unload', () => {
+                themeObserver.disconnect()
+            })
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
+    renderWidget()
 </script>

@@ -1,17 +1,22 @@
 import "@blocknote/core/fonts/inter.css";
-import {BlockNoteView} from "@blocknote/mantine";
+import {BlockNoteView, Theme} from "@blocknote/mantine";
 
 import "@blocknote/mantine/style.css";
 import {useCreateBlockNote} from "@blocknote/react";
 
-export default function JSONEditor() {
-    // Get the theme from the html class
-    const theme = document.documentElement.classList.contains("dark") ? "dark" : "light"
+interface JSONEditorProps {
+    content: string;
+    setContent: (content: string) => void;
+    theme?: "light" | "dark" | Theme;
+}
+
+export default function JSONEditor(options: JSONEditorProps) {
+    const {content, setContent, theme} = options;
 
     // Creates a new editor instance.
-    const editor = useCreateBlockNote(
-
-    );
+    const editor = useCreateBlockNote({
+        initialContent: JSON.parse(content),
+    });
 
     // Renders the editor instance using a React component.
     return (
@@ -19,6 +24,9 @@ export default function JSONEditor() {
             editor={editor}
             editable={true}
             theme={theme}
+            onChange={() => {
+                setContent(JSON.stringify(editor.document, null, 2))
+            }}
         />
     )
 }

@@ -1,4 +1,6 @@
 from django.forms import widgets
+from django.templatetags.static import static
+from django.utils.html import format_html
 
 
 class ReactJsonEditorWidget(widgets.Widget):
@@ -7,5 +9,16 @@ class ReactJsonEditorWidget(widgets.Widget):
     def __init__(self, attrs=None):
         super().__init__(attrs)
 
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['widget']['attrs']['data-react-props'] = {
+            'name':  name,
+            'value': str(value) or '[]',
+        }
+        return context
+
     class Media:
-        js = ['react-widget/react-widget.js']
+        js = [format_html(
+            '<script type="module" src="{}"></script>',
+            static('react-widget/react-widget.js'),
+        )]
