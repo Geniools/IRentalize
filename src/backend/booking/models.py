@@ -3,10 +3,11 @@ from django.db import models
 
 from backend.booking.constants import RESERVATION_STATUS, MESSAGE_STATUS
 from backend.booking.utils import validate_booking_dates
+from backend.main.models import BaseModel
 from backend.main.utils import UploadToPathAndRename
 
 
-class Reservation(models.Model):
+class Reservation(BaseModel):
     id = models.AutoField(primary_key=True)
     # Entities involved
     listing = models.ForeignKey('listing.Listing', on_delete=models.CASCADE, related_name='reservations')
@@ -17,9 +18,6 @@ class Reservation(models.Model):
     # Reservation time period
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField(null=True, blank=True)
-    # Timestamps
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'reservation'
@@ -52,15 +50,12 @@ class Reservation(models.Model):
         Reservation.validate_reservation_conflicts(listing, start_date, end_date)
 
 
-class ReservationComment(models.Model):
+class ReservationComment(BaseModel):
     id = models.AutoField(primary_key=True)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField(null=True, blank=True)
     picture = models.ImageField(upload_to=UploadToPathAndRename('reservation_comments', 'reservation.guest'), null=True, blank=True)
     status = models.SmallIntegerField(choices=MESSAGE_STATUS, default=0)
-    # Timestamps
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'reservation_comment'

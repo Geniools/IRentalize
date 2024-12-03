@@ -5,8 +5,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Grappelli admin interface
-    path('grappelli/', include('grappelli.urls')),
     # Authentication endpoints (custom)
     # path('auth/', include('backend.auth.urls')),
     # All the API endpoints are handled by the backend.api app

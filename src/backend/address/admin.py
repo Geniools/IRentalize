@@ -15,6 +15,11 @@ class LocationAdmin(UnfoldModelAdmin):
                 'city', 'country',
             ],
         }),
+        ('Timestamps', {
+            'fields': [
+                'created_at', 'updated_at',
+            ],
+        })
     ]
 
 
@@ -34,4 +39,9 @@ class AddressAdmin(UnfoldModelAdmin):
                 'latitude', 'longitude',
             ],
         }),
+        ('Timestamps', {
+            'fields': [
+                'created_at', 'updated_at',
+            ],
+        })
     ]

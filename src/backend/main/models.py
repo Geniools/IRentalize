@@ -3,7 +3,15 @@ from django.db import models
 from backend.user.utils import is_valid_number
 
 
-class ContactUs(models.Model):
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class ContactUs(BaseModel):
     id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=250, null=True, blank=True)
     middle_name = models.CharField(max_length=250, null=True, blank=True)
@@ -15,7 +23,6 @@ class ContactUs(models.Model):
         help_text='An non Dutch phone number must contain the country code with the "+" sign.',
         null=True, blank=True,
     )
-    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'contact_us'

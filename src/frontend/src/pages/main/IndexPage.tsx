@@ -17,7 +17,7 @@ const IndexPage = () => {
             {
                 !isLoading ?
                     <InfiniteScroll
-                        dataLength={listings?.length}
+                        dataLength={listings.length}
                         next={fetchNextPage}
                         hasMore={hasNextPage}
                         loader={<Loader/>}

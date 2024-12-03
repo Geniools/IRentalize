@@ -7,6 +7,7 @@ from backend.review.models import Review
 @admin.register(Review)
 class ReviewAdmin(UnfoldModelAdmin):
     list_display = ('id', 'listing', 'reviewer', 'title', 'rating', 'created_at')
+    list_display_links = ('id', 'listing', 'reviewer', 'title')
     list_filter = ('listing', 'reviewer', 'rating')
     search_fields = ('title', 'content', 'listing__title', 'reviewer__email')
     date_hierarchy = 'created_at'
@@ -17,7 +18,6 @@ class ReviewAdmin(UnfoldModelAdmin):
             'fields': ('id', 'listing', 'reviewer', 'title', 'content', 'rating')
         }),
         ('Timestamps', {
-            'fields':  ('created_at', 'updated_at'),
-            'classes': ('collapse',)
+            'fields': ('created_at', 'updated_at'),
         })
     )

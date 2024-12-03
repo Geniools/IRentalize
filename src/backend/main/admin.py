@@ -22,13 +22,20 @@ class ContactUsAdmin(UnfoldModelAdmin):
             'fields': (
                 'id', 'first_name', 'middle_name', 'last_name',
                 'email', 'message', 'phone',
-                'created_at'
             )
         }),
+        ('Timestamps', {
+            'fields': [
+                'created_at', 'updated_at',
+            ],
+        })
     )
     add_fieldsets = (
         (None, {
-            'fields': ('email', 'message')
+            'fields': (
+                'first_name', 'middle_name', 'last_name',
+                'email', 'message', 'phone',
+            )
         }),
     )
 

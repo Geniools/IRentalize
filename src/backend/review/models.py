@@ -1,17 +1,16 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from backend.main.models import BaseModel
 
-class Review(models.Model):
+
+class Review(BaseModel):
     id = models.AutoField(primary_key=True)
     listing = models.ForeignKey('listing.Listing', on_delete=models.CASCADE)
     reviewer = models.ForeignKey('user.User', on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=50)
     content = models.TextField(null=True, blank=True)
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], null=True, blank=True)
-
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'review'

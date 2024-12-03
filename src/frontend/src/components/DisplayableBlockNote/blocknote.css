@@ -1,0 +1,9 @@
+/* This overrides the default css of BlockNoteJs editor */
+
+.bn-editor {
+    padding-inline: 0;
+}
+
+.bn-shadcn .bn-editor {
+    background-color: transparent;
+}

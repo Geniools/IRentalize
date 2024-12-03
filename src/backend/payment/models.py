@@ -1,8 +1,10 @@
 from django.db import models
 
+from backend.main.models import BaseModel
+
 
 # ! This model will most likely be modified when the payment gateway is implemented
-class Payment(models.Model):
+class Payment(BaseModel):
     id = models.AutoField(primary_key=True)
     # The user who made the payment
     user = models.ForeignKey('user.User', on_delete=models.DO_NOTHING, related_name='payments')

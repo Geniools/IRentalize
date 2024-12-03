@@ -126,6 +126,11 @@ class ListingImageAdmin(UnfoldModelAdmin):
         ('Image', {
             'fields': ['display_image'],
         }),
+        ('Timestamps', {
+            'fields': [
+                'created_at', 'updated_at',
+            ],
+        })
     ]
 
     @admin.display(description='Image')

@@ -1,8 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from backend.main.models import BaseModel
 
-class Location(models.Model):
+
+class Location(BaseModel):
     id = models.AutoField(primary_key=True)
     city = models.CharField(max_length=250)
     country = models.CharField(max_length=250)
@@ -17,7 +19,7 @@ class Location(models.Model):
         return f"{self.city}, {self.country}"
 
 
-class Address(models.Model):
+class Address(BaseModel):
     id = models.AutoField(primary_key=True)
     location = models.ForeignKey(Location, on_delete=models.PROTECT, related_name='addresses')
     # Address details

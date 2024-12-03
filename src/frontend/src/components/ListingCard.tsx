@@ -1,18 +1,16 @@
 import {Link} from "react-router-dom";
-import {type Listing} from "@/lib/types/listingTypes";
+
+import {ImageOffIcon} from "lucide-react";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
-import {ImageOffIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
 
-interface ListingLinkProps {
-    listing: Listing,
-    url: string
-}
+import DisplayableBlockNote from "@/components/DisplayableBlockNote/DisplayableBlockNote";
 
-const ListingCard = (obj: ListingLinkProps) => {
-    const {listing, url} = obj
-    const hasImages = listing.images.length > 0
+
+const ListingCard = (props: { listing: Listing, url: string }) => {
+    const {listing, url} = props
+    const hasImages = listing.images?.length > 0
     const listingUrl = url + listing.id + "/"
 
     return (
@@ -23,9 +21,9 @@ const ListingCard = (obj: ListingLinkProps) => {
                         <CarouselContent className={"h-60"}>
                             {
                                 hasImages ?
-                                    listing.images.map((image, index) => (
+                                    listing.images?.map((img, index) => (
                                         <CarouselItem key={index} className={"flex justify-center items-center"}>
-                                            <img src={image.image} alt={listing.title}/>
+                                            <img src={img.image} alt={listing.name}/>
                                         </CarouselItem>
                                     ))
                                     :
@@ -53,15 +51,12 @@ const ListingCard = (obj: ListingLinkProps) => {
             </CardHeader>
 
             <CardContent className={"flex flex-col gap-3"}>
-                <h1>{listing.title}</h1>
-                <pre>{listing.description.slice(0, 100)}...</pre>
-                <p>{listing.price} <b><span>&euro;</span></b></p>
-                <i><p>{listing.address?.zip_code}</p></i>
+                <DisplayableBlockNote content={listing.summary}/>
             </CardContent>
 
-            <CardFooter className={"flex-1 flex items-end"}>
-                <Button variant={"default"} className={"w-full"}>
-                    <Link to={listingUrl} className={"w-full"}>View</Link>
+            <CardFooter className="flex-1 flex items-end">
+                <Button variant="default" className="w-full">
+                    <Link to={listingUrl} className="w-full">View</Link>
                 </Button>
             </CardFooter>
         </Card>

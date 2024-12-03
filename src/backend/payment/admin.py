@@ -15,6 +15,11 @@ class PaymentAdmin(UnfoldModelAdmin):
         (None, {
             'fields': ('id', 'user', 'reservation', 'is_paid')
         }),
+        ('Timestamps', {
+            'fields': [
+                'created_at', 'updated_at',
+            ],
+        })
     )
     add_fieldsets = (
         (None, {

@@ -1,6 +1,6 @@
-from rest_framework import routers
-
-router = routers.DefaultRouter()
+from django.urls import path, include
 
 urlpatterns = [
+    path('', include('backend.listing.urls')),
+    # include('backend.address.urls'),
 ]

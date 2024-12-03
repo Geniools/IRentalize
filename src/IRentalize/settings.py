@@ -5,6 +5,8 @@ from pathlib import Path
 from django.templatetags.static import static
 from dotenv import load_dotenv
 
+# TODO: Split the settings into separate files (https://github.com/HackSoftware/Django-Styleguide?tab=readme-ov-file#settings)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -74,55 +76,54 @@ INSTALLED_APPS = [
 
 # DRF (Django REST Framework) settings
 REST_FRAMEWORK = {
-    'DEFAULT_THROTTLE_CLASSES':       [
+    'DEFAULT_THROTTLE_CLASSES':   [
         'rest_framework.throttling.ScopedRateThrottle',
     ],
-    'DEFAULT_THROTTLE_RATES':         {
+    'DEFAULT_THROTTLE_RATES':     {
         'request': '50/min',
     },
-    'DEFAULT_PERMISSION_CLASSES':     [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    'DEFAULT_FILTER_BACKENDS':        [
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ],
+    'DEFAULT_FILTER_BACKENDS':    [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    'DEFAULT_PAGINATION_CLASS':       'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':                      10,
+    'DEFAULT_PAGINATION_CLASS':   'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':                  10,
 }
 
 # 3rd party app for managing user accounts
-DJOSER = {
-    'LOGIN_FIELD':                         'email',
-    'PASSWORD_RESET_CONFIRM_URL':          'password-reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL':          'username-reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL':                      'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL':               True,
-    'SEND_CONFIRMATION_EMAIL':             True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
-    'PASSWORD_RESET_CONFIRM_RETYPE':       True,
-    'USERNAME_RESET_CONFIRM_RETYPE':       True,
-    'TOKEN_MODEL':                         None,
-    'SERIALIZERS':                         {
-        'user_create':  'backend.auth.serializers.CustomUserCreateSerializer',
-        'user':         'backend.auth.serializers.UserSerializer',
-        'current_user': 'backend.auth.serializers.UserSerializer',
-        'user_delete':  'djoser.serializers.UserCreateSerializer',
-    },
-}
+# DJOSER = {
+#     'LOGIN_FIELD':                         'email',
+#     'PASSWORD_RESET_CONFIRM_URL':          'password-reset/confirm/{uid}/{token}',
+#     'USERNAME_RESET_CONFIRM_URL':          'username-reset/confirm/{uid}/{token}',
+#     'ACTIVATION_URL':                      'activate/{uid}/{token}',
+#     'SEND_ACTIVATION_EMAIL':               True,
+#     'SEND_CONFIRMATION_EMAIL':             True,
+#     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+#     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+#     'PASSWORD_RESET_CONFIRM_RETYPE':       True,
+#     'USERNAME_RESET_CONFIRM_RETYPE':       True,
+#     'TOKEN_MODEL':                         None,
+#     'SERIALIZERS':                         {
+#         'user_create':  'backend.auth.serializers.CustomUserCreateSerializer',
+#         'user':         'backend.auth.serializers.UserSerializer',
+#         'current_user': 'backend.auth.serializers.UserSerializer',
+#         'user_delete':  'djoser.serializers.UserCreateSerializer',
+#     },
+# }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME":    timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME":   timedelta(days=1),
-    'AUTH_HEADER_TYPES':        ('JWT',),
-    'ROTATE_REFRESH_TOKENS':    True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'UPDATE_LAST_LOGIN':        True,
-}
+# SIMPLE_JWT = {
+#     "ACCESS_TOKEN_LIFETIME":    timedelta(minutes=5),
+#     "REFRESH_TOKEN_LIFETIME":   timedelta(days=1),
+#     'AUTH_HEADER_TYPES':        ('JWT',),
+#     'ROTATE_REFRESH_TOKENS':    True,
+#     'BLACKLIST_AFTER_ROTATION': True,
+#     'UPDATE_LAST_LOGIN':        True,
+# }
 
 UNFOLD = {
     "SITE_ICON":     {
