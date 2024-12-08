@@ -9,8 +9,12 @@ import "@blocknote/core/fonts/inter.css"
 import "./blocknote.css"
 
 
-const DisplayableBlockNote = (props: { content: Block[] }) => {
+const DisplayableBlockNote = (props: { content?: Block[] }) => {
     const {content} = props
+    if (!content) {
+        return null
+    }
+
     // Remove empty blocks
     content.map((block, index) => {
         if (block.type === "paragraph" && block.content.length === 0) {
@@ -22,7 +26,6 @@ const DisplayableBlockNote = (props: { content: Block[] }) => {
     const editor = useCreateBlockNote({
         initialContent: content,
     })
-
 
     return (
         <BlockNoteView

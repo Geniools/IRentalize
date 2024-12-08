@@ -7,7 +7,7 @@ from backend.listing.serializers import OutputListingSerializer
 
 
 class OutputListingViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Listing.objects.prefetch_related('images', 'category', 'address').all()
+    queryset = Listing.objects.prefetch_related('images', 'category', 'address').filter(analytics__is_visible=True)
     serializer_class = OutputListingSerializer
     permission_classes = []
     filter_class = ListingFilter

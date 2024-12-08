@@ -47,6 +47,12 @@ class Listing(BaseModel):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Create analytics for the listing
+        if not hasattr(self, 'analytics'):
+            ListingAnalytics.objects.create(listing=self)
+
 
 class ListingAnalytics(models.Model):
     id = models.AutoField(primary_key=True)
@@ -61,7 +67,7 @@ class ListingAnalytics(models.Model):
         ordering = ['views', 'is_visible']
 
     def __str__(self):
-        return self.listing
+        return self.listing.name
 
 
 @cleanup.select  # https://github.com/un1t/django-cleanup

@@ -3,8 +3,8 @@ from django.templatetags.static import static
 from django.utils.html import format_html
 
 
-class ReactJsonEditorWidget(widgets.Widget):
-    template_name = "admin/json_editor_widget.html"
+class BlockNoteJSWidget(widgets.Widget):
+    template_name = "admin/blocknotejs_widget.html"
 
     def __init__(self, attrs=None):
         super().__init__(attrs)

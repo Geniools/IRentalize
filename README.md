@@ -2,14 +2,7 @@
 
 ## Description
 
-IRentalize is a web application that allows users to rent out their items to other users.
-The application is closely related to the popular website Airbnb, but instead of renting out *only* houses, users can
-rent out different other items.
-
-## ERD - Entity Relationship Diagram
-
-***Note:*** *The ERD is not final and will be updated in the future.*
-![ERD](docs/assets/IRentalize_ERD.png)
+IRentalize is a web application targeting students that allows one to rent out their items/properties.
 
 ## Installation
 
@@ -87,5 +80,3 @@ python manage.py runserver
 - The frontend can be accessed at `http://localhost:8000/` (or whatever port you are running the frontend development
   server on)
 - The API can be accessed at `http://localhost:8000/api/` (or whatever port you are running the server on)
-- The submodule "student-finance" can be accessed at `http://student.localhost:8000/` (or whatever port you are running
-  the server on)

@@ -1,4 +1,4 @@
-import {Block} from "@blocknote/core";
+import {type Block} from "@blocknote/core";
 
 export {};
 
@@ -32,13 +32,13 @@ declare global {
     type Listing = {
         id: number,
         images?: ListingImage[],
-        category?: ListingCategory[],
+        category: ListingCategory[],
         address?: Address,
         name: string,
-        content: Block[],
-        summary: Block[],
-        price_details: Block[],
-        contact_details: Block[],
+        content?: Block[],
+        summary?: Block[],
+        price_details?: Block[],
+        contact_details?: Block[],
         created_at: string,
         updated_at: string,
     }
@@ -47,6 +47,6 @@ declare global {
         count: number,
         next?: number,
         previous?: number,
-        results: Listing[]
+        results?: Listing[]
     }
 }

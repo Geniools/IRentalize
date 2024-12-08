@@ -5,12 +5,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Authentication endpoints (custom)
     # path('auth/', include('backend.auth.urls')),
-    # All the API endpoints are handled by the backend.api app
-    path('api/', include('backend.api.urls')),
-    # All the frontend is handled by the frontend app
-    path('', include('frontend.urls')),
+    path('api/', include('backend.api.urls')),  # All the API endpoints are handled by the backend.api app
+    path('', include('frontend.urls')),  # All the frontend is handled by the frontend app
 ]
 
 handler404 = 'frontend.views.handler404'
