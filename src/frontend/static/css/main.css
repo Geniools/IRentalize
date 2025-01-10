@@ -45,7 +45,8 @@ pre {
 
 /* The content of a page is wrapped in this class to keep the padding and footer in the right position */
 .layout {
-    min-height: calc(100vh - var(--header-height));
+    /*min-height: calc(100vh - var(--header-height));*/
+    min-height: 100vh;
     padding: 0 var(--padding) calc(var(--footer-height) + var(--padding)) var(--padding);
     position: relative;
     width: 100%;
@@ -58,7 +59,8 @@ header {
 
 /* The footer must have a set position to always be at the end of the page */
 footer {
-    min-height: var(--footer-height);
+    height: var(--footer-height);
+    width: calc(100% - var(--padding) * 2);
     position: absolute;
     bottom: 0;
 }

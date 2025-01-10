@@ -57,6 +57,7 @@ const ContactUsForm = () => {
     })
 
     function onSubmit(data: z.infer<typeof formSchema>) {
+        // TODO: Submit the form data to the backend
         console.log(data)
         toast.success("Form submitted successfully!")
     }

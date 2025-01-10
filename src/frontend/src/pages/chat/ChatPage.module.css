@@ -1,7 +1,0 @@
-.chatContainer {
-	display               : grid;
-	gap                   : 2rem;
-	grid-template-columns : 1fr 2fr;
-	grid-template-rows    : auto auto;
-	margin                : var(--padding) 0;
-}

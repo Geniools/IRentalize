@@ -1,0 +1,9 @@
+.custom-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-marker div {
+    transform: translateY(-50%);
+}

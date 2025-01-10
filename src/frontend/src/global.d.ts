@@ -29,10 +29,21 @@ declare global {
         image: string
     }
 
+    // Used to display a list of listings
+    type ListingShort = {
+        id: number,
+        images?: ListingImage[],
+        category: ListingCategory,
+        name: string,
+        summary?: Block[],
+        price_details?: Block[],
+    }
+
+    // Used to display the details of a listing
     type Listing = {
         id: number,
         images?: ListingImage[],
-        category: ListingCategory[],
+        category: ListingCategory,
         address?: Address,
         name: string,
         content?: Block[],

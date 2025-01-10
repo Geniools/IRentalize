@@ -1,4 +1,3 @@
-import React from "react"
 import {GoogleMap, Marker, useLoadScript} from "@react-google-maps/api"
 
 import Loader from "../Loader/Loader.js"
@@ -14,21 +13,23 @@ export default function GoogleMapContainer({latitude, longitude, zoom = 18}) {
         lng: +longitude,
     }
 
+    if (!isLoaded) {
+        return (
+            <div className={"flex-horizontally-center flex-vertically-centered space-filler"}>
+                <Loader/>
+            </div>
+        )
+    }
+
     return (
         <div>
-            {!isLoaded ? (
-                <div className={"flex-horizontally-center flex-vertically-centered space-filler"}>
-                    <Loader/>
-                </div>
-            ) : (
-                <GoogleMap
-                    mapContainerClassName={styles.mapContainer}
-                    center={center}
-                    zoom={zoom}
-                >
-                    <Marker position={center}/>
-                </GoogleMap>
-            )}
+            <GoogleMap
+                mapContainerClassName={styles.mapContainer}
+                center={center}
+                zoom={zoom}
+            >
+                <Marker position={center}/>
+            </GoogleMap>
         </div>
     )
 }

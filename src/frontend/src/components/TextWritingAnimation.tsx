@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {useTheme} from "@/components/ThemeProvider";
 
-interface TextWritingAnimationProps {
+type TextWritingAnimationProps = {
     children: string,
     fontSize?: number,
 }

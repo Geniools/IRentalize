@@ -6,7 +6,11 @@ const fetchListing = async (id: number) => {
     return response.data;
 }
 
-const useListingData = (id: number) => {
+const useListingData = (id: number): {
+    data?: Listing,
+    isLoading: boolean,
+    isError: boolean,
+} => {
     const {
         data,
         isLoading,

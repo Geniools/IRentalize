@@ -26,3 +26,5 @@ class OutputListingSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         # TODO: Add 'host' field
         exclude = ['host']
+
+# TODO: Make OutputListingShortSerializer for listing list view

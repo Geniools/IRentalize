@@ -24,7 +24,7 @@ const useListingsQuery = () => {
     const listings: Listing[] = []
     data?.pages.map((page) => {
         // Add all the results from a page to the 'listing' array
-        listings.push(...page.results)
+        listings.push(...(page.results ?? []))
     })
 
     return {
