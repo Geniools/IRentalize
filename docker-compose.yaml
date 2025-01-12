@@ -1,0 +1,38 @@
+version: '3.8'
+
+# TODO: Test the docker-compose file
+
+services:
+    db:
+        image: mysql:5.7
+        restart: always
+        environment:
+            MYSQL_DATABASE: ${DJANGO_DB_NAME}
+            MYSQL_USER: ${DJANGO_DB_USER}
+            MYSQL_PASSWORD: ${DJANGO_DB_PASS}
+            MYSQL_ROOT_PASSWORD: ${DJANGO_DB_PASS}
+        volumes:
+            - db_data:/var/lib/mysql
+
+    web:
+        build: .
+        command: gunicorn --bind 0.0.0.0:8000 IRentalize.wsgi:application
+        volumes:
+            - .:/app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+        environment:
+            DJANGO_DB_NAME: ${DJANGO_DB_NAME}
+            DJANGO_DB_HOST: db
+            DJANGO_DB_PORT: ${DJANGO_DB_PORT}
+            DJANGO_DB_USER: ${DJANGO_DB_USER}
+            DJANGO_DB_PASS: ${DJANGO_DB_PASS}
+            DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+            DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+            DJANGO_RECAPTCHA_PRIVATE_KEY: ${DJANGO_RECAPTCHA_PRIVATE_KEY}
+            DJANGO_RECAPTCHA_PUBLIC_KEY: ${DJANGO_RECAPTCHA_PUBLIC_KEY}
+
+volumes:
+    db_data:
