@@ -11,7 +11,7 @@ const IndexPage = () => {
         fetchNextPage,
         hasNextPage,
         isLoading
-    } = useListingsQuery();
+    } = useListingsQuery()
 
     return (
         <>

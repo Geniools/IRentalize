@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 
 const Footer = () => {
     return (
@@ -10,7 +10,6 @@ const Footer = () => {
                 {/*</div>*/}
 
                 <div className="flex-1 flex h-full justify-end items-center">
-                    Reach out at:&nbsp;
                     <i><strong>
                         <Link to="mailto:info@irentalize.nl" typeof={"email"}>info.irentalize.nl</Link>
                     </strong></i>

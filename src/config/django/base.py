@@ -27,6 +27,7 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'django_recaptcha',  # Integration with Google reCAPTCHA
     'django_vite',  # Integration with ViteJS
     'django_filters',
     'django_cleanup.apps.CleanupSelectedConfig',

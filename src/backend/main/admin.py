@@ -12,11 +12,12 @@ admin.site.index_title = 'Welcome to IRentalize Portal'
 @admin.register(ContactUs)
 class ContactUsAdmin(UnfoldModelAdmin):
     list_display = ('id', 'email', 'created_at')
+    list_display_links = ('id', 'email')
     list_filter = ('created_at',)
-    search_fields = ('email', 'message')
+    search_fields = ('first_name', 'last_name', 'middle_name', 'email', 'message', 'phone')
     date_hierarchy = 'created_at'
     ordering = ('-created_at',)
-    readonly_fields = ('id', 'created_at')
+    readonly_fields = ('id', 'created_at', 'updated_at')
     fieldsets = (
         (None, {
             'fields': (

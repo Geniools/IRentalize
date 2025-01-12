@@ -37,9 +37,9 @@ class ListingAdmin(UnfoldModelAdmin):
     list_display_links = ('id', 'name')
     list_filter = ('category', 'host', 'address')
     search_fields = (
-        'name', 'content', 'summary', 'price_details', 'contact_details',
+        'id', 'name', 'content', 'summary', 'price_details', 'contact_details',
         'host__email', 'host__first_name', 'host__last_name',
-        'address__street_name', 'address__house_number', 'address__house_addition', 'address__zip_code',
+        'address__street_name', 'address__location__city', 'address__location__country', 'address__zip_code',
     )
     readonly_fields = ('display_images', 'image_number', 'created_at', 'updated_at',)
     inlines = (ListingImageInLine, ListingAnalyticsInLine,)
@@ -113,10 +113,11 @@ class ListingImageAdmin(UnfoldModelAdmin):
     list_display_links = ('id', 'listing',)
     list_filter = ('listing',)
     search_fields = (
-        'listing__name', 'listing__address', 'listing__host__email',
+        'id',
+        'listing__name', 'listing__address__name', 'listing__host__email',
         'listing__host__first_name', 'listing__host__last_name',
     )
-    readonly_fields = ('display_image',)
+    readonly_fields = ('display_image', 'created_at', 'updated_at',)
     fieldsets = [
         ('Listing', {
             'fields': [

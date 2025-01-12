@@ -17,9 +17,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=250)
     email = models.EmailField(max_length=255, unique=True)
     # Access control
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.')
+    is_staff = models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.')
+    is_active = models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
     # Timestamps
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)

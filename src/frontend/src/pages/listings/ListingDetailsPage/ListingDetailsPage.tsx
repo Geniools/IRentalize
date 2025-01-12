@@ -4,11 +4,11 @@ import useListingData from "@/hooks/useListingData"
 import NotFoundContent from "@/pages/main/partials/404NotFoundContent"
 import Loader from "@/components/Loader/Loader"
 
-import ListingHeader from "@/pages/listings/ListingDetailsPage/partials/ListingHeader";
-import ImageGallery from "@/pages/listings/ListingDetailsPage/partials/ImageGallery";
-import LocationCard from "@/pages/listings/ListingDetailsPage/partials/LocationCard";
-import InfoCard from "@/pages/listings/ListingDetailsPage/partials/InfoCard";
-import ContactCard from "@/pages/listings/ListingDetailsPage/partials/ContactCard";
+import ListingHeader from "@/pages/listings/ListingDetailsPage/partials/ListingHeader"
+import ImageGallery from "@/pages/listings/ListingDetailsPage/partials/ImageGallery"
+import LocationCard from "@/pages/listings/ListingDetailsPage/partials/LocationCard"
+import InfoCard from "@/pages/listings/ListingDetailsPage/partials/InfoCard"
+import ContactCard from "@/pages/listings/ListingDetailsPage/partials/ContactCard"
 
 
 const ListingDetailsPage = () => {
@@ -37,7 +37,7 @@ const ListingDetailsPage = () => {
                     <div className="space-y-6">
                         <LocationCard address={data.address}/>
                         <InfoCard content={data.content}/>
-                        <ContactCard/>
+                        <ContactCard listingId={Number(id)}/>
                     </div>
                 </div>
             </div>

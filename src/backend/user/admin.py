@@ -67,6 +67,10 @@ class UserChangeForm(UnfoldUserChangeForm):
 class UserAdmin(BaseUserAdmin, UnfoldModelAdmin):
     list_display = ['id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser']
     list_display_links = ['id', 'email']
+    search_fields = (
+        'id', 'email', 'first_name', 'last_name', 'last_login', 'date_joined',
+        'profile__username', 'profile__phone', 'profile__default_address__zip_code',
+    )
     readonly_fields = ['id', 'last_login', 'date_joined']
     empty_value_display = '-'
     ordering = ['-date_joined']
@@ -76,7 +80,7 @@ class UserAdmin(BaseUserAdmin, UnfoldModelAdmin):
     add_form = UserCreationForm
     # The form to change user instances
     form = UserChangeForm
-    
+
     # Fieldsets that will be shown when ADDING a new user
     add_fieldsets = (
         (None, {
@@ -103,6 +107,10 @@ class UserAdmin(BaseUserAdmin, UnfoldModelAdmin):
 class UserProfileAdmin(UnfoldModelAdmin):
     list_display = ['id', 'user', 'username', 'phone']
     list_display_links = ['id', 'user']
+    search_fields = (
+        'id', 'username', 'phone',
+        'user__id', 'user__email', 'user__first_name', 'user__last_name',
+    )
     readonly_fields = ['id', 'user']
     empty_value_display = '-'
 

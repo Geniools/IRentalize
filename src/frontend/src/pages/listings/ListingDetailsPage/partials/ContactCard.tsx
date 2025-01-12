@@ -1,10 +1,14 @@
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {Link} from "react-router-dom";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import {Link} from "react-router-dom"
 
-import {Calendar} from "lucide-react";
+import {Calendar} from "lucide-react"
 
-const ContactCard: React.FC = () => (
+type ContactCardProps = {
+    listingId?: number
+}
+
+const ContactCard: React.FC<ContactCardProps> = ({listingId}) => (
     <Card className="bg-background/10 backdrop-blur-lg border-muted">
         <CardHeader>
             <div className="flex items-center gap-3">
@@ -14,7 +18,7 @@ const ContactCard: React.FC = () => (
         </CardHeader>
 
         <CardContent>
-            <Link to="/contact-us/">
+            <Link to={`/contact-us/?listing_id=${listingId}`}>
                 <Button className="w-full" size="lg">
                     Check Availability
                 </Button>

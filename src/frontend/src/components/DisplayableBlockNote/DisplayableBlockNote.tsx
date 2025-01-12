@@ -21,7 +21,7 @@ const DisplayableBlockNote = (props: { content?: Block[] }) => {
             content.splice(index, 1)
         }
     })
-    const theme = useTheme().theme
+    const theme = useTheme().theme === "system" ? undefined : useTheme().theme
 
     const editor = useCreateBlockNote({
         initialContent: content,
@@ -30,7 +30,7 @@ const DisplayableBlockNote = (props: { content?: Block[] }) => {
     return (
         <BlockNoteView
             editor={editor}
-            theme={theme}
+            theme={theme as "dark" | "light" | undefined}
             editable={false}
         />
     )

@@ -28,6 +28,8 @@ class Reservation(BaseModel):
     def __str__(self):
         return f'{self.guest} - {self.listing}'
 
+    # TODO: Validate the reservation time period (the methods below)
+
     @staticmethod
     def validate_reservation_conflicts(listing, start_date, end_date):
         # Check if the start date and the end date do not conflict with any existing reservations
@@ -81,6 +83,8 @@ class Availability(models.Model):
 
     def __str__(self):
         return f'{self.listing} - {self.start_date_time} - {self.end_date_time if self.end_date_time else "Indefinite"}'
+
+    # TODO: Validate the availability time period (the methods below)
 
     @staticmethod
     def validate_conflicts(listing, start_date, end_date):

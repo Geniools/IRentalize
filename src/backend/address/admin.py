@@ -8,7 +8,8 @@ from backend.address.models import Location, Address
 class LocationAdmin(UnfoldModelAdmin):
     list_display = ('id', 'city', 'country')
     list_display_links = ('id', 'city', 'country')
-    search_fields = ('city', 'country')
+    search_fields = ('id', 'city', 'country')
+    readonly_fields = ('created_at', 'updated_at')
     fieldsets = [
         ('Location', {
             'fields': [
@@ -27,7 +28,12 @@ class LocationAdmin(UnfoldModelAdmin):
 class AddressAdmin(UnfoldModelAdmin):
     list_display = ('id', 'location', 'street_name', 'number', 'number_addition', 'zip_code', 'province', 'name')
     list_display_links = ('id', 'location', 'street_name', 'number', 'number_addition', 'zip_code', 'province', 'name')
-    search_fields = ('location', 'street_name', 'number', 'number_addition', 'zip_code', 'province', 'name', 'latitude', 'longitude')
+    search_fields = (
+        'location__city', 'location__country', 'location__id',
+        'id', 'street_name', 'number', 'number_addition', 'zip_code', 'province', 'name',
+        'latitude', 'longitude'
+    )
+    readonly_fields = ('created_at', 'updated_at')
     fieldsets = [
         ('Address', {
             'fields': [
